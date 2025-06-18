@@ -14,13 +14,11 @@
       text-align: center;
       overflow-x: hidden;
     }
-
     h1 {
       font-size: 3rem;
       margin-top: 1rem;
       text-shadow: 2px 2px 4px #000;
     }
-
     .letter {
       background: rgba(255, 255, 255, 0.95);
       color: #000;
@@ -34,19 +32,16 @@
       max-height: 400px;
       overflow-y: scroll;
     }
-
     .proposal {
       margin-top: 2rem;
       font-size: 1.5rem;
       animation: pulse 2s infinite;
     }
-
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.05); }
       100% { transform: scale(1); }
     }
-
     .button {
       margin: 1rem;
       padding: 1rem 2rem;
@@ -59,40 +54,29 @@
       box-shadow: 0 0 10px #ff5e7e;
       transition: 0.3s;
     }
-
     .button:hover {
       background: #ff2f5a;
     }
-
     .image-section {
       margin-top: 2rem;
     }
-
     .image-section img {
       width: 300px;
       max-width: 90%;
       border: 5px solid white;
       border-radius: 10px;
     }
-
     .footer {
       margin: 2rem;
       font-size: 0.9rem;
     }
-
-    .shinchan-dance {
-      display: none;
+    .shinchan {
       margin-top: 2rem;
-      animation: dance 2s infinite;
+      animation: dance 1s infinite alternate;
     }
-
     @keyframes dance {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-
-    .shinchan-dance img {
-      width: 150px;
+      0% { transform: rotate(-5deg) scale(1.05); }
+      100% { transform: rotate(5deg) scale(1.1); }
     }
   </style>
 </head>
@@ -100,13 +84,15 @@
   <h1>Indhu 💖</h1>
 
   <div class="letter">
-    <!-- Full love letter content -->
-    <p>... (your full message here, unchanged) ...</p>
+    <!-- Your letter message (as-is, no changes made here) -->
+    <p>(குறிப்பு: ... If I was krishna 
+       Will you be my 
+                 Ratha ❤)</p>
   </div>
 
   <div class="proposal">
     <p>Indhu, will you be my Ratha? </p>
-    <form onsubmit="handleYesClick()" action="https://formsubmit.co/adamfx209@gmail.com" method="POST">
+    <form action="https://formsubmit.co/adamfx209@gmail.com" method="POST" onsubmit="handleYesClick(event)">
       <input type="hidden" name="subject" value="💌 Indhu said YES!">
       <input type="hidden" name="message" value="She clicked YES on your proposal page. Congratulations! 🎉💖">
       <input type="hidden" name="_captcha" value="false">
@@ -115,14 +101,13 @@
     </form>
   </div>
 
-  <div class="shinchan-dance" id="shinchanDance">
-    <p>Shinchan is dancing now! 🎉</p>
-    <img src="https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif" alt="Shinchan dancing">
+  <div class="shinchan">
+    <img src="https://media.tenor.com/7QKPRvknPu0AAAAC/shinchan-dance.gif" alt="Shinchan dancing" width="200" />
   </div>
 
   <div class="image-section">
     <p>Take a screenshot of this and scan in Spotify 🎵</p>
-    <img src="https://i.ibb.co/BKwY2jC/spotify-sample.png" alt="Spotify code image">
+    <img src="https://i.ibb.co/BKwY2jC/spotify-sample.png" alt="Spotify image" />
   </div>
 
   <div class="footer">
@@ -130,11 +115,7 @@
   </div>
 
   <script>
-    function handleYesClick() {
-      const dance = document.getElementById('shinchanDance');
-      if (dance) {
-        dance.style.display = 'block';
-      }
+    function handleYesClick(event) {
       alert("Yay! She said yes! 💖 Shinchan is dancing now 🎉");
     }
   </script>
