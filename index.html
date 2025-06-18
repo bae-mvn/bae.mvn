@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Indhu ❤️ Will You Be My Ratha?</title>
   <style>
     body {
@@ -70,13 +70,13 @@
       margin: 2rem;
       font-size: 0.9rem;
     }
-    .shinchan {
+    #shinchan-dance {
+      display: none;
       margin-top: 2rem;
-      animation: dance 1s infinite alternate;
     }
-    @keyframes dance {
-      0% { transform: rotate(-5deg) scale(1.05); }
-      100% { transform: rotate(5deg) scale(1.1); }
+    #shinchan-dance img {
+      width: 200px;
+      border-radius: 20px;
     }
   </style>
 </head>
@@ -84,15 +84,16 @@
   <h1>Indhu 💖</h1>
 
   <div class="letter">
-    <!-- Your letter message (as-is, no changes made here) -->
-    <p>(குறிப்பு: ... If I was krishna 
-       Will you be my 
-                 Ratha ❤)</p>
+    <!-- Your love letter content here -->
+    <p>(குறிப்பு: ...<br>Just imagine 
+    If I was krishna 
+    Will you be my 
+    Ratha ❤)</p>
   </div>
 
   <div class="proposal">
     <p>Indhu, will you be my Ratha? </p>
-    <form action="https://formsubmit.co/adamfx209@gmail.com" method="POST" onsubmit="handleYesClick(event)">
+    <form id="proposal-form" action="https://formsubmit.co/adamfx209@gmail.com" method="POST">
       <input type="hidden" name="subject" value="💌 Indhu said YES!">
       <input type="hidden" name="message" value="She clicked YES on your proposal page. Congratulations! 🎉💖">
       <input type="hidden" name="_captcha" value="false">
@@ -101,13 +102,14 @@
     </form>
   </div>
 
-  <div class="shinchan">
-    <img src="https://media.tenor.com/7QKPRvknPu0AAAAC/shinchan-dance.gif" alt="Shinchan dancing" width="200" />
+  <div id="shinchan-dance">
+    <img src="https://media.giphy.com/media/KZQlfylo73AMdE6pwv/giphy.gif" alt="Shinchan dancing" />
+    <p>Shinchan is dancing with joy! 💃🎉</p>
   </div>
 
   <div class="image-section">
     <p>Take a screenshot of this and scan in Spotify 🎵</p>
-    <img src="https://i.ibb.co/BKwY2jC/spotify-sample.png" alt="Spotify image" />
+    <img src="https://i.ibb.co/BKwY2jC/spotify-code.png" alt="Spotify image" />
   </div>
 
   <div class="footer">
@@ -115,9 +117,20 @@
   </div>
 
   <script>
-    function handleYesClick(event) {
+    document.getElementById("proposal-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      // Show Shinchan dance
+      document.getElementById("shinchan-dance").style.display = "block";
+
+      // Alert
       alert("Yay! She said yes! 💖 Shinchan is dancing now 🎉");
-    }
+
+      // Delay form submission for 2 seconds
+      setTimeout(() => {
+        e.target.submit();
+      }, 2000);
+    });
   </script>
 </body>
 </html>
