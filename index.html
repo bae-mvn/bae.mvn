@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -70,10 +71,32 @@
       margin: 2rem;
       font-size: 0.9rem;
     }
+
+    /* ❤️ Heart Rain Animation */
+    .heart {
+      position: fixed;
+      top: -50px;
+      font-size: 24px;
+      color: #ff5e7e;
+      animation: fall linear infinite;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-50px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>INDHU 💖</h1>
+  <h1>Indhu 💖</h1>
   <div class="letter">
     <p><strong>From:</strong><br>Naan,<br>Ur aachi ooru,<br>Our mavatam.</p>
     <p><strong>To:</strong><br>You,<br>Ur ooru,<br>Our mavatam.</p>
@@ -132,5 +155,20 @@
   <div class="footer">
     <p>Made with love by your one & only 💌</p>
   </div>
+
+  <!-- ❤️ Heart Rain Script -->
+  <script>
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 2 + Math.random() * 3 + "s";
+      heart.style.fontSize = 16 + Math.random() * 24 + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+    setInterval(createHeart, 300);
+  </script>
 </body>
 </html>
