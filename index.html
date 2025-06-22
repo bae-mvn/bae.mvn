@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Indhu 💖 Will You Be My Radha?</title>
   <style>
     body {
       margin: 0;
       font-family: 'Comic Sans MS', cursive;
-      background: url('https://i.imgur.com/bkZVqmo.jpeg') no-repeat center center fixed;
+      background: url('https://i.imgur.com/fH1J6hK.jpeg') no-repeat center center fixed;
       background-size: cover;
       color: white;
       text-align: center;
@@ -22,16 +22,24 @@
     .letter {
       background: rgba(255, 255, 255, 0.95);
       color: #000;
-      width: 80%;
+      width: 90%;
+      height: 90vh;
       margin: 2rem auto;
       padding: 2rem;
       border-radius: 20px;
       box-shadow: 0 0 20px rgba(0,0,0,0.5);
       font-size: 1rem;
       line-height: 1.6;
-      max-height: 400px;
-      overflow-y: scroll;
       text-align: left;
+      overflow-y: auto;
+      position: relative;
+    }
+    .letter img {
+      width: 200px;
+      max-width: 80%;
+      border-radius: 10px;
+      margin: 1rem auto 0;
+      display: block;
     }
     .proposal {
       margin-top: 2rem;
@@ -58,18 +66,18 @@
     .button:hover {
       background: #ff2f5a;
     }
-    .image-section {
-      margin-top: 2rem;
-    }
-    .image-section img {
-      width: 300px;
-      max-width: 90%;
-      border: 5px solid white;
-      border-radius: 10px;
-    }
     .footer {
       margin: 2rem;
       font-size: 0.9rem;
+    }
+    .shinchan-gif {
+      display: none;
+      margin-top: 2rem;
+    }
+    .shinchan-gif img {
+      width: 300px;
+      max-width: 90%;
+      border-radius: 20px;
     }
 
     /* ❤️ Heart Rain Animation */
@@ -84,19 +92,19 @@
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(-50px);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh);
-        opacity: 0;
-      }
+      0% { transform: translateY(-50px); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      .proposal { font-size: 1.2rem; }
+      .letter { font-size: 0.95rem; }
     }
   </style>
 </head>
 <body>
-  <h1>“If Words Were Roses, This Would Be a Garden” 💖</h1>
+  <h1>Indhu 💖</h1>
   <div class="letter">
     <p><strong>From:</strong><br>Naan,<br>Ur aachi ooru,<br>Our mavatam.</p>
     <p><strong>To:</strong><br>You,<br>Ur ooru,<br>Our mavatam.</p>
@@ -137,21 +145,24 @@
     <p><strong>One last thing:</strong><br>
     I love Lord Muruga and Krishna. Krishna and Radha were a beautiful couple. So I ask…</p>
     <p><strong>If I was Krishna, would you be my Radha? ❤</strong></p>
+    <img src="https://i.ibb.co/mCByb7y/IMG-20230415-152406.jpg" alt="Cute Picture"/>
   </div>
+
   <div class="proposal">
     <p>Indhu, will you be my Radha?</p>
-    <form action="https://formsubmit.co/adamfx209@gmail.com" method="POST">
+    <form action="https://formsubmit.co/adamfx209@gmail.com" method="POST" onsubmit="showShinchan()">
       <input type="hidden" name="subject" value="💌 Indhu said YES!">
       <input type="hidden" name="message" value="She clicked YES on your proposal page. Congratulations! 🎉💖">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
-      <button type="submit" class="button" onclick="alert('Yay! She said yes! 💖 Shinchan is dancing now 🎉')">Yes, I will ❤️</button>
+      <button type="submit" class="button">Yes, I will ❤️</button>
     </form>
   </div>
-  <div class="image-section">
-    <p>Take a screenshot of this and scan in Spotify 🎵</p>
-    <img src="https://i.ibb.co/BKwY2jC/spotify-sample.png" alt="Spotify image" />
+
+  <div class="shinchan-gif" id="shinchan">
+    <img src="https://i.ibb.co/qMJmsDg/Nice-GIF.gif" alt="Shinchan dancing gif"/>
   </div>
+
   <div class="footer">
     <p>Made with love by your one & only 💌</p>
   </div>
@@ -169,6 +180,13 @@
       setTimeout(() => heart.remove(), 5000);
     }
     setInterval(createHeart, 300);
+
+    function showShinchan() {
+      setTimeout(() => {
+        document.getElementById("shinchan").style.display = "block";
+        alert('Yay! She said yes! 💖 You got you angel 🎉'):
+      }, 500);
+    }
   </script>
 </body>
 </html>
