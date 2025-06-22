@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Indhu 💖 Will You Be My Radha?</title>
   <style>
     body {
       margin: 0;
       font-family: 'Comic Sans MS', cursive;
-      background: url('https://i.imgur.com/fH1J6hK.jpeg') no-repeat center center fixed;
+      background: url('https://i.imgur.com/lVWYZHk.jpeg') no-repeat center center fixed;
       background-size: cover;
       color: white;
       text-align: center;
@@ -30,16 +30,8 @@
       box-shadow: 0 0 20px rgba(0,0,0,0.5);
       font-size: 1rem;
       line-height: 1.6;
-      text-align: left;
       overflow-y: auto;
-      position: relative;
-    }
-    .letter img {
-      width: 200px;
-      max-width: 80%;
-      border-radius: 10px;
-      margin: 1rem auto 0;
-      display: block;
+      text-align: left;
     }
     .proposal {
       margin-top: 2rem;
@@ -66,21 +58,18 @@
     .button:hover {
       background: #ff2f5a;
     }
+    .letter img {
+      display: block;
+      margin: 2rem auto 0;
+      width: 300px;
+      max-width: 90%;
+      border: 5px solid white;
+      border-radius: 10px;
+    }
     .footer {
       margin: 2rem;
       font-size: 0.9rem;
     }
-    .shinchan-gif {
-      display: none;
-      margin-top: 2rem;
-    }
-    .shinchan-gif img {
-      width: 300px;
-      max-width: 90%;
-      border-radius: 20px;
-    }
-
-    /* ❤️ Heart Rain Animation */
     .heart {
       position: fixed;
       top: -50px;
@@ -90,16 +79,16 @@
       z-index: 1000;
       pointer-events: none;
     }
-
     @keyframes fall {
       0% { transform: translateY(-50px); opacity: 1; }
       100% { transform: translateY(100vh); opacity: 0; }
     }
-
-    @media (max-width: 600px) {
-      h1 { font-size: 2rem; }
-      .proposal { font-size: 1.2rem; }
-      .letter { font-size: 0.95rem; }
+    #shinchan-gif {
+      display: none;
+      margin-top: 1rem;
+    }
+    #shinchan-gif img {
+      width: 200px;
     }
   </style>
 </head>
@@ -145,22 +134,23 @@
     <p><strong>One last thing:</strong><br>
     I love Lord Muruga and Krishna. Krishna and Radha were a beautiful couple. So I ask…</p>
     <p><strong>If I was Krishna, would you be my Radha? ❤</strong></p>
-    <img src="https://i.ibb.co/mCByb7y/IMG-20230415-152406.jpg" alt="Cute Picture"/>
+
+    <!-- Added Indhu Picture Here -->
+    <img src="https://drive.google.com/uc?export=view&id=1og6dqc2E5gOL0IyAPfcwovMjmAxgmX1R" alt="Indhu Picture"/>
   </div>
 
   <div class="proposal">
     <p>Indhu, will you be my Radha?</p>
-    <form action="https://formsubmit.co/adamfx209@gmail.com" method="POST" onsubmit="showShinchan()">
+    <form action="https://formsubmit.co/adamfx209@gmail.com" method="POST" onsubmit="showShinchan();">
       <input type="hidden" name="subject" value="💌 Indhu said YES!">
       <input type="hidden" name="message" value="She clicked YES on your proposal page. Congratulations! 🎉💖">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
-      <button type="submit" class="button">Yes, I will ❤️</button>
+      <button type="submit" class="button" onclick="alert('Yay! She said yes! 💖 Shinchan is dancing now 🎉')">Yes, I will ❤️</button>
     </form>
-  </div>
-
-  <div class="shinchan-gif" id="shinchan">
-    <img src="https://i.ibb.co/qMJmsDg/Nice-GIF.gif" alt="Shinchan dancing gif"/>
+    <div id="shinchan-gif">
+      <img src="https://i.ibb.co/qMJmsDgN/shinchan.gif" alt="Shinchan Dancing" />
+    </div>
   </div>
 
   <div class="footer">
@@ -182,10 +172,7 @@
     setInterval(createHeart, 300);
 
     function showShinchan() {
-      setTimeout(() => {
-        document.getElementById("shinchan").style.display = "block";
-        alert('Yay! She said yes! 💖 You got you angel 🎉'):
-      }, 500);
+      document.getElementById("shinchan-gif").style.display = "block";
     }
   </script>
 </body>
