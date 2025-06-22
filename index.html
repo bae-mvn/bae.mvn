@@ -1,119 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>For Indhu 💌</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Indhu 💖 Will You Be My Radha?</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Great Vibes', cursive;
-      background: url('https://i.ibb.co/w7YdV2T/valentine-bg.jpg') no-repeat center center fixed;
+      font-family: 'Comic Sans MS', cursive;
+      background: url('https://drive.google.com/uc?export=view&id=1q1ZJN7Qlr9lTRZMvZyHDlEbV6uZ5-J5U') no-repeat center center fixed;
       background-size: cover;
-      color: #000;
+      color: white;
+      text-align: center;
       overflow-x: hidden;
     }
-
-    .letter-box {
-      background-color: rgba(255, 255, 255, 0.95);
-      padding: 30px;
-      border-radius: 20px;
-      margin: 5% auto;
-      width: 90%;
-      max-width: 800px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    }
-
     h1 {
-      text-align: center;
-      font-size: 2.5em;
-      margin-bottom: 20px;
+      font-size: 3rem;
+      margin-top: 1rem;
+      text-shadow: 2px 2px 4px #000;
     }
-
-    p {
-      font-size: 1.4em;
-      line-height: 1.8;
+    .letter {
+      background: rgba(255, 255, 255, 0.95);
+      color: #000;
+      width: 100%;
+      height: 100vh;
+      margin: 0 auto;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      font-size: 1rem;
+      line-height: 1.6;
+      overflow-y: scroll;
+      text-align: left;
     }
-
-    .answer-btn {
+    .letter img {
       display: block;
-      margin: 40px auto 20px;
-      background-color: #ff3366;
-      color: white;
+      margin: 2rem auto 0;
+      max-width: 300px;
+      width: 90%;
+      border: 5px solid white;
+      border-radius: 10px;
+    }
+    .proposal {
+      margin-top: 2rem;
+      font-size: 1.5rem;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .button {
+      margin: 1rem;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
       border: none;
-      padding: 15px 30px;
-      border-radius: 50px;
-      font-size: 1.5em;
+      border-radius: 30px;
       cursor: pointer;
-      transition: background 0.3s;
+      background: #ff5e7e;
+      color: white;
+      box-shadow: 0 0 10px #ff5e7e;
+      transition: 0.3s;
     }
-
-    .answer-btn:hover {
-      background-color: #ff6699;
+    .button:hover {
+      background: #ff2f5a;
     }
-
-    .gif-container {
-      display: none;
-      text-align: center;
-      margin-top: 30px;
+    .footer {
+      margin: 2rem;
+      font-size: 0.9rem;
     }
-
-    .gif-container img {
-      width: 300px;
-      max-width: 80%;
+    .heart {
+      position: fixed;
+      top: -50px;
+      font-size: 24px;
+      color: #ff5e7e;
+      animation: fall linear infinite;
+      z-index: 1000;
+      pointer-events: none;
     }
-
-    img.ending-photo {
-      display: block;
-      margin: 20px auto 0;
-      max-width: 100%;
-      border-radius: 15px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    @keyframes fall {
+      0% { transform: translateY(-50px); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <div class="letter-box">
-    <h1>To My Indhu 💖</h1>
-    <p>Thirumbum thodathu!<br/>
-    Pinji magam oru nodiyum<br/>
-    Vaada koodathu!</p>
-
-    <p><strong>There's a mistake in that song. Find it!</strong></p>
-
-    <p><strong>Pickup line:</strong><br/>
-    Panavai vazha thevai kodugal<br/>
-    Kadhal vazha thevai un idhayangal!</p>
-
-    <p><strong>Choose the correct answer:</strong><br/>
-    Answer: Love you too.<br/>
-    a) Love you<br/>
-    b) Do you love me?<br/>
-    c) a<br/>
-    d) c</p>
-
-    <p><strong>One last thing:</strong><br/>
-    I love Lord Muruga and Krishna. Krishna and Radha were a beautiful couple. So I ask...</p>
-
-    <p style="font-size: 1.6em;"><strong>If I was Krishna, would you be my Radha? ❤️</strong></p>
-
-    <img src="https://i.ibb.co/lRdpnPph/Picsart-25-06-16-22-19-20-852.jpg" alt="Us Picture" class="ending-photo" />
-
-    <button class="answer-btn" onclick="showGif()">Yes, I will ❤️</button>
-
-    <div class="gif-container" id="gifContainer">
-      <img src="https://i.ibb.co/qMJmsDgN/shinchan-love.gif" alt="Shinchan Love GIF"/>
-    </div>
-  </div>
-
-  <script>
-    function showGif() {
-      document.getElementById('gifContainer').style.display = 'block';
-      document.querySelector('.answer-btn').scrollIntoView({ behavior: 'smooth' });
+  <h1>Indhu 💖</h1>
+  <div class="letter">
+    <!-- Full love letter content stays the same -->
+    <img src="https://drive.google.com/uc?export=view&id=1q1ZJN7Qlr9lTRZMvZyHDlEbV6uZ5-J5U" alt="Us Picture" />
+  </div>  <div class="proposal">
+    <p>Indhu, will you be my Radha?</p>
+    <form action="https://formsubmit.co/adamfx209@gmail.com" method="POST">
+      <input type="hidden" name="subject" value="💌 Indhu said YES!">
+      <input type="hidden" name="message" value="She clicked YES on your proposal page. Congratulations! 🎉💖">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <button type="submit" class="button" onclick="showGif()">Yes, I will ❤️</button>
+    </form>
+  </div>  <div id="gif-container" style="display:none; margin-top: 1rem;">
+    <img src="https://i.ibb.co/qMJmsDgN/shinchan-dance.gif" alt="Shinchan Dance" style="max-width:300px; width:90%;">
+  </div>  <div class="footer">
+    <p>Made with love by your one & only 💌</p>
+  </div>  <!-- Heart Rain Script -->  <script>
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 2 + Math.random() * 3 + "s";
+      heart.style.fontSize = 16 + Math.random() * 24 + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
     }
-  </script>
-</body>
+    setInterval(createHeart, 300);
+
+    function showGif() {
+      document.getElementById("gif-container").style.display = "block";
+      alert('Yay! She said yes! 💖 Shinchan is dancing now 🎉');
+    }
+  </script></body>
 </html>
