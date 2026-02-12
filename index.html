@@ -1,145 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>I'm Sorry, Puppy 💖</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #ffcce0;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Jebiksha</title>
 
-    .hearts {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 1;
-    }
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: url('https://i.imgur.com/IaZxgY2.png') no-repeat center;
-      background-size: contain;
-      animation: float 6s linear infinite;
-      opacity: 0.8;
-    }
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-    @keyframes float {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-100vh) scale(1.5);
-        opacity: 0;
-      }
-    }
+body{
+background:#0e0e0e;
+font-family:Georgia, serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+overflow:hidden;
+}
 
-    .container {
-      z-index: 2;
-      position: relative;
-      padding: 40px;
-      max-width: 600px;
-      margin: 0 auto;
-      color: #d6006e;
-      font-size: 18px;
-      line-height: 1.8;
-      white-space: pre-wrap;
-    }
+/* Loader */
+.loader{
+position:fixed;
+width:100%;
+height:100%;
+background:#0e0e0e;
+display:flex;
+justify-content:center;
+align-items:center;
+color:gold;
+font-size:22px;
+letter-spacing:3px;
+z-index:1000;
+animation:fadeOut 2s forwards;
+animation-delay:2.5s;
+}
 
-    h1 {
-      text-align: center;
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
+@keyframes fadeOut{
+to{opacity:0;visibility:hidden;}
+}
 
-    .final-message {
-      text-align: center;
-      margin-top: 50px;
-      font-size: 24px;
-      font-weight: bold;
-      color: #c2185b;
-    }
+/* Book */
+.book{
+width:380px;
+height:520px;
+position:relative;
+perspective:2000px;
+}
 
-    button {
-      background-color: #ff69b4;
-      border: none;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-size: 18px;
-      cursor: pointer;
-      margin-top: 20px;
-      transition: 0.3s ease;
-    }
+.page{
+position:absolute;
+width:100%;
+height:100%;
+background:#fffaf3;
+border-radius:15px;
+padding:40px;
+transform-origin:left;
+transition:1s ease;
+backface-visibility:hidden;
+box-shadow:0 20px 50px rgba(0,0,0,0.6);
+}
 
-    button:hover {
-      background-color: #ff85c1;
-      transform: scale(1.05);
-    }
-  </style>
+.page h1{
+color:#b8860b;
+text-align:center;
+margin-bottom:20px;
+}
+
+.page p{
+font-size:17px;
+line-height:1.6;
+color:#333;
+}
+
+.book input{
+display:none;
+}
+
+input:checked + .page{
+transform:rotateY(-180deg);
+}
+
+label{
+position:absolute;
+bottom:20px;
+right:20px;
+background:#b8860b;
+color:white;
+padding:8px 20px;
+border-radius:20px;
+cursor:pointer;
+}
+
+/* Buttons */
+button{
+margin-top:30px;
+padding:12px 25px;
+border:none;
+border-radius:25px;
+cursor:pointer;
+font-size:16px;
+margin-right:10px;
+}
+
+.yes{
+background:#b8860b;
+color:white;
+}
+
+.no{
+background:#444;
+color:white;
+}
+
+/* Final screen */
+.result{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+background:#111;
+color:gold;
+padding:40px;
+border-radius:20px;
+text-align:center;
+transition:0.6s;
+box-shadow:0 0 40px gold;
+}
+
+.result.show{
+transform:translate(-50%,-50%) scale(1);
+}
+</style>
 </head>
+
 <body>
 
-  <!-- Heart Animation Layer -->
-  <div class="hearts" id="hearts-container"></div>
+<div class="loader">A Story For Jebiksha...</div>
 
-  <!-- Letter Content -->
-  <div class="container">
-    <h1>Sorry Puppy 🐾💖</h1>
-    <p>
-Babisha....
-Ennala unaku eppavumae prblm tha , initial days la msg panni matikitto ,konja days apro screenshot anupi maativitutae and intha leave la nee call pannuna nu enaku theriyathu etho un mela kovama irunthae athunala num save pannala so yaro nu wp la text pannunae but un brother pathuta Athuvum ennala tha and call pannunathu nee nu theriyama avan ta prblm pannitae , school la un name ah spoil pannirukae 🫠 aana ethumae therinji pannala ellam enoda arva kolaru and avasara buthi nala tha 🥴
-Ennala unaku prblm mattum tha vanthuruku aanalum nee enta pesa try pannuna but naa tha etho kolaru maari paithiyam pudicha maari panrae 😵‍💫 naa sorry ketta accept pannunviya nu therla but Sorry puppy 🥺 Ellathukum sorry sorry enna mannichiru puppy 🥺 sorry . Enaku onnu sollu nee annaiku ethuku avan koopta nu Kovil porae nu sonna ,enaku purila nee enna cheat pannanum na enta sollama ponum .aana apdiyum illa but enta solra ana yean apdi avn kooda ponum nu sonna nu ennum purila .And unmaiyavae nee enna cheat panra nu tha appo thonichi bcoz nov la irunthae enaku adikadi news vanthutae irunthu " babisha enoruthan kooda committ aagita nu " but naa nambala neraya per sonnaga avagata la appo "en aalu enaku vairam 💎 avala pathi enaku theriyum nu " but nee ye apdi kettiya so enaku oru maari aagitu. enaku ellame unlucky ah tha nedakum ana ore oru hope babisha enaku tha nu but antha hope illatha maari nee kettathu irunthu so atha naa kova pattae and nee enna cheat pannuna nu tha nenachitu irunthen.Neeyae konjam yosichi paru puppy oru ponnu enaku propose panra na illana sethuruvae nu solra nu vai apo na  no sollama unta solrae ava propose panra naa illana sethuruva la apdi nu unaku enna thonum neeyae yosi and ava kopta nu Kovil ku polama nu unta kekae nee enna nenaipa ❓sollu nee en place iruntha nee itha thana pannirupa .so naa unna maraka neraya try pannunae un photos la daily adikadi paape un photos ah pathutu tha thooga povae appo tha nee en kooda iruka maari irukum .so photos la del pannunae unna maraka but mudila seturala nu la thonichi but Athuvum enna la mudiyathu vera ponna pakala na Athuvum mudila un nenapa varuthu enaku life ah veruthutu .unaku thonala school la nalla thana iruka nu but benit kooda das kooda irukum pothu konjam nimathi irukum so athu perusa theriyathu but night nee enna patha puriyum thookame varathu songs ketta thogala nu paatha appavum songs oodum aana un kooda naa iruntha days tha nyabagam varum . Leg join pannurathu kiss vera pesunathu sanda potathu ellame nyabagam varum aana unta pesa mudila . But mistake enthu tha bcoz na oru vartha yean apdi ketta nu ketta ivlo varathurukathu la but naa oru aarva kolaru orae word la mudivu pannitae 😵‍💫 but neraya time pesanum nu thonum but nee katayar ta illana enaku pudikathavaga ta pesuva athuku apro unaku tha avaga irukaga vera enna pathi yosika kooda maata na pesuna perusa eduthuka mata and avaga tha unaku muki yam nu thonum so pesa mudiyathu ennala . Aana onnu purinjikittae unnala naa illama iruka mudiyum nu and unaku un life la enna vida neraya per mudiyam ah irukaga nu . Onnu sollava naa already unta sollirukae en family' la enaku yarum priority koduka mataga nu atha na ethir paka mudiyathu bcoz avagavagaluku ovoruthar ah pudikum atha namma matha mudiyathu but enaku akka na romba pudikum avagaluku naa neraya pannirukae 🫠 but avagaluku enna vida mukiyam neraya Ber undu and purinjikittae namaku nu mattumae oruthar na athu namma luv panra ponnu tha nu so na atha first ava kitta ethir paathe romba illa konja maathu but kedaikala and athu oru story ne solla mudiyathu. Next puppy nu oru ponnu ava romba alaga irupa ava ta romba ethir paathe but unfortunately engayum enaku kedaikala ava nenacha mudiyum aana panna mata but romba kastama irukum bcoz ennala puppy ta mattu tha antha pasam, akara , priority la ethir paka mudiyum avalum tharala na enga poi kekka mudiyum 🙁
-But na avaluku priority athigama koduthae and kodupae . Ava sonna ellame kepae 
-And puppy onnu solluva kova padatha and feel pannatha na nee enna cheat pannita nu nenachi romba mosama la unna thituane ellathukum sorry but ella ennoda misunderstanding tha .nee enna manika mata nu theriyum Naanum unna thitutae nu nenaikatha . Naa unna intensional ah thitala misunderstanding nala tha so sorry 😔 apdiyae enna adikanum na adi ,thittu bad word vachi thittu ketukurae but mannichiru puppy 🥺 plzzzz sorry puppy 😭en mela tha thappu . sorry 😔😔😔 
-Unmaiyavae na oru paithiyam tha puppy ellathukum aarva kolaru maari panrae na panrathu ellame thappa tha varuthu and unlucky ah tha iruku , problem la tha varathu 
-Unmaiyavae en life la luck irunthathu illa game la kooda enaku luck irukathu ellathulayum thothutae irupae . Sports varathu ,ippo studies um suthama illa , ellame romba low tha but unna love panrathu la na apdi illa enoda max efforts poduvae unnakaga 👀 
-But one thing , I am very lucky to have you ❤️😘 bcoz nee vanthu unmaiyavae romba alaga iruka but na un lvl la illa but unnala en lvl ku love la panna mudiyathu na unna love panrathula rank 1 tha and enaku bayam nu onnu iruku " losing" athu romba bayama iruku en life la luck la irunthathu illa but nee iruntha en life bright ah vathu irukum . And naa unna nalla pathukanum nu nenaipae yean na nee enaku oru lover mattum illa nee enaku etho oru visthiyasamana onnu epdi solla ne therla epdina oru pokisham nu sollala 
-" En life la kedacha pokisham ,ennoda pokisham "💖💓 . And please nee oru silar ta pecha kammi pannu athu tha nallathu ..Please enimae ipdi ethuvum nadakathu puppy 🥺 I promise you 🫴👉👈intha oru time enna nambu please 🥺 namma onnu senthuruvo puppy please.❤️
-   Namma luv piriyanum nu start aagala senthu vala num nu start aachi so 
-                  Meendum idhayam korpoma ❗
-                       Luv u as always ❤️
-    </p>
+<div class="book">
 
-    <div class="final-message">
-      Shall we continue our story again? 💞
-      <br><br>
-      <button onclick="document.getElementById('puppyForm').submit()">love you 💌</button>
-    </div>
-  </div>
+<!-- PAGE 1 -->
+<input type="checkbox" id="p1">
+<div class="page">
+<h1>Jebiksha</h1>
+<p id="text1"></p>
+<label for="p1">Next ➜</label>
+</div>
 
-  <!-- ✅ Corrected Hidden FormSubmit Form -->
-  <form id="puppyForm" action="https://formsubmit.co/adamfx209@gmail.com" method="POST" style="display: none;">
-    <input type="hidden" name="puppy" value="Sree Babisha said YES 💘">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_template" value="table">
-  </form>
+<!-- PAGE 2 -->
+<input type="checkbox" id="p2">
+<div class="page">
+<h1>It Wasn't Planned</h1>
+<p id="text2"></p>
+<label for="p2">Next ➜</label>
+</div>
 
-  <!-- Heart Animation Script -->
-  <script>
-    const heartContainer = document.getElementById('hearts-container');
-    setInterval(() => {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (Math.random() * 2 + 4) + "s";
-      heartContainer.appendChild(heart);
-      setTimeout(() => {
-        heart.remove();
-      }, 6000);
-    }, 300);
-  </script>
+<!-- PAGE 3 -->
+<input type="checkbox" id="p3">
+<div class="page">
+<h1>Why You?</h1>
+<p id="text3"></p>
+<label for="p3">Next ➜</label>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page">
+<h1>Will You Be Mine?</h1>
+
+<button class="yes" onclick="choose('YES ❤️')">Yes</button>
+<button class="no" onclick="choose('NO 💔')">No</button>
+
+</div>
+
+</div>
+
+<div class="result" id="resultBox"></div>
+
+<script>
+
+/* TYPEWRITER EFFECT */
+function typeWriter(text, elementId, speed=40){
+let i=0;
+let element=document.getElementById(elementId);
+function typing(){
+if(i<text.length){
+element.innerHTML+=text.charAt(i);
+i++;
+setTimeout(typing,speed);
+}
+}
+typing();
+}
+
+typeWriter("Some names are spoken. Yours is felt.", "text1");
+setTimeout(()=>typeWriter("I never decided to like you. It just happened — quietly, naturally.", "text2"),2000);
+setTimeout(()=>typeWriter("Among many faces and days, you became different without trying.", "text3"),4000);
+
+/* EMAILJS (optional) */
+(function(){
+emailjs.init("YOUR_PUBLIC_KEY"); // Replace if using
+})();
+
+function choose(answer){
+
+// Optional email send
+emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{
+message:"Jebiksha selected: "+answer
+}).then(()=>{});
+
+let box=document.getElementById("resultBox");
+
+if(answer.includes("YES")){
+box.innerHTML="You just made my world brighter ❤️";
+}else{
+box.innerHTML="No matter what, I respect your choice.";
+}
+
+box.classList.add("show");
+}
+
+</script>
 
 </body>
 </html>
