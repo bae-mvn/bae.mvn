@@ -1,218 +1,133 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Special Moment</title>
+import { useState, useRef, useEffect } from "react"; import { motion, AnimatePresence } from "framer-motion"; import { Heart, Sparkles, Gift, Music, Star } from "lucide-react";
 
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+export default function ProposalExperience() { const [started, setStarted] = useState(false); const [showMemories, setShowMemories] = useState(false); const [showQuestion, setShowQuestion] = useState(false); const [showRing, setShowRing] = useState(false); const [accepted, setAccepted] = useState(false); const audioRef = useRef(null);
 
-<style>
-body{
-margin:0;
-overflow:hidden;
-font-family:Georgia,serif;
-background:radial-gradient(circle,#ffe6f0,#ffc0cb);
-color:#6b2c4a;
-text-align:center;
-}
+useEffect(() => { if (started && audioRef.current) { audioRef.current.play().catch(() => {}); } }, [started]);
 
-/* Pages */
-.page{
-display:none;
-padding:60px 20px;
-animation:fade 1.2s ease;
-}
+return ( <div className="min-h-screen w-full bg-gradient-to-br from-pink-100 via-purple-100 to-rose-200 overflow-hidden relative"> <FloatingHearts />
 
-.page.active{
-display:block;
-}
+<audio
+    ref={audioRef}
+    loop
+    src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5e4dfdbb7a.mp3"
+  />
 
-@keyframes fade{
-from{opacity:0;transform:translateY(40px);}
-to{opacity:1;transform:translateY(0);}
-}
+  {!started && <IntroScreen onStart={() => setStarted(true)} />}
 
-button{
-padding:12px 30px;
-border:none;
-border-radius:30px;
-background:#ff69b4;
-color:white;
-font-size:16px;
-cursor:pointer;
-margin-top:25px;
-transition:0.3s;
-}
+  {started && !showMemories && (
+    <LoveStory onNext={() => setShowMemories(true)} />
+  )}
 
-button:hover{
-transform:scale(1.08);
-}
+  {showMemories && !showQuestion && (
+    <MemoryGallery onNext={() => setShowQuestion(true)} />
+  )}
 
-/* Ring */
-.ringBox{
-position:fixed;
-bottom:-400px;
-left:50%;
-transform:translateX(-50%);
-background:white;
-padding:40px;
-border-radius:20px;
-box-shadow:0 0 40px #ff69b4;
-transition:1.2s;
-}
+  {showQuestion && !showRing && (
+    <BigQuestion
+      onYes={() => {
+        setShowRing(true);
+        setAccepted(true);
+      }}
+      onNo={() => alert("Think again 😌")}
+    />
+  )}
 
-.ringBox.show{
-bottom:120px;
-}
-
-.ring{
-font-size:70px;
-animation:spin 4s linear infinite;
-}
-
-@keyframes spin{
-from{transform:rotateY(0);}
-to{transform:rotateY(360deg);}
-}
-
-/* Firework */
-.fire{
-position:absolute;
-width:6px;
-height:6px;
-border-radius:50%;
-animation:explode 1s linear forwards;
-}
-
-@keyframes explode{
-from{transform:translate(0,0);}
-to{transform:translate(var(--x),var(--y));opacity:0;}
-}
-</style>
-</head>
-
-<body>
-
-<div class="page active">
-<h1 id="intro"></h1>
-<button onclick="nextPage()">Start</button>
+  <AnimatePresence>
+    {showRing && (
+      <RingReveal accepted={accepted} />
+    )}
+  </AnimatePresence>
 </div>
 
-<div class="page">
-<h1>You came into my life quietly 🌸</h1>
-<button onclick="nextPage()">Next</button>
-</div>
+); }
 
-<div class="page">
-<h1>And somehow… everything felt softer.</h1>
-<button onclick="nextPage()">Next</button>
-</div>
+function IntroScreen({ onStart }) { return ( <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center h-screen text-center px-6" > <motion.h1 initial={{ scale: 0.7 }} animate={{ scale: 1 }} transition={{ duration: 1 }} className="text-5xl font-bold text-rose-600 mb-6" > A Special Surprise 🌸 </motion.h1>
 
-<div class="page">
-<h1>I didn’t expect this feeling.</h1>
-<button onclick="nextPage()">Next</button>
-</div>
+<p className="text-lg text-gray-700 mb-10 max-w-md">
+    This is not just a website... it's a journey of feelings, memories,
+    and one important question.
+  </p>
 
-<div class="page">
-<h1>But I don’t want to ignore it anymore.</h1>
-<button onclick="nextPage()">Next</button>
-</div>
+  <motion.button
+    whileHover={{ scale: 1.1 }}
+    whileTap={{ scale: 0.95 }}
+    onClick={onStart}
+    className="px-8 py-4 rounded-2xl bg-rose-500 text-white text-lg shadow-xl"
+  >
+    Start the Journey ✨
+  </motion.button>
+</motion.div>
 
-<div class="page">
-<h1>Before I ask…</h1>
-<textarea id="herMessage" placeholder="Write something..." style="width:80%;padding:12px;border-radius:10px;border:none;"></textarea>
-<br>
-<button onclick="startCountdown()">Continue</button>
-</div>
+); }
 
-<div class="page" id="countPage">
-<h1>Get Ready...</h1>
-<h1 id="countdown">3</h1>
-</div>
+function LoveStory({ onNext }) { return ( <section className="h-screen flex flex-col items-center justify-center text-center px-6"> <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 max-w-xl" > <Heart className="mx-auto text-rose-500" size={48} /> <h2 className="text-4xl font-semibold text-rose-600">Our Story</h2> <p className="text-gray-700 text-lg"> Every moment we shared became a beautiful memory. Every smile, every laugh, every heartbeat... led to this moment. </p>
 
-<div class="ringBox" id="ringBox">
-<div class="ring">💍</div>
-<h1>Will You Be Mine?</h1>
-<button onclick="choose('YES ❤️')">Yes</button>
-<button onclick="choose('NO 💔')">No</button>
-</div>
+<motion.button
+      whileHover={{ scale: 1.08 }}
+      onClick={onNext}
+      className="mt-6 px-6 py-3 rounded-xl bg-purple-500 text-white"
+    >
+      See Memories 💫
+    </motion.button>
+  </motion.div>
+</section>
 
-<script>
+); }
 
-/* Safe EmailJS init */
-try{
-emailjs.init("ZBpSMBnfdEQE_bwCn");
-}catch(e){}
+function MemoryGallery({ onNext }) { const items = [ "First smile", "First laugh", "Unforgettable moment", "Endless happiness", ];
 
-/* Page control */
-let current=0;
-function nextPage(){
-let pages=document.querySelectorAll(".page");
-pages[current].classList.remove("active");
-current++;
-pages[current].classList.add("active");
-}
+return ( <section className="h-screen flex flex-col items-center justify-center"> <h2 className="text-4xl font-semibold text-purple-600 mb-10"> Beautiful Memories ✨ </h2>
 
-/* Intro typing */
-let text="There are moments that quietly change everything.";
-let i=0;
-function type(){
-if(i<text.length){
-document.getElementById("intro").innerHTML+=text.charAt(i);
-i++;
-setTimeout(type,40);
-}
-}
-type();
+<div className="grid grid-cols-2 gap-6 px-6">
+    {items.map((text, i) => (
+      <motion.div
+        key={i}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: i * 0.3 }}
+        className="p-10 rounded-2xl bg-white shadow-xl text-center"
+      >
+        <Star className="mx-auto mb-2 text-pink-500" />
+        {text}
+      </motion.div>
+    ))}
+  </div>
 
-/* Countdown */
-function startCountdown(){
-nextPage();
-let count=3;
-let cd=document.getElementById("countdown");
-let interval=setInterval(()=>{
-count--;
-cd.innerHTML=count;
-if(count==0){
-clearInterval(interval);
-document.getElementById("ringBox").classList.add("show");
-}
-},1000);
-}
+  <motion.button
+    whileHover={{ scale: 1.08 }}
+    onClick={onNext}
+    className="mt-10 px-6 py-3 rounded-xl bg-rose-500 text-white"
+  >
+    Continue 💖
+  </motion.button>
+</section>
 
-/* Choose */
-function choose(answer){
+); }
 
-let msg=document.getElementById("herMessage").value;
+function BigQuestion({ onYes, onNo }) { return ( <section className="h-screen flex flex-col items-center justify-center text-center"> <motion.h2 initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="text-5xl font-bold text-rose-600 mb-8" > Will You Say Yes? </motion.h2>
 
-try{
-emailjs.send("service_vi8o9j4","template_1uului7",{
-message:"Answer: "+answer+" | Message: "+msg
-});
-}catch(e){}
+<div className="flex gap-8">
+    <motion.button
+      whileHover={{ scale: 1.2 }}
+      onClick={onYes}
+      className="px-8 py-4 rounded-2xl bg-green-500 text-white text-xl shadow-xl"
+    >
+      Yes 💍
+    </motion.button>
 
-if(answer.includes("YES")){
-for(let i=0;i<150;i++){
-let f=document.createElement("div");
-f.className="fire";
-f.style.left="50%";
-f.style.top="50%";
-f.style.background="hsl("+Math.random()*360+",100%,70%)";
-f.style.setProperty('--x',(Math.random()*800-400)+"px");
-f.style.setProperty('--y',(Math.random()*800-400)+"px");
-document.body.appendChild(f);
-}
-setTimeout(()=>{
-document.body.innerHTML="<h1 style='margin-top:40vh;'>A Beautiful Beginning 🌸</h1>";
-},1500);
-}else{
-setTimeout(()=>{
-document.body.innerHTML="<h1 style='margin-top:40vh;'>No matter what, you are respected 🌙</h1>";
-},1000);
-}
-}
-</script>
+    <motion.button
+      whileHover={{ x: [0, -10, 10, -10, 0] }}
+      onClick={onNo}
+      className="px-8 py-4 rounded-2xl bg-gray-400 text-white text-xl"
+    >
+      No 🙈
+    </motion.button>
+  </div>
+</section>
 
-</body>
-</html>
+); }
+
+function RingReveal({ accepted }) { return ( <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 flex items-center justify-center bg-black/70 backdrop-blur-lg" > <motion.div initial={{ scale: 0.3, rotate: -180 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: "spring", stiffness: 120 }} className="bg-white rounded-3xl p-16 text-center shadow-2xl" > <Gift className="mx-auto text-yellow-500 mb-4" size={60} /> <h2 className="text-4xl font-bold text-rose-600 mb-4"> She Said YES 💖 </h2> <p className="text-gray-600 text-lg">Forever begins now ✨</p> </motion.div> </motion.div> ); }
+
+function FloatingHearts() { return ( <div className="absolute inset-0 pointer-events-none overflow-hidden"> {[...Array(20)].map((_, i) => ( <motion.div key={i} initial={{ y: "100%", opacity: 0 }} animate={{ y: "-10%", opacity: [0, 1, 0] }} transition={{ duration: 8 + Math.random() * 5, repeat: Infinity, delay: Math.random() * 5, }} className="absolute text-pink-400" style={{ left: ${Math.random() * 100}% }} > <Heart size={24} /> </motion.div> ))} </div> ); }
+
