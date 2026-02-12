@@ -14,98 +14,84 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:radial-gradient(circle at top,#1a1a1a,#000);
+  background:linear-gradient(160deg,#000,#1a1a1a,#000);
   overflow:hidden;
-  font-family:Georgia, serif;
+  font-family:'Georgia',serif;
 }
 
-/* Floating sparkles */
-.sparkle{
-  position:absolute;
-  width:6px;
-  height:6px;
-  background:gold;
-  border-radius:50%;
-  animation:float 6s infinite ease-in-out;
-  opacity:0.6;
+/* Particle background */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
 }
 
-@keyframes float{
-  0%{transform:translateY(100vh) scale(0);}
-  50%{opacity:1;}
-  100%{transform:translateY(-10vh) scale(1.5);opacity:0;}
+/* Book Cover */
+.cover{
+  width:420px;
+  height:560px;
+  background:linear-gradient(145deg,#111,#000);
+  border-radius:15px;
+  box-shadow:0 0 40px gold;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  cursor:pointer;
+  transition:transform 1.5s ease;
 }
 
-/* Book */
-.book{
-  position:relative;
-  width:400px;
-  height:540px;
-  perspective:3000px;
-  animation:glow 3s infinite alternate;
+.cover h1{
+  color:gold;
+  font-size:30px;
+  animation:glow 2s infinite alternate;
 }
 
 @keyframes glow{
-  from{filter:drop-shadow(0 0 10px gold);}
-  to{filter:drop-shadow(0 0 25px orange);}
+  from{text-shadow:0 0 10px gold;}
+  to{text-shadow:0 0 30px orange;}
+}
+
+/* Book Pages Container */
+.book{
+  width:420px;
+  height:560px;
+  background:#fffaf0;
+  border-radius:15px;
+  position:absolute;
+  display:none;
+  padding:50px;
+  box-shadow:0 0 60px rgba(0,0,0,0.8);
+  animation:openBook 1.5s ease forwards;
+}
+
+@keyframes openBook{
+  from{transform:rotateY(90deg);}
+  to{transform:rotateY(0);}
 }
 
 .page{
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:linear-gradient(#fffaf0,#f5deb3);
-  border-radius:15px;
-  padding:40px;
-  box-shadow:0 30px 60px rgba(0,0,0,0.7);
-  transform-origin:left;
-  transition:transform 1.2s ease;
-  backface-visibility:hidden;
-}
-
-.page h1{
-  text-align:center;
-  color:#b8860b;
-  animation:fadeIn 2s ease;
-}
-
-.page p{
-  margin-top:20px;
-  font-size:17px;
-  line-height:1.6;
-  color:#333;
-  animation:fadeIn 3s ease;
-}
-
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
-}
-
-.page:nth-of-type(2){ z-index:6; }
-.page:nth-of-type(4){ z-index:5; }
-.page:nth-of-type(6){ z-index:4; }
-.page:nth-of-type(8){ z-index:3; }
-.page:nth-of-type(10){ z-index:2; }
-.page:nth-of-type(12){ z-index:1; }
-
-.book input{
   display:none;
+  animation:fadeSlide 1s ease;
 }
 
-.book input:checked + .page{
-  transform:rotateY(-180deg);
+@keyframes fadeSlide{
+  from{opacity:0; transform:translateX(50px);}
+  to{opacity:1; transform:translateX(0);}
 }
 
-/* Buttons */
+.page.active{
+  display:block;
+}
+
 button{
   margin-top:30px;
-  padding:12px 25px;
+  padding:12px 30px;
   border:none;
   border-radius:25px;
-  cursor:pointer;
   font-size:16px;
-  margin-right:10px;
+  cursor:pointer;
   transition:0.3s;
 }
 
@@ -123,7 +109,7 @@ button:hover{
   transform:scale(1.1);
 }
 
-/* Result popup */
+/* Result screen */
 .result{
   position:fixed;
   top:50%;
@@ -131,81 +117,65 @@ button:hover{
   transform:translate(-50%,-50%) scale(0);
   background:black;
   color:gold;
-  padding:40px;
+  padding:50px;
   border-radius:20px;
   text-align:center;
   transition:0.6s;
-  box-shadow:0 0 50px gold;
+  box-shadow:0 0 60px gold;
 }
 
 .result.show{
   transform:translate(-50%,-50%) scale(1);
 }
 
-/* Confetti */
-.confetti{
+/* Floating hearts */
+.heart{
   position:absolute;
-  width:8px;
-  height:8px;
-  background:gold;
-  animation:conf 3s linear forwards;
+  color:red;
+  font-size:20px;
+  animation:floatUp 4s linear forwards;
 }
 
-@keyframes conf{
-  0%{transform:translateY(0);}
-  100%{transform:translateY(100vh);}
-}
-
-label{
-  position:absolute;
-  bottom:20px;
-  right:20px;
-  background:gold;
-  color:black;
-  padding:8px 20px;
-  border-radius:20px;
-  cursor:pointer;
+@keyframes floatUp{
+  from{transform:translateY(0); opacity:1;}
+  to{transform:translateY(-100vh); opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<audio id="flipSound" src="https://www.soundjay.com/page-flip-01a.mp3"></audio>
-<audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" autoplay loop></audio>
+<canvas id="bg"></canvas>
 
-<div class="book">
-
-<input type="checkbox" id="p1">
-<div class="page">
+<div class="cover" onclick="openBook()">
 <h1>Jebiksha</h1>
-<p>Some names are spoken. Yours is felt.</p>
-<label for="p1" onclick="flip()">Next ➜</label>
+<p style="color:#aaa;">Tap to Open</p>
 </div>
 
-<input type="checkbox" id="p2">
-<div class="page">
-<h1>The Beginning</h1>
-<p>I don’t know when it started, but I know it feels real.</p>
-<label for="p2" onclick="flip()">Next ➜</label>
-</div>
+<div class="book" id="book">
 
-<input type="checkbox" id="p3">
-<div class="page">
-<h1>Little Things</h1>
-<p>Your smile. Your voice. The calm you bring.</p>
-<label for="p3" onclick="flip()">Next ➜</label>
-</div>
-
-<input type="checkbox" id="p4">
-<div class="page">
-<h1>One Question</h1>
-<p>This is just honesty from my heart.</p>
-<label for="p4" onclick="flip()">Next ➜</label>
+<div class="page active">
+<h2>The First Chapter</h2>
+<p id="typing1"></p>
+<button onclick="nextPage()">Next ➜</button>
 </div>
 
 <div class="page">
-<h1>Will You Be Mine?</h1>
+<h2>Little Things</h2>
+<p>Your smile feels different.<br>
+Your presence feels calm.<br>
+And somehow... special.</p>
+<button onclick="nextPage()">Next ➜</button>
+</div>
+
+<div class="page">
+<h2>One Honest Question</h2>
+<p>This comes from a real place in my heart.</p>
+<button onclick="nextPage()">Next ➜</button>
+</div>
+
+<div class="page">
+<h2>Will You Be Mine?</h2>
 <button class="yes" onclick="choose('YES ❤️')">Yes</button>
 <button class="no" onclick="choose('NO 💔')">No</button>
 </div>
@@ -215,16 +185,26 @@ label{
 <div class="result" id="resultBox"></div>
 
 <script>
-(function(){
 emailjs.init("ZBpSMBnfdEQE_bwCn");
-})();
 
-function flip(){
-document.getElementById("flipSound").play();
+function openBook(){
+  document.querySelector(".cover").style.transform="rotateY(-180deg)";
+  setTimeout(()=>{
+    document.querySelector(".cover").style.display="none";
+    document.getElementById("book").style.display="block";
+    typeText();
+  },1000);
+}
+
+let current=0;
+function nextPage(){
+  let pages=document.querySelectorAll(".page");
+  pages[current].classList.remove("active");
+  current++;
+  pages[current].classList.add("active");
 }
 
 function choose(answer){
-
 emailjs.send("service_vi8o9j4","template_1uului7",{
 message:"Jebiksha selected: " + answer
 });
@@ -233,29 +213,64 @@ let box=document.getElementById("resultBox");
 
 if(answer.includes("YES")){
   box.innerHTML="You just made my world brighter ❤️";
-  for(let i=0;i<50;i++){
-    let c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.background="hsl("+Math.random()*360+",100%,50%)";
-    document.body.appendChild(c);
+  for(let i=0;i<30;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.style.left=Math.random()*100+"vw";
+    h.innerHTML="❤";
+    document.body.appendChild(h);
   }
 }else{
-  box.innerHTML="No matter what, I respect your choice.";
+  box.innerHTML="I respect your choice.";
 }
 
 box.classList.add("show");
 }
 
-/* Generate sparkles */
-for(let i=0;i<30;i++){
-  let s=document.createElement("div");
-  s.className="sparkle";
-  s.style.left=Math.random()*100+"vw";
-  s.style.animationDuration=(4+Math.random()*4)+"s";
-  document.body.appendChild(s);
+/* Typing effect */
+function typeText(){
+let text="I don’t know when it started... but I know it feels real.";
+let i=0;
+let speed=40;
+function typing(){
+  if(i<text.length){
+    document.getElementById("typing1").innerHTML+=text.charAt(i);
+    i++;
+    setTimeout(typing,speed);
+  }
 }
+typing();
+}
+
+/* Particle background */
+let canvas=document.getElementById("bg");
+let ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+for(let i=0;i<80;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2
+});
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="gold";
+particles.forEach(p=>{
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fill();
+p.y-=0.3;
+if(p.y<0) p.y=canvas.height;
+});
+requestAnimationFrame(animate);
+}
+animate();
 </script>
 
 </body>
-  </html>
+</html>
