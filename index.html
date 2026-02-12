@@ -4,22 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Jebiksha</title>
-
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
 <style>
 body{
   margin:0;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:linear-gradient(160deg,#000,#1a1a1a,#000);
   overflow:hidden;
-  font-family:'Georgia',serif;
+  background:radial-gradient(circle at center,#000,#111,#000);
+  font-family:Georgia,serif;
+  color:white;
 }
 
-/* Particle background */
+/* Heartbeat background pulse */
+@keyframes pulseBG{
+  0%{background-color:#000;}
+  50%{background-color:#120000;}
+  100%{background-color:#000;}
+}
+body{
+  animation:pulseBG 4s infinite;
+}
+
+/* Particle canvas */
 canvas{
   position:fixed;
   top:0;
@@ -27,72 +33,51 @@ canvas{
   z-index:-1;
 }
 
-/* Book Cover */
-.cover{
-  width:420px;
-  height:560px;
-  background:linear-gradient(145deg,#111,#000);
-  border-radius:15px;
-  box-shadow:0 0 40px gold;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  cursor:pointer;
-  transition:transform 1.5s ease;
-}
-
-.cover h1{
-  color:gold;
-  font-size:30px;
-  animation:glow 2s infinite alternate;
-}
-
-@keyframes glow{
-  from{text-shadow:0 0 10px gold;}
-  to{text-shadow:0 0 30px orange;}
-}
-
-/* Book Pages Container */
-.book{
-  width:420px;
-  height:560px;
-  background:#fffaf0;
-  border-radius:15px;
-  position:absolute;
-  display:none;
-  padding:50px;
-  box-shadow:0 0 60px rgba(0,0,0,0.8);
-  animation:openBook 1.5s ease forwards;
-}
-
-@keyframes openBook{
-  from{transform:rotateY(90deg);}
-  to{transform:rotateY(0);}
+/* Container */
+.container{
+  width:90%;
+  max-width:700px;
+  margin:auto;
+  margin-top:60px;
+  text-align:center;
 }
 
 .page{
   display:none;
-  animation:fadeSlide 1s ease;
-}
-
-@keyframes fadeSlide{
-  from{opacity:0; transform:translateX(50px);}
-  to{opacity:1; transform:translateX(0);}
+  animation:fadeIn 1.5s ease;
 }
 
 .page.active{
   display:block;
 }
 
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(50px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+h1{
+  color:gold;
+  text-shadow:0 0 20px gold;
+}
+
 button{
-  margin-top:30px;
   padding:12px 30px;
   border:none;
-  border-radius:25px;
+  border-radius:30px;
+  margin-top:25px;
   font-size:16px;
   cursor:pointer;
   transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+}
+
+.next{
+  background:gold;
+  color:black;
 }
 
 .yes{
@@ -105,40 +90,78 @@ button{
   color:white;
 }
 
-button:hover{
-  transform:scale(1.1);
+/* Countdown */
+.countdown{
+  font-size:50px;
+  color:gold;
+  animation:zoom 1s infinite alternate;
 }
 
-/* Result screen */
-.result{
+@keyframes zoom{
+  from{transform:scale(1);}
+  to{transform:scale(1.2);}
+}
+
+/* Ring popup */
+.ringBox{
   position:fixed;
-  top:50%;
+  bottom:-500px;
   left:50%;
-  transform:translate(-50%,-50%) scale(0);
+  transform:translateX(-50%);
   background:black;
-  color:gold;
   padding:50px;
   border-radius:20px;
-  text-align:center;
-  transition:0.6s;
   box-shadow:0 0 60px gold;
+  text-align:center;
+  transition:1.5s;
 }
 
-.result.show{
-  transform:translate(-50%,-50%) scale(1);
+.ringBox.show{
+  bottom:100px;
 }
 
-/* Floating hearts */
-.heart{
+.ring{
+  font-size:80px;
+  animation:spin 4s linear infinite;
+}
+
+@keyframes spin{
+  from{transform:rotateY(0deg);}
+  to{transform:rotateY(360deg);}
+}
+
+/* Fireworks */
+.fire{
   position:absolute;
-  color:red;
-  font-size:20px;
-  animation:floatUp 4s linear forwards;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  animation:explode 1s linear forwards;
 }
 
-@keyframes floatUp{
-  from{transform:translateY(0); opacity:1;}
-  to{transform:translateY(-100vh); opacity:0;}
+@keyframes explode{
+  from{transform:translate(0,0);}
+  to{transform:translate(var(--x),var(--y)); opacity:0;}
+}
+
+/* Signature */
+.signature{
+  font-size:40px;
+  color:gold;
+  opacity:0;
+  animation:sign 4s forwards;
+}
+
+@keyframes sign{
+  to{opacity:1;}
+}
+
+textarea{
+  width:90%;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  margin-top:20px;
 }
 </style>
 </head>
@@ -147,114 +170,123 @@ button:hover{
 
 <canvas id="bg"></canvas>
 
-<div class="cover" onclick="openBook()">
-<h1>Jebiksha</h1>
-<p style="color:#aaa;">Tap to Open</p>
-</div>
+<audio autoplay loop>
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
 
-<div class="book" id="book">
+<div class="container">
+
+<!-- 15 STORY PAGES -->
 
 <div class="page active">
-<h2>The First Chapter</h2>
-<p id="typing1"></p>
-<button onclick="nextPage()">Next ➜</button>
+<h1>Jebiksha</h1>
+<p id="type1"></p>
+<button class="next" onclick="nextPage()">Begin</button>
 </div>
 
-<div class="page">
-<h2>Little Things</h2>
-<p>Your smile feels different.<br>
-Your presence feels calm.<br>
-And somehow... special.</p>
-<button onclick="nextPage()">Next ➜</button>
-</div>
+<div class="page"><h1>Chapter 1</h1><p>You walked in quietly.</p><button class="next" onclick="nextPage()">Next</button></div>
+<div class="page"><h1>Chapter 2</h1><p>But your presence stayed.</p><button class="next" onclick="nextPage()">Next</button></div>
+<div class="page"><h1>Chapter 3</h1><p>Your smile changed my day.</p><button class="next" onclick="nextPage()">Next</button></div>
+<div class="page"><h1>Chapter 4</h1><p>I started noticing everything.</p><button class="next" onclick="nextPage()">Next</button></div>
+<div class="page"><h1>Chapter 5</h1><p>Little moments became important.</p><button class="next" onclick="nextPage()">Next</button></div>
+<div class="page"><h1>Chapter 6</h1><p>Feelings grew silently.</p><button class="next" onclick="nextPage()">Next</button></div>
+<div class="page"><h1>Chapter 7</h1><p>I tried to ignore it.</p><button class="next" onclick="nextPage()">Next</button></div>
+<div class="page"><h1>Chapter 8</h1><p>But my heart was louder.</p><button class="next" onclick="nextPage()">Next</button></div>
 
 <div class="page">
-<h2>One Honest Question</h2>
-<p>This comes from a real place in my heart.</p>
-<button onclick="nextPage()">Next ➜</button>
+<h1>Before I Ask...</h1>
+<p>You can write something here first.</p>
+<textarea id="herMessage"></textarea>
+<button class="next" onclick="startCountdown()">Continue</button>
 </div>
 
-<div class="page">
-<h2>Will You Be Mine?</h2>
+<div class="page" id="countPage">
+<h1>Get Ready...</h1>
+<div class="countdown" id="countdown">3</div>
+</div>
+
+</div>
+
+<!-- Ring Proposal -->
+<div class="ringBox" id="ringBox">
+<div class="ring">💎💍</div>
+<h1>Will You Be Mine?</h1>
 <button class="yes" onclick="choose('YES ❤️')">Yes</button>
 <button class="no" onclick="choose('NO 💔')">No</button>
 </div>
 
-</div>
-
-<div class="result" id="resultBox"></div>
-
 <script>
 emailjs.init("ZBpSMBnfdEQE_bwCn");
 
-function openBook(){
-  document.querySelector(".cover").style.transform="rotateY(-180deg)";
-  setTimeout(()=>{
-    document.querySelector(".cover").style.display="none";
-    document.getElementById("book").style.display="block";
-    typeText();
-  },1000);
-}
-
 let current=0;
 function nextPage(){
-  let pages=document.querySelectorAll(".page");
-  pages[current].classList.remove("active");
-  current++;
-  pages[current].classList.add("active");
+let pages=document.querySelectorAll(".page");
+pages[current].classList.remove("active");
+current++;
+pages[current].classList.add("active");
 }
 
+/* Countdown */
+function startCountdown(){
+nextPage();
+let count=3;
+let cd=document.getElementById("countdown");
+let interval=setInterval(()=>{
+count--;
+cd.innerHTML=count;
+if(count==0){
+clearInterval(interval);
+document.getElementById("ringBox").classList.add("show");
+}
+},1000);
+}
+
+/* Final choice */
 function choose(answer){
+let msg=document.getElementById("herMessage").value;
+
 emailjs.send("service_vi8o9j4","template_1uului7",{
-message:"Jebiksha selected: " + answer
+message:"Answer: "+answer+" | Message: "+msg
 });
 
-let box=document.getElementById("resultBox");
-
 if(answer.includes("YES")){
-  box.innerHTML="You just made my world brighter ❤️";
-  for(let i=0;i<30;i++){
-    let h=document.createElement("div");
-    h.className="heart";
-    h.style.left=Math.random()*100+"vw";
-    h.innerHTML="❤";
-    document.body.appendChild(h);
-  }
+for(let i=0;i<150;i++){
+let f=document.createElement("div");
+f.className="fire";
+f.style.left="50%";
+f.style.top="50%";
+f.style.background="hsl("+Math.random()*360+",100%,50%)";
+f.style.setProperty('--x',(Math.random()*800-400)+"px");
+f.style.setProperty('--y',(Math.random()*800-400)+"px");
+document.body.appendChild(f);
+}
+document.body.innerHTML += "<div class='signature'>Forever Yours,<br>Mevin</div>";
 }else{
-  box.innerHTML="I respect your choice.";
+alert("I respect your choice.");
+}
 }
 
-box.classList.add("show");
-}
-
-/* Typing effect */
-function typeText(){
-let text="I don’t know when it started... but I know it feels real.";
+/* Typing */
+let text="Some people are temporary. You feel permanent.";
 let i=0;
-let speed=40;
 function typing(){
-  if(i<text.length){
-    document.getElementById("typing1").innerHTML+=text.charAt(i);
-    i++;
-    setTimeout(typing,speed);
-  }
+if(i<text.length){
+document.getElementById("type1").innerHTML+=text.charAt(i);
+i++;
+setTimeout(typing,40);
+}
 }
 typing();
-}
 
-/* Particle background */
+/* Gold particle universe */
 let canvas=document.getElementById("bg");
 let ctx=canvas.getContext("2d");
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
 let particles=[];
-for(let i=0;i<80;i++){
-particles.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*2
-});
+for(let i=0;i<200;i++){
+particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2});
 }
 
 function animate(){
@@ -264,8 +296,8 @@ particles.forEach(p=>{
 ctx.beginPath();
 ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
 ctx.fill();
-p.y-=0.3;
-if(p.y<0) p.y=canvas.height;
+p.y-=0.7;
+if(p.y<0)p.y=canvas.height;
 });
 requestAnimationFrame(animate);
 }
@@ -273,4 +305,4 @@ animate();
 </script>
 
 </body>
-</html>
+                                                                           </html>
