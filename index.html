@@ -4,166 +4,131 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A Special Moment</title>
+
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
 <style>
 body{
-  margin:0;
-  overflow:hidden;
-  font-family:Georgia,serif;
-  background:radial-gradient(circle,#ffe6f0,#ffc0cb);
-  animation:bgPulse 6s infinite alternate;
-  color:#6b2c4a;
-}
-@keyframes bgPulse{
-  from{background:#ffe6f0;}
-  to{background:#ffd6e7;}
+margin:0;
+overflow:hidden;
+font-family:Georgia,serif;
+background:radial-gradient(circle,#ffe6f0,#ffc0cb);
+color:#6b2c4a;
+text-align:center;
 }
 
-canvas{
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:-1;
-}
-
-.container{
-  width:90%;
-  max-width:700px;
-  margin:auto;
-  margin-top:60px;
-  text-align:center;
-}
-
+/* Pages */
 .page{
-  display:none;
-  animation:fadeIn 1.5s ease;
-}
-.page.active{
-  display:block;
-}
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(40px);}
-  to{opacity:1; transform:translateY(0);}
+display:none;
+padding:60px 20px;
+animation:fade 1.2s ease;
 }
 
-h1{
-  font-size:28px;
+.page.active{
+display:block;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:translateY(0);}
 }
 
 button{
-  padding:12px 30px;
-  border:none;
-  border-radius:30px;
-  margin-top:25px;
-  font-size:16px;
-  cursor:pointer;
-  background:#ff69b4;
-  color:white;
-  transition:0.3s;
+padding:12px 30px;
+border:none;
+border-radius:30px;
+background:#ff69b4;
+color:white;
+font-size:16px;
+cursor:pointer;
+margin-top:25px;
+transition:0.3s;
 }
+
 button:hover{
-  transform:scale(1.1);
+transform:scale(1.08);
 }
 
-textarea{
-  width:85%;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-  margin-top:20px;
-  font-family:Georgia;
-}
-
-/* Ring popup */
+/* Ring */
 .ringBox{
-  position:fixed;
-  bottom:-400px;
-  left:50%;
-  transform:translateX(-50%);
-  background:white;
-  padding:40px;
-  border-radius:20px;
-  box-shadow:0 0 40px #ff69b4;
-  text-align:center;
-  transition:1.5s;
+position:fixed;
+bottom:-400px;
+left:50%;
+transform:translateX(-50%);
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 0 40px #ff69b4;
+transition:1.2s;
 }
+
 .ringBox.show{
-  bottom:120px;
+bottom:120px;
 }
+
 .ring{
-  font-size:70px;
-  animation:spin 5s linear infinite;
+font-size:70px;
+animation:spin 4s linear infinite;
 }
+
 @keyframes spin{
-  from{transform:rotateY(0deg);}
-  to{transform:rotateY(360deg);}
+from{transform:rotateY(0);}
+to{transform:rotateY(360deg);}
 }
 
-/* Fireworks */
+/* Firework */
 .fire{
-  position:absolute;
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  animation:explode 1s linear forwards;
-}
-@keyframes explode{
-  from{transform:translate(0,0);}
-  to{transform:translate(var(--x),var(--y)); opacity:0;}
+position:absolute;
+width:6px;
+height:6px;
+border-radius:50%;
+animation:explode 1s linear forwards;
 }
 
-/* Ending overlay */
-.overlay{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:#fff0f5;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:30px;
-  opacity:0;
-  transition:2s;
-}
-.overlay.show{
-  opacity:1;
+@keyframes explode{
+from{transform:translate(0,0);}
+to{transform:translate(var(--x),var(--y));opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="petals"></canvas>
-
-<div class="container">
-
 <div class="page active">
-<h1 id="typeIntro"></h1>
+<h1 id="intro"></h1>
 <button onclick="nextPage()">Start</button>
 </div>
 
-<div class="page"><h1>Some people walk into your life...</h1><button onclick="nextPage()">Next</button></div>
-<div class="page"><h1>And everything feels lighter.</h1><button onclick="nextPage()">Next</button></div>
-<div class="page"><h1>Calmer.</h1><button onclick="nextPage()">Next</button></div>
-<div class="page"><h1>Happier.</h1><button onclick="nextPage()">Next</button></div>
-<div class="page"><h1>You became one of those people.</h1><button onclick="nextPage()">Next</button></div>
-<div class="page"><h1>I didn’t expect it.</h1><button onclick="nextPage()">Next</button></div>
-<div class="page"><h1>But I truly value it.</h1><button onclick="nextPage()">Next</button></div>
+<div class="page">
+<h1>You came into my life quietly 🌸</h1>
+<button onclick="nextPage()">Next</button>
+</div>
 
 <div class="page">
-<h1>If you’d like… leave a message 🌸</h1>
-<textarea id="herMessage" placeholder="Write something..."></textarea>
-<button onclick="nextPage()">Continue</button>
+<h1>And somehow… everything felt softer.</h1>
+<button onclick="nextPage()">Next</button>
+</div>
+
+<div class="page">
+<h1>I didn’t expect this feeling.</h1>
+<button onclick="nextPage()">Next</button>
+</div>
+
+<div class="page">
+<h1>But I don’t want to ignore it anymore.</h1>
+<button onclick="nextPage()">Next</button>
+</div>
+
+<div class="page">
+<h1>Before I ask…</h1>
+<textarea id="herMessage" placeholder="Write something..." style="width:80%;padding:12px;border-radius:10px;border:none;"></textarea>
+<br>
+<button onclick="startCountdown()">Continue</button>
 </div>
 
 <div class="page" id="countPage">
-<h1>Before I ask...</h1>
+<h1>Get Ready...</h1>
 <h1 id="countdown">3</h1>
-</div>
-
 </div>
 
 <div class="ringBox" id="ringBox">
@@ -173,29 +138,28 @@ textarea{
 <button onclick="choose('NO 💔')">No</button>
 </div>
 
-<div class="overlay" id="endingOverlay"></div>
-
 <script>
-emailjs.init("ZBpSMBnfdEQE_bwCn");
 
+/* Safe EmailJS init */
+try{
+emailjs.init("ZBpSMBnfdEQE_bwCn");
+}catch(e){}
+
+/* Page control */
 let current=0;
 function nextPage(){
 let pages=document.querySelectorAll(".page");
 pages[current].classList.remove("active");
 current++;
 pages[current].classList.add("active");
-
-if(pages[current].id==="countPage"){
-startCountdown();
-}
 }
 
-/* Typewriter */
-let intro="There are moments that quietly change everything.";
+/* Intro typing */
+let text="There are moments that quietly change everything.";
 let i=0;
 function type(){
-if(i<intro.length){
-document.getElementById("typeIntro").innerHTML+=intro.charAt(i);
+if(i<text.length){
+document.getElementById("intro").innerHTML+=text.charAt(i);
 i++;
 setTimeout(type,40);
 }
@@ -204,6 +168,7 @@ type();
 
 /* Countdown */
 function startCountdown(){
+nextPage();
 let count=3;
 let cd=document.getElementById("countdown");
 let interval=setInterval(()=>{
@@ -218,14 +183,17 @@ document.getElementById("ringBox").classList.add("show");
 
 /* Choose */
 function choose(answer){
+
 let msg=document.getElementById("herMessage").value;
 
+try{
 emailjs.send("service_vi8o9j4","template_1uului7",{
 message:"Answer: "+answer+" | Message: "+msg
 });
+}catch(e){}
 
 if(answer.includes("YES")){
-for(let i=0;i<200;i++){
+for(let i=0;i<150;i++){
 let f=document.createElement("div");
 f.className="fire";
 f.style.left="50%";
@@ -235,41 +203,16 @@ f.style.setProperty('--x',(Math.random()*800-400)+"px");
 f.style.setProperty('--y',(Math.random()*800-400)+"px");
 document.body.appendChild(f);
 }
-document.body.style.transition="3s";
-document.body.style.background="#ffb6c1";
-document.getElementById("endingOverlay").innerHTML="A New Chapter Begins 🌸";
-document.getElementById("endingOverlay").classList.add("show");
+setTimeout(()=>{
+document.body.innerHTML="<h1 style='margin-top:40vh;'>A Beautiful Beginning 🌸</h1>";
+},1500);
 }else{
-document.getElementById("endingOverlay").innerHTML="No matter what, you are respected 🌙";
-document.getElementById("endingOverlay").classList.add("show");
+setTimeout(()=>{
+document.body.innerHTML="<h1 style='margin-top:40vh;'>No matter what, you are respected 🌙</h1>";
+},1000);
 }
 }
-
-/* Petals animation */
-let canvas=document.getElementById("petals");
-let ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let petals=[];
-for(let i=0;i<80;i++){
-petals.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*3});
-}
-
-function animate(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="#ff69b4";
-petals.forEach(p=>{
-ctx.beginPath();
-ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-ctx.fill();
-p.y+=0.5;
-if(p.y>canvas.height)p.y=0;
-});
-requestAnimationFrame(animate);
-}
-animate();
 </script>
 
 </body>
-  </html>
+</html>
