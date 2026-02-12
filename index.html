@@ -2,273 +2,212 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mevin ❤️ Jebiksha</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Great+Vibes&display=swap" rel="stylesheet"><style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
-body{background:black;color:white;overflow:hidden}
-
-/* ================= CINEMATIC LOADER ================= */
-#loader{
- position:fixed;inset:0;background:black;
- display:flex;flex-direction:column;
- align-items:center;justify-content:center;
- z-index:9999
+<title>Mevin ❤️ Jebiksha</title><style>
+body{
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background:black;
+  color:white;
+  overflow:hidden;
 }
-#loader h2{font-family:"Great Vibes",cursive;font-size:50px;color:#ff4db8}
-.progress{width:200px;height:4px;background:#333;margin-top:20px}
-.bar{height:100%;width:0;background:#ff4db8;animation:load 3s linear forwards}
-@keyframes load{to{width:100%}}
 
-/* ================= BACKGROUND STARS ================= */
-.star{position:absolute;background:white;border-radius:50%;opacity:.7;animation:twinkle 3s infinite alternate}
-@keyframes twinkle{from{opacity:.3}to{opacity:1}}
-
-/* ================= ROSE PETALS ================= */
-.petal{position:absolute;color:#ff4db8;font-size:20px;animation:fall linear infinite}
-@keyframes fall{from{transform:translateY(-10vh) rotate(0)}to{transform:translateY(110vh) rotate(360deg)}}
-
-/* ================= SCENES ================= */
 .scene{
- position:absolute;inset:0;
- display:flex;flex-direction:column;
- align-items:center;justify-content:center;
- text-align:center;padding:20px;
- opacity:0;transform:scale(.92);
- transition:1.4s ease
+  position:absolute;
+  width:100%;
+  height:100vh;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+  animation:fadeIn 1.5s ease;
 }
-.scene.active{opacity:1;transform:scale(1)}
 
-/* ================= TEXT ================= */
-h1{font-size:70px;color:#ff4db8;font-family:"Great Vibes",cursive}
-h2{font-size:45px;color:#ff4db8}
-p{margin-top:15px;color:#ddd;font-size:22px;max-width:900px;line-height:1.6}
-.quote{font-size:32px;font-family:"Great Vibes",cursive;color:#ffb3da}
+.active{ display:flex; }
 
-/* ================= BUTTONS ================= */
-button{margin-top:35px;padding:16px 42px;font-size:20px;border:none;border-radius:16px;cursor:pointer}
-.start,.next{background:#ff2e92;color:white}
-.yes{background:#00c853;color:white;font-size:26px}
-.no{background:gray;color:white;font-size:26px}
-
-/* ================= CINEMATIC FADE ================= */
-.fadeBlack{position:fixed;inset:0;background:black;opacity:0;pointer-events:none;transition:1s}
-.fadeBlack.show{opacity:1}
-
-/* ================= TYPEWRITER ================= */
-.type{border-right:3px solid white;white-space:nowrap;overflow:hidden}
-
-/* ================= MEMORY CAROUSEL ================= */
-.carousel{position:relative;width:340px;height:340px;overflow:hidden;border-radius:25px}
-.carousel img{position:absolute;width:100%;height:100%;object-fit:cover;opacity:0;transition:2s}
-.carousel img.show{opacity:1;transform:scale(1.1)}
-
-/* ================= COUNTDOWN ================= */
-.count{font-size:140px;color:#ff4db8}
-
-/* ================= RING BOX 3D ================= */
-#ringPopup{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;align-items:center;justify-content:center;flex-direction:column}
-.ringBox3d{
- width:220px;height:140px;background:#222;border-radius:10px;
- position:relative;perspective:800px
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(1.05)}
+  to{opacity:1; transform:scale(1)}
 }
-.lid{
- position:absolute;width:100%;height:50%;top:0;background:#333;border-radius:10px 10px 0 0;
- transform-origin:bottom;animation:openLid 1.4s forwards
+
+h1{
+  font-size:3rem;
+  margin:20px;
 }
-@keyframes openLid{to{transform:rotateX(-120deg)}}
-.ring{position:absolute;bottom:15px;width:100%;text-align:center;font-size:40px;color:gold}
 
-/* ================= FIREWORKS ================= */
-canvas{position:fixed;inset:0;pointer-events:none}
+p{
+  font-size:1.4rem;
+  max-width:700px;
+  line-height:1.6;
+}
 
-/* ================= HEART FLOAT ================= */
-.heart{position:absolute;color:#ff4db8;animation:float linear infinite}
-@keyframes float{from{transform:translateY(100vh);opacity:0}20%{opacity:1}to{transform:translateY(-10vh);opacity:0}}
+button{
+  padding:14px 30px;
+  border:none;
+  border-radius:40px;
+  background:#ff4da6;
+  color:white;
+  font-size:18px;
+  cursor:pointer;
+  margin-top:30px;
+  transition:.3s;
+}
+button:hover{ transform:scale(1.1); }
+
+/* falling hearts */
+.heart{
+  position:fixed;
+  top:-10px;
+  color:#ff4da6;
+  font-size:20px;
+  animation:fall linear infinite;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh);
+    opacity:0;
+  }
+}
+
+/* gallery */
+.gallery{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.gallery img{
+  width:200px;
+  height:250px;
+  object-fit:cover;
+  border-radius:20px;
+  box-shadow:0 0 20px rgba(255,255,255,0.3);
+}
+
+/* ring box */
+.ring-box{
+  width:180px;
+  height:120px;
+  background:#111;
+  border-radius:20px;
+  position:relative;
+  cursor:pointer;
+  box-shadow:0 0 30px rgba(255,255,255,0.3);
+}
+.ring{
+  position:absolute;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%) scale(0);
+  font-size:50px;
+  transition:1s;
+}
+.open .ring{ transform:translateX(-50%) scale(1.5); }
+
+/* fireworks */
+.firework{
+  position:fixed;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  animation:explode 1s ease-out forwards;
+}
+@keyframes explode{
+  to{
+    transform:translate(var(--x), var(--y));
+    opacity:0;
+  }
+}
 
 </style></head>
-<body><div id="loader">
-<h2>Mevin ❤️ Jebiksha</h2>
-<div class="progress"><div class="bar"></div></div>
-</div><div class="fadeBlack" id="fade"></div>
-<canvas id="fireworks"></canvas>
-<audio id="music" loop src="enna-oru.mp3"></audio>
-<audio id="heartbeat" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b94a0.mp3"></audio><!-- ================= BACKGROUND GENERATORS ================= --><script>
-for(let i=0;i<120;i++){
- let s=document.createElement('div');
- s.className='star';
- s.style.width=s.style.height=Math.random()*2+'px';
- s.style.left=Math.random()*100+'%';
- s.style.top=Math.random()*100+'%';
- document.body.appendChild(s);
-}
-for(let i=0;i<40;i++){
- let p=document.createElement('div');
- p.innerHTML='🌸';
- p.className='petal';
- p.style.left=Math.random()*100+'%';
- p.style.animationDuration=6+Math.random()*6+'s';
- document.body.appendChild(p);
-}
-for(let i=0;i<40;i++){
- let h=document.createElement('div');
- h.innerHTML='❤';
- h.className='heart';
- h.style.left=Math.random()*100+'%';
- h.style.animationDuration=8+Math.random()*6+'s';
- h.style.fontSize=12+Math.random()*25+'px';
- document.body.appendChild(h);
-}
-</script><!-- ================= SCENE 1 INTRO ================= --><div class="scene active" id="s1">
-<h2>A Cinematic Love Story</h2>
-<p>Close your eyes… feel the music… and watch our journey unfold.</p>
-<button class="start" onclick="startExperience()">Begin ❤️</button>
-</div><!-- ================= SCENE 2 NAMES ================= --><div class="scene" id="s2">
-<h1>Mevin ❤️ Jebiksha</h1>
-<p class="quote">"Some souls are meant to find each other."</p>
-<button class="next" onclick="nextScene(3)">Continue</button>
-</div><!-- ================= SCENE 3 LOVE LETTER ================= --><div class="scene" id="s3">
-<p id="loveText" class="type"></p>
-<button class="next" onclick="nextScene(4)">Continue</button>
-</div><!-- ================= SCENE 4 QUOTES FLOW ================= --><div class="scene" id="s4">
-<p class="quote" id="quoteBox"></p>
-<button class="next" onclick="nextScene(5)">Continue</button>
-</div><!-- ================= SCENE 5 MEMORY CAROUSEL ================= --><div class="scene" id="s5">
-<h2>Our Beautiful Memories</h2>
-<div class="carousel">
-<img src="memory1.jpg">
-<img src="memory2.jpg">
-<img src="memory3.jpg">
-<img src="memory4.jpg">
-</div>
-<button class="next" onclick="nextScene(6)">Continue</button>
-</div><!-- ================= SCENE 6 HEARTBEAT BUILDUP ================= --><div class="scene" id="s6">
-<h2>Listen carefully...</h2>
-<p>Can you hear it?</p>
-<p>It's my heart... beating only for you.</p>
-<button class="next" onclick="startHeartbeat()">Continue</button>
-</div><!-- ================= SCENE 7 COUNTDOWN ================= --><div class="scene" id="s7">
-<div class="count" id="count">3</div>
-</div><!-- ================= SCENE 8 PROPOSAL ================= --><div class="scene" id="s8">
-<h2>Will you be mine forever?</h2>
-<div>
-<button class="yes" onclick="showRing()">YES 💍</button>
-<button class="no" onmouseover="moveNo(this)">NO 🙈</button>
-</div>
-</div><!-- ================= FINAL RING ================= --><div id="ringPopup">
-<div class="ringBox3d">
-<div class="lid"></div>
-<div class="ring">💍</div>
-</div>
-<h2 style="margin-top:40px">She Said YES ❤️</h2>
-<p>A new forever begins today.</p>
-<button onclick="shareLove()">Share Happiness</button>
+<body><audio id="music" loop>
+  <source src="enna-oru.mp3" type="audio/mpeg">
+</audio><!-- SCENE 1 INTRO --><div class="scene active">
+  <h1>✨ A Special Journey ✨</h1>
+  <p>This is not just a website... this is my heart.</p>
+  <button onclick="nextScene()">Start</button>
+</div><!-- SCENE 2 NAME --><div class="scene">
+  <h1>Mevin ❤️ Jebiksha</h1>
+  <p>Some love stories are written by fate...</p>
+  <button onclick="nextScene()">Next</button>
+</div><!-- SCENE 3 MEMORIES --><div class="scene">
+  <h1>Our Memories</h1>
+  <p>Every moment with you is my favorite memory.</p>
+  <button onclick="nextScene()">See More</button>
+</div><!-- SCENE 4 GALLERY --><div class="scene">
+  <h1>Beautiful Moments</h1>
+  <div class="gallery">
+    <img src="photo1.jpg">
+    <img src="photo2.jpg">
+    <img src="photo3.jpg">
+  </div>
+  <button onclick="nextScene()">Continue</button>
+</div><!-- SCENE 5 LOVE LETTER --><div class="scene">
+  <h1>My Heart Says...</h1>
+  <p>
+    From the moment you came into my life,
+    everything became more beautiful.Your smile is my happiness.
+Your voice is my peace.
+Your love is my world.
+
+  </p>
+  <button onclick="nextScene()">One More Thing</button>
+</div><!-- SCENE 6 RING --><div class="scene">
+  <h1>Open This...</h1>
+  <div class="ring-box" onclick="openRing(this)">
+    <div class="ring">💍</div>
+  </div>
+</div><!-- SCENE 7 PROPOSAL --><div class="scene">
+  <h1>Jebiksha...</h1>
+  <h1>Will You Marry Me?</h1>
+  <button onclick="yesLove()">YES ❤️</button>
+  <button onclick="alert('Think again 😜')">NO</button>
 </div><script>
-/* ===== LOADER ===== */
-window.onload=()=>setTimeout(()=>loader.style.display='none',3200)
+const scenes = document.querySelectorAll('.scene');
+let current = 0;
 
-/* ===== SCENE CONTROL ===== */
-function fadeTransition(cb){
- fade.classList.add('show')
- setTimeout(()=>{cb();fade.classList.remove('show')},1000)
-}
-function nextScene(n){
- fadeTransition(()=>{
- document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'))
- document.getElementById('s'+n).classList.add('active')
- })
+function nextScene(){
+  scenes[current].classList.remove('active');
+  current++;
+  scenes[current].classList.add('active');
+  document.getElementById('music').play();
 }
 
-/* ===== START ===== */
-function startExperience(){
- music.play()
- nextScene(2)
- typeWriter()
+function openRing(box){
+  box.classList.add('open');
+  setTimeout(nextScene,1500);
 }
 
-/* ===== LOVE LETTER TYPEWRITER ===== */
-let msg="Among millions of people… our hearts found each other. Every smile… every touch… every moment… led us to this magical day. You are my happiness… my peace… my forever."
-let i=0
-function typeWriter(){
- if(i<msg.length){loveText.innerHTML+=msg.charAt(i);i++;setTimeout(typeWriter,45)}
+function yesLove(){
+  launchFireworks();
+  alert('She said YES ❤️❤️❤️');
 }
 
-/* ===== QUOTES FLOW ===== */
-const quotes=[
-"You are the reason my world feels beautiful.",
-"Every moment with you is my favorite memory.",
-"In your eyes… I found my home.",
-"Loving you is the best decision of my life."
-]
-let qi=0
-setInterval(()=>{quoteBox.innerText=quotes[qi];qi=(qi+1)%quotes.length},2500)
-
-/* ===== MEMORY CAROUSEL ===== */
-let slides=document.querySelectorAll('.carousel img')
-let si=0
+/* falling hearts */
 setInterval(()=>{
- slides.forEach(s=>s.classList.remove('show'))
- slides[si].classList.add('show')
- si=(si+1)%slides.length
-},2500)
+  const heart=document.createElement('div');
+  heart.className='heart';
+  heart.innerHTML='❤';
+  heart.style.left=Math.random()*100+'vw';
+  heart.style.animationDuration=3+Math.random()*4+'s';
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),7000);
+},300);
 
-/* ===== HEARTBEAT ===== */
-function startHeartbeat(){
- heartbeat.play()
- nextScene(7)
- let c=3
- let interval=setInterval(()=>{
- count.innerText=c
- c--
- if(c<0){clearInterval(interval);nextScene(8)}
- },1000)
-}
-
-/* ===== ESCAPE NO BUTTON ===== */
-function moveNo(btn){
- btn.style.position='absolute'
- btn.style.left=Math.random()*80+'%'
- btn.style.top=Math.random()*80+'%'
-}
-
-/* ===== RING SHOW ===== */
-function showRing(){
- ringPopup.style.display='flex'
- launchFireworks()
-}
-
-/* ===== SHARE ===== */
-function shareLove(){
- if(navigator.share){
- navigator.share({title:'We are together ❤️',text:'She said YES!',url:location.href})
- }else alert('Share this page ❤️')
-}
-
-/* ===== FIREWORKS ===== */
-const canvas=document.getElementById('fireworks')
-const ctx=canvas.getContext('2d')
-canvas.width=innerWidth
-canvas.height=innerHeight
-let particles=[]
+/* fireworks */
 function launchFireworks(){
- setInterval(()=>{
-  for(let i=0;i<120;i++){
-   particles.push({x:innerWidth/2,y:innerHeight/2,vx:(Math.random()-0.5)*9,vy:(Math.random()-0.5)*9,life:100})
+  for(let i=0;i<80;i++){
+    const f=document.createElement('div');
+    f.className='firework';
+    f.style.background=`hsl(${Math.random()*360},100%,60%)`;
+    f.style.left='50%';
+    f.style.top='50%';
+    f.style.setProperty('--x',(Math.random()-0.5)*600+'px');
+    f.style.setProperty('--y',(Math.random()-0.5)*600+'px');
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1000);
   }
- },600)
- animate()
-}
-function animate(){
- ctx.fillStyle='rgba(0,0,0,0.2)'
- ctx.fillRect(0,0,canvas.width,canvas.height)
- particles.forEach(p=>{
-  ctx.fillStyle='hsl('+Math.random()*360+',100%,60%)'
-  ctx.fillRect(p.x,p.y,3,3)
-  p.x+=p.vx
-  p.y+=p.vy
-  p.life--
- })
- particles=particles.filter(p=>p.life>0)
- requestAnimationFrame(animate)
 }
 </script></body>
 </html>
