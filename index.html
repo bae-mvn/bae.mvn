@@ -1,271 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Special Moment</title>
-
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<title>Private Access</title>
 
 <style>
 body{
-margin:0;
-overflow:hidden;
-font-family:Georgia,serif;
-background:radial-gradient(circle,#ffe6f0,#ffc0cb);
-color:#6b2c4a;
-text-align:center;
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#0a0a0a;
+  font-family:Segoe UI, sans-serif;
+  overflow:hidden;
 }
 
-/* ===== GALAXY BACKGROUND ===== */
-.galaxy{
-position:fixed;
-top:0;
-left:0;
-width:200%;
-height:200%;
-background:
-radial-gradient(white 1px, transparent 1px),
-radial-gradient(gold 1px, transparent 1px);
-background-size:3px 3px, 6px 6px;
-animation:galaxyMove 120s linear infinite;
-z-index:-2;
+/* Pink glow background */
+body::before{
+  content:"";
+  position:absolute;
+  width:500px;
+  height:500px;
+  background:radial-gradient(circle, #ff4da6, transparent 70%);
+  filter:blur(140px);
+  animation:float 6s ease-in-out infinite alternate;
 }
 
-@keyframes galaxyMove{
-from{transform:translate(0,0)}
-to{transform:translate(-50%, -50%)}
+@keyframes float{
+  from{transform:translateY(-40px);}
+  to{transform:translateY(40px);}
 }
 
-/* Pages */
-.page{
-display:none;
-padding:60px 20px;
-animation:fade 1.2s ease;
+/* Glass box */
+.lock-box{
+  position:relative;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(15px);
+  border:1px solid #ff4da6;
+  padding:40px;
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 0 40px rgba(255,77,166,0.4);
 }
 
-.page.active{
-display:block;
+/* Title */
+h2{
+  color:#ff66b3;
+  margin-bottom:20px;
+  letter-spacing:1px;
 }
 
-@keyframes fade{
-from{opacity:0;transform:translateY(40px);}
-to{opacity:1;transform:translateY(0);}
+/* Input */
+input{
+  padding:12px;
+  width:230px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+  text-align:center;
+  font-size:16px;
+  margin-bottom:15px;
+  background:#111;
+  color:white;
 }
 
+/* Button */
 button{
-padding:12px 30px;
-border:none;
-border-radius:30px;
-background:#ff69b4;
-color:white;
-font-size:16px;
-cursor:pointer;
-margin-top:25px;
-transition:0.3s;
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(45deg,#ff4da6,#ff99cc);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 0 15px rgba(255,77,166,0.6);
+  transition:0.3s;
 }
 
 button:hover{
-transform:scale(1.08);
+  transform:scale(1.08);
 }
 
-/* Ring */
-.ringBox{
-position:fixed;
-bottom:-400px;
-left:50%;
-transform:translateX(-50%);
-background:white;
-padding:40px;
-border-radius:20px;
-box-shadow:0 0 40px #ff69b4;
-transition:1.2s;
-}
-
-.ringBox.show{
-bottom:120px;
-}
-
-.ring{
-font-size:70px;
-animation:spin 4s linear infinite;
-}
-
-@keyframes spin{
-from{transform:rotateY(0);}
-to{transform:rotateY(360deg);}
-}
-
-/* Firework */
-.fire{
-position:absolute;
-width:6px;
-height:6px;
-border-radius:50%;
-animation:explode 1s linear forwards;
-}
-
-@keyframes explode{
-from{transform:translate(0,0);}
-to{transform:translate(var(--x),var(--y));opacity:0;}
-}
-
-/* ===== SHOCKWAVE EFFECT ===== */
-.shock{
-position:fixed;
-top:50%;
-left:50%;
-width:50px;
-height:50px;
-border-radius:50%;
-border:3px solid gold;
-transform:translate(-50%,-50%);
-animation:shockExpand 1s forwards;
-pointer-events:none;
-}
-
-@keyframes shockExpand{
-to{
-width:1500px;
-height:1500px;
-opacity:0;
-}
+/* Error text */
+#error{
+  color:#ff4d4d;
+  margin-top:10px;
+  display:none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- GALAXY BACKGROUND -->
-<div class="galaxy"></div>
-
-<div class="page active">
-<h1 id="intro"></h1>
-<button onclick="nextPage()">Start</button>
-</div>
-
-<div class="page">
-<h1>You came into my life quietly 🌸</h1>
-<button onclick="nextPage()">Next</button>
-</div>
-
-<div class="page">
-<h1>And somehow… everything felt softer.</h1>
-<button onclick="nextPage()">Next</button>
-</div>
-
-<div class="page">
-<h1>I didn’t expect this feeling.</h1>
-<button onclick="nextPage()">Next</button>
-</div>
-
-<div class="page">
-<h1>But I don’t want to ignore it anymore.</h1>
-<button onclick="nextPage()">Next</button>
-</div>
-
-<div class="page">
-<h1>Before I ask…</h1>
-<textarea id="herMessage" placeholder="Write something..." style="width:80%;padding:12px;border-radius:10px;border:none;"></textarea>
-<br>
-<button onclick="startCountdown()">Continue</button>
-</div>
-
-<div class="page" id="countPage">
-<h1>Get Ready...</h1>
-<h1 id="countdown">3</h1>
-</div>
-
-<div class="ringBox" id="ringBox">
-<div class="ring">💍</div>
-<h1>Will You Be Mine?</h1>
-<button onclick="choose('YES ❤️')">Yes</button>
-<button onclick="choose('NO 💔')">No</button>
+<div class="lock-box">
+  <h2>Enter Password</h2>
+  <input type="password" id="password" placeholder="Secret password">
+  <br>
+  <button onclick="checkPassword()">Unlock</button>
+  <div id="error">Wrong password</div>
 </div>
 
 <script>
+function checkPassword(){
 
-/* Safe EmailJS init */
-try{
-emailjs.init("ZBpSMBnfdEQE_bwCn");
-}catch(e){}
+  var correctPassword = "1234"; // 🔐 change password here
+  var entered = document.getElementById("password").value;
 
-/* Page control */
-let current=0;
-function nextPage(){
-let pages=document.querySelectorAll(".page");
-pages[current].classList.remove("active");
-current++;
-pages[current].classList.add("active");
-}
-
-/* Intro typing */
-let text="There are moments that quietly change everything.";
-let i=0;
-function type(){
-if(i<text.length){
-document.getElementById("intro").innerHTML+=text.charAt(i);
-i++;
-setTimeout(type,40);
-}
-}
-type();
-
-/* Countdown */
-function startCountdown(){
-nextPage();
-let count=3;
-let cd=document.getElementById("countdown");
-let interval=setInterval(()=>{
-count--;
-cd.innerHTML=count;
-if(count==0){
-clearInterval(interval);
-document.getElementById("ringBox").classList.add("show");
-}
-},1000);
-}
-
-/* Choose */
-function choose(answer){
-
-let msg=document.getElementById("herMessage").value;
-
-try{
-emailjs.send("service_vi8o9j4","template_1uului7",{
-message:"Answer: "+answer+" | Message: "+msg
-});
-}catch(e){}
-
-/* SHOCKWAVE WHEN YES */
-if(answer.includes("YES")){
-
-let s=document.createElement("div");
-s.className="shock";
-document.body.appendChild(s);
-
-for(let i=0;i<150;i++){
-let f=document.createElement("div");
-f.className="fire";
-f.style.left="50%";
-f.style.top="50%";
-f.style.background="hsl("+Math.random()*360+",100%,70%)";
-f.style.setProperty('--x',(Math.random()*800-400)+"px");
-f.style.setProperty('--y',(Math.random()*800-400)+"px");
-document.body.appendChild(f);
-}
-
-setTimeout(()=>{
-document.body.innerHTML="<h1 style='margin-top:40vh;'>A Beautiful Beginning 🌸</h1>";
-},1500);
-
-}else{
-
-setTimeout(()=>{
-document.body.innerHTML="<h1 style='margin-top:40vh;'>No matter what, you are respected 🌙</h1>";
-},1000);
-
-}
+  if(entered === correctPassword){
+      window.location.href = "main.html"; 
+      // 👆 change to your proposal page file name
+  }
+  else{
+      document.getElementById("error").style.display="block";
+  }
 }
 </script>
 
