@@ -1,324 +1,253 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Special Moment</title>
+<title>Oops... ❤️</title>
 
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
+*{
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
 body{
-margin:0;
-overflow:hidden;
-font-family:Georgia,serif;
-background:black;
-color:gold;
-text-align:center;
+    margin:0;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    transition:background 0.8s ease;
+    background:linear-gradient(135deg,#ffd6ec,#ffe9d6);
 }
 
-/* ===== PASSWORD LOCK ===== */
-#lockScreen{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:black;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:999;
+/* MAIN CARD */
+.container{
+    width:90%;
+    max-width:420px;
+    padding:35px 25px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.75);
+    backdrop-filter:blur(10px);
+    text-align:center;
+    box-shadow:0 20px 40px rgba(0,0,0,0.12);
+    transition:all 0.6s ease;
 }
 
-.lockBox{
-background:#111;
-padding:40px;
-border-radius:20px;
-box-shadow:0 0 30px gold;
-border:1px solid gold;
+/* TEXT */
+h1{
+    margin:0 0 10px;
+    font-weight:700;
 }
 
-.lockBox input{
-padding:12px;
-margin-top:15px;
-border-radius:10px;
-border:none;
-width:200px;
-text-align:center;
+p{
+    margin:10px 0 20px;
+    font-weight:300;
 }
 
-#error{
-color:red;
-margin-top:10px;
-}
-
-/* ===== GOLD PARTICLES ===== */
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
-}
-
-/* ===== PAGES ===== */
-.page{
-display:none;
-padding:60px 20px;
-animation:fade 1.2s ease;
-}
-
-.page.active{
-display:block;
-}
-
-@keyframes fade{
-from{opacity:0;transform:translateY(50px);}
-to{opacity:1;transform:translateY(0);}
-}
-
+/* BUTTONS */
 button{
-padding:14px 32px;
-border:none;
-border-radius:40px;
-background:gold;
-color:black;
-font-size:16px;
-cursor:pointer;
-margin-top:25px;
-font-weight:bold;
-transition:0.3s;
+    border:none;
+    padding:12px 26px;
+    margin:8px;
+    border-radius:999px;
+    font-size:15px;
+    cursor:pointer;
+    transition:all 0.3s ease;
+    box-shadow:0 6px 15px rgba(0,0,0,0.1);
 }
 
 button:hover{
-transform:scale(1.1);
-box-shadow:0 0 20px gold;
+    transform:translateY(-2px);
 }
 
-/* ===== RING POPUP ===== */
-.ringBox{
-position:fixed;
-bottom:-500px;
-left:50%;
-transform:translateX(-50%);
-background:#111;
-padding:45px;
-border-radius:25px;
-box-shadow:0 0 60px gold;
-transition:1.2s;
-border:1px solid gold;
+.primary{
+    background:#ff6fa5;
+    color:white;
 }
 
-.ringBox.show{
-bottom:120px;
+.secondary{
+    background:white;
 }
 
-.ring{
-font-size:85px;
-animation:pulse 1.3s infinite;
+.hidden{
+    opacity:0;
+    transform:translateY(15px);
+    pointer-events:none;
 }
 
-@keyframes pulse{
-0%{transform:scale(1)}
-50%{transform:scale(1.2)}
-100%{transform:scale(1)}
+/* VALENTINE SECTION */
+#valentine{
+    position:relative;
 }
 
-/* ===== FIREWORK ===== */
-.fire{
-position:absolute;
-width:6px;
-height:6px;
-border-radius:50%;
-animation:explode 1.2s linear forwards;
+#noBtn{
+    position:absolute;
 }
 
-@keyframes explode{
-from{transform:translate(0,0);}
-to{transform:translate(var(--x),var(--y));opacity:0;}
+/* MESSAGE */
+#yesMessage{
+    margin-top:15px;
+    white-space:pre-line;
+    font-weight:500;
 }
 
-/* ===== COUNTDOWN ===== */
-#countdown{
-font-size:90px;
-animation:beat 1s infinite;
-}
-
-@keyframes beat{
-0%{transform:scale(1)}
-50%{transform:scale(1.3)}
-100%{transform:scale(1)}
+/* CONFETTI */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    pointer-events:none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- PASSWORD SCREEN -->
-<div id="lockScreen">
-  <div class="lockBox">
-    <h2>Enter Password</h2>
-    <input type="password" id="passInput">
-    <br>
-    <button onclick="checkPassword()">Unlock</button>
-    <p id="error"></p>
-  </div>
+<canvas id="confettiCanvas"></canvas>
+
+<div class="container">
+
+<!-- 404 SCREEN -->
+<div id="errorScreen">
+<h1>404 😅</h1>
+<p>Page Not Found... but maybe love is?</p>
+<button class="primary" id="refreshBtn">Refresh</button>
 </div>
 
-<canvas id="bg"></canvas>
+<!-- VALENTINE SCREEN -->
+<div id="valentine" class="hidden">
+<h1>Will you be my Valentine? 💖</h1>
 
-<div class="page active">
-<h1 id="intro"></h1>
-<button onclick="nextPage()">Start</button>
+<button class="primary" id="yesBtn">YES</button>
+<button class="secondary" id="noBtn">NO</button>
+
+<div id="yesMessage" class="hidden"></div>
 </div>
 
-<div class="page">
-<h1>You came into my life quietly…</h1>
-<button onclick="nextPage()">Next</button>
-</div>
-
-<div class="page">
-<h1>And everything slowly felt different.</h1>
-<button onclick="nextPage()">Next</button>
-</div>
-
-<div class="page">
-<h1>You changed something in me I never knew existed...</h1>
-<button onclick="nextPage()">Next</button>
-</div>
-
-<div class="page">
-<h1>Before I ask something important…</h1>
-<textarea id="herMessage" placeholder="Write something..." style="width:80%;padding:12px;border-radius:10px;border:none;"></textarea>
-<br>
-<button onclick="startCountdown()">Continue</button>
-</div>
-
-<div class="page" id="countPage">
-<h1>Get Ready...</h1>
-<h1 id="countdown">3</h1>
-</div>
-
-<div class="ringBox" id="ringBox">
-<div class="ring">💍</div>
-<h1>Will You Be Mine?</h1>
-<button onclick="choose('YES ❤️')">Yes</button>
-<button onclick="choose('NO 💔')">No</button>
 </div>
 
 <script>
+const errorScreen=document.getElementById("errorScreen");
+const valentine=document.getElementById("valentine");
+const refreshBtn=document.getElementById("refreshBtn");
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const message=document.getElementById("yesMessage");
+const body=document.body;
 
-/* PASSWORD CHECK */
-function checkPassword(){
-let correct="1234";   // CHANGE PASSWORD HERE
-let entered=document.getElementById("passInput").value;
+/* ---------- SHOW VALENTINE ---------- */
+refreshBtn.onclick=()=>{
+    errorScreen.classList.add("hidden");
+    setTimeout(()=>valentine.classList.remove("hidden"),400);
+};
 
-if(entered===correct){
-document.getElementById("lockScreen").style.display="none";
-}else{
-document.getElementById("error").innerText="Wrong password";
-}
-}
+/* ---------- YES CLICK ---------- */
+yesBtn.onclick=()=>{
 
-/* EMAILJS */
-emailjs.init("ZBpSMBnfdEQE_bwCn");
+message.textContent=
+`By clicking YES you agree to:
 
-/* PAGE CONTROL */
-let current=0;
-function nextPage(){
-let pages=document.querySelectorAll(".page");
-pages[current].classList.remove("active");
-current++;
-pages[current].classList.add("active");
-}
+Unlimited cuddles
+Lifetime supply of bad puns
+Mutual pizza stealing rights
 
-/* INTRO TYPE */
-let text="Some moments change life forever...";
-let i=0;
-function type(){
-if(i<text.length){
-document.getElementById("intro").innerHTML+=text.charAt(i);
-i++;
-setTimeout(type,40);
-}
-}
-type();
+Effective immediately! 💞`;
 
-/* COUNTDOWN */
-function startCountdown(){
-nextPage();
-let count=3;
-let cd=document.getElementById("countdown");
-let interval=setInterval(()=>{
-count--;
-cd.innerHTML=count;
-if(count==0){
-clearInterval(interval);
-document.getElementById("ringBox").classList.add("show");
-}
+message.classList.remove("hidden");
+
+/* hide buttons smoothly */
+setTimeout(()=>{
+    yesBtn.classList.add("hidden");
+    noBtn.classList.add("hidden");
 },1000);
+
+startConfetti();
+setTimeout(stopConfetti,5000);
+};
+
+/* ---------- NO CLICK ---------- */
+let noClicks=0;
+
+noBtn.onclick=()=>{
+    noClicks++;
+
+moveButton();
+changeBackground();
+
+if(noClicks>=2){
+    noBtn.textContent="🥺";
+}
+};
+
+function moveButton(){
+const x=Math.random()*(window.innerWidth-120);
+const y=Math.random()*(window.innerHeight-60);
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
 }
 
-/* CHOOSE */
-function choose(answer){
-
-let msg=document.getElementById("herMessage").value;
-
-emailjs.send("service_vi8o9j4","template_1uului7",{
-message:"Answer: "+answer+" | Message: "+msg
-});
-
-if(answer.includes("YES")){
-for(let i=0;i<200;i++){
-let f=document.createElement("div");
-f.className="fire";
-f.style.left="50%";
-f.style.top="50%";
-f.style.background="gold";
-f.style.setProperty('--x',(Math.random()*900-450)+"px");
-f.style.setProperty('--y',(Math.random()*900-450)+"px");
-document.body.appendChild(f);
-}
-setTimeout(()=>{
-document.body.innerHTML="<h1 style='margin-top:40vh;font-size:40px;color:gold;'>A Beautiful Beginning ✨</h1>";
-},1700);
-}else{
-setTimeout(()=>{
-document.body.innerHTML="<h1 style='margin-top:40vh;'>No matter what, you are special 💛</h1>";
-},1200);
-}
+function changeBackground(){
+const gradients=[
+"linear-gradient(135deg,#ffd6ec,#ffe9d6)",
+"linear-gradient(135deg,#e0c3fc,#f9f586)",
+"linear-gradient(135deg,#ff9a9e,#fad0c4)",
+"linear-gradient(135deg,#a18cd1,#fbc2eb)",
+"linear-gradient(135deg,#ffecd2,#fcb69f)"
+];
+body.style.background=gradients[Math.floor(Math.random()*gradients.length)];
 }
 
-/* GOLD PARTICLES */
-let canvas=document.getElementById("bg");
-let ctx=canvas.getContext("2d");
+/* ---------- CONFETTI ---------- */
+const canvas=document.getElementById("confettiCanvas");
+const ctx=canvas.getContext("2d");
+let confetti=[];
+let confettiRunning=false;
+
+function resizeCanvas(){
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
+}
+resizeCanvas();
+window.onresize=resizeCanvas;
 
-let p=[];
-for(let i=0;i<120;i++){
-p.push({
+function startConfetti(){
+confettiRunning=true;
+for(let i=0;i<150;i++){
+confetti.push({
 x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*2,
-s:Math.random()*1
+y:Math.random()*canvas.height- canvas.height,
+size:5+Math.random()*5,
+speed:2+Math.random()*3,
+color:`hsl(${Math.random()*360},100%,60%)`
 });
 }
+animateConfetti();
+}
 
-function animate(){
+function animateConfetti(){
+if(!confettiRunning) return;
+
 ctx.clearRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="gold";
-p.forEach(a=>{
-ctx.beginPath();
-ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
-ctx.fill();
-a.y+=a.s;
-if(a.y>canvas.height)a.y=0;
-});
-requestAnimationFrame(animate);
-}
-animate();
 
+confetti.forEach(p=>{
+p.y+=p.speed;
+ctx.fillStyle=p.color;
+ctx.fillRect(p.x,p.y,p.size,p.size);
+});
+
+requestAnimationFrame(animateConfetti);
+}
+
+function stopConfetti(){
+confettiRunning=false;
+ctx.clearRect(0,0,canvas.width,canvas.height);
+confetti=[];
+}
 </script>
+
 </body>
 </html>
