@@ -4,143 +4,209 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Jebiksha ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --accent: #ff4d6d;
-            --soft-pink: #ffccd5;
+            --primary: #ff4d6d;
+            --secondary: #ffccd5;
+            --text-main: #2d2d2d;
+            --elegant-font: 'Dancing Script', cursive;
         }
 
         body, html {
             margin: 0; padding: 0; height: 100%;
-            font-family: 'Quicksand', sans-serif;
-            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #fff5f7 0%, #fde2e4 100%);
             display: flex; justify-content: center; align-items: center;
-            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
-            transition: background 0.8s ease;
+            overflow: hidden;
+            transition: background 0.5s ease;
         }
 
-        #main-card {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 2rem;
-            border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        #container {
+            background: rgba(255, 255, 255, 0.95);
+            width: 380px;
+            height: 520px; /* Equal screen size for all */
+            border-radius: 40px;
+            box-shadow: 0 25px 50px rgba(255, 77, 109, 0.15);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            max-width: 450px; width: 90%;
-            z-index: 10;
             position: relative;
+            border: 2px solid #fff;
         }
 
-        .screen { display: none; opacity: 0; transition: opacity 0.5s ease; }
-        .active { display: block; opacity: 1; }
+        .screen { display: none; width: 100%; animation: fadeIn 0.8s ease forwards; }
+        .active { display: flex; flex-direction: column; align-items: center; }
 
-        /* Animations */
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes popIn { 0% { transform: scale(0); } 80% { transform: scale(1.2); } 100% { transform: scale(1); } }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .rotate-icon { display: inline-block; animation: rotate 10s linear infinite; font-size: 4rem; }
-        .ring-anim { font-size: 5rem; animation: popIn 0.8s cubic-bezier(0.17, 0.89, 0.32, 1.49), float 3s ease-in-out infinite; display: block; }
+        .name-style { font-family: var(--elegant-font); color: var(--primary); font-size: 3rem; margin: 10px 0; }
+        .emoji-large { font-size: 4rem; margin-bottom: 20px; display: block; }
         
-        .jebiksha-name { font-family: 'Dancing Script', cursive; color: var(--accent); font-size: 2.5rem; margin: 10px 0; }
+        /* Interactive Small Elements */
+        .floating-heart { color: var(--primary); font-size: 1.5rem; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        .btn-group { display: flex; justify-content: center; gap: 15px; margin-top: 25px; min-height: 60px; }
+        h2 { font-weight: 500; color: var(--text-main); font-size: 1.4rem; line-height: 1.4; }
+        p { color: #666; font-size: 0.95rem; line-height: 1.6; margin-top: 15px; }
+
         .btn {
-            padding: 12px 30px; border: none; border-radius: 50px;
-            font-weight: 600; cursor: pointer; transition: 0.3s;
-            font-family: 'Quicksand', sans-serif;
+            margin-top: 30px;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 50px;
+            background: var(--primary);
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.2);
         }
-        .btn-primary { background: var(--accent); color: white; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4); }
-        #no-btn { background: #eee; color: #888; transition: 0.1s; }
+        .btn:hover { transform: scale(1.1); box-shadow: 0 15px 25px rgba(255, 77, 109, 0.3); }
 
-        ul { text-align: left; display: inline-block; list-style: none; padding: 0; }
-        li { margin: 10px 0; color: #444; }
-        li::before { content: "💗 "; }
+        #no-btn { background: #eee; color: #777; position: relative; }
+
+        .progress-bar {
+            position: absolute; bottom: 30px; display: flex; gap: 5px;
+        }
+        .dot { width: 6px; height: 6px; border-radius: 50%; background: #ddd; transition: 0.3s; }
+        .dot.active-dot { background: var(--primary); width: 15px; }
     </style>
 </head>
 <body>
 
-    <div id="main-card">
-        <div id="step-1" class="screen active">
-            <div class="rotate-icon">🔍</div>
-            <h1>404</h1>
-            <p>Wait, where is the most beautiful girl in the world?</p>
-            <button class="btn btn-primary" onclick="nextStep(2)">Find Her</button>
+    <div id="container">
+        <div class="screen active" id="page1">
+            <span class="emoji-large" style="animation: rotate 20s linear infinite;">🔍</span>
+            <h2>404 Error</h2>
+            <p>Wait... the most amazing person named <b>Jebiksha</b> is missing from this page.</p>
+            <button class="btn" onclick="goTo(2)">Find Her</button>
         </div>
 
-        <div id="step-2" class="screen">
-            <div class="jebiksha-name">Hi Jebiksha...</div>
-            <p>I was looking for a reason to make you smile today, and I found a few:</p>
-            <ul>
-                <li>Your laugh is my favorite song.</li>
-                <li>The way you light up every room.</li>
-                <li>Because you're simply Jebiksha.</li>
-            </ul>
-            <br>
-            <button class="btn btn-primary" onclick="nextStep(3)">One More Thing...</button>
+        <div class="screen" id="page2">
+            <span class="emoji-large">✨</span>
+            <p>Scanning the universe...</p>
+            <div class="name-style">Found You!</div>
+            <p>It’s you, Jebiksha. It was always going to be you.</p>
+            <button class="btn" onclick="goTo(3)">Continue</button>
         </div>
 
-        <div id="step-3" class="screen">
-            <span class="ring-anim">💍</span>
-            <div class="jebiksha-name">Jebiksha...</div>
-            <h1 style="font-size: 1.5rem;">Will you be my Valentine?</h1>
-            
-            <div id="agreement" style="display:none; margin-bottom: 20px;">
-                <p><strong>Contractual Agreement:</strong></p>
-                <ul>
-                    <li>Unlimited cuddles</li>
-                    <li>Lifetime supply of bad puns</li>
-                    <li>Mutual pizza stealing rights</li>
-                </ul>
+        <div class="screen" id="page3">
+            <span class="emoji-large">🌸</span>
+            <h2>Did you know?</h2>
+            <p>The world gets 10% brighter every time you smile.</p>
+            <button class="btn" onclick="goTo(4)">Really?</button>
+        </div>
+
+        <div class="screen" id="page4">
+            <span class="emoji-large">🧬</span>
+            <h2>It's Science!</h2>
+            <p>Your laugh has been proven to be the most beautiful sound in existence.</p>
+            <button class="btn" onclick="goTo(5)">Wow, Next!</button>
+        </div>
+
+        <div class="screen" id="page5">
+            <span class="emoji-large">💎</span>
+            <div class="name-style">Jebiksha</div>
+            <p>You are rarer than a shooting star and more precious than any diamond.</p>
+            <button class="btn" onclick="goTo(6)">Ok, stop it...</button>
+        </div>
+
+        <div class="screen" id="page6">
+            <span class="emoji-large">💭</span>
+            <h2>Thinking of you...</h2>
+            <p>I tried to think of something else today, but I failed within 2 seconds.</p>
+            <button class="btn" onclick="goTo(7)">Only 2 seconds?</button>
+        </div>
+
+        <div class="screen" id="page7">
+            <span class="emoji-large">☀️</span>
+            <h2>Sun vs You</h2>
+            <p>The Sun gives light, but you give my life a <i>purpose</i>.</p>
+            <button class="btn" onclick="goTo(8)">Next ✨</button>
+        </div>
+
+        <div class="screen" id="page8">
+            <span class="emoji-large">🏆</span>
+            <h2>Award Time</h2>
+            <p>You’ve won the "Favorite Person Ever" award in my heart. Every. Single. Day.</p>
+            <button class="btn" onclick="goTo(9)">Accept Award</button>
+        </div>
+
+        <div class="screen" id="page9">
+            <span class="emoji-large">💌</span>
+            <h2>One Secret...</h2>
+            <p>I wrote your name on a piece of paper, but I accidentally wrote it on my heart too.</p>
+            <button class="btn" onclick="goTo(10)">Show Me</button>
+        </div>
+
+        <div class="screen" id="page10">
+            <span class="emoji-large" style="animation: popIn 0.8s forwards;">💍</span>
+            <div class="name-style">Jebiksha</div>
+            <h2>Will you be my Valentine?</h2>
+            <div id="btn-group" style="display:flex; gap:10px;">
+                <button class="btn" onclick="handleYes()">YES</button>
+                <button class="btn" id="no-btn" onclick="handleNo()">NO</button>
             </div>
-
-            <div id="btn-container" class="btn-group">
-                <button id="yes-btn" class="btn btn-primary" onclick="handleYes()">YES</button>
-                <button id="no-btn" class="btn" onclick="handleNo()">NO</button>
-            </div>
         </div>
+
+        <div class="screen" id="page11">
+            <span class="emoji-large">💖</span>
+            <div class="name-style">Official!</div>
+            <p>By clicking YES, you've signed up for a lifetime of happiness & pizza stealing rights!</p>
+            <p><i>Check your heart, the update is installed!</i></p>
+        </div>
+
+        <div class="progress-bar" id="dots"></div>
     </div>
 
     <script>
-        let noCount = 0;
-        const colors = ['#ffdee9', '#e0c3fc', '#caf0f8', '#fce1e4'];
+        const totalPages = 11;
+        const colors = ['#fdfcfb', '#ffdee9', '#e0c3fc', '#caf0f8', '#fce1e4', '#d4fc79'];
 
-        function nextStep(step) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            setTimeout(() => {
-                document.getElementById(`step-${step}`).classList.add('active');
-            }, 100);
+        // Create Dots
+        const dotsContainer = document.getElementById('dots');
+        for(let i=1; i<=totalPages; i++) {
+            let dot = document.createElement('div');
+            dot.className = 'dot' + (i===1 ? ' active-dot' : '');
+            dot.id = 'dot' + i;
+            dotsContainer.appendChild(dot);
         }
 
-        function handleNo() {
-            noCount++;
-            const noBtn = document.getElementById('no-btn');
-            if(noCount >= 2) document.querySelector('.ring-anim').innerText = '🥺';
+        function goTo(pageNum) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.dot').forEach(d => d.classList.remove('active-dot'));
             
+            document.getElementById('page' + pageNum).classList.add('active');
+            document.getElementById('dot' + pageNum).classList.add('active-dot');
+            
+            // Subtle BG change
+            document.body.style.background = `linear-gradient(135deg, ${colors[pageNum%colors.length]} 0%, #fff 100%)`;
+        }
+
+        let noClicks = 0;
+        function handleNo() {
+            noClicks++;
+            const noBtn = document.getElementById('no-btn');
             const x = Math.random() * (window.innerWidth - 100);
             const y = Math.random() * (window.innerHeight - 50);
-            
             noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
-            document.body.style.background = colors[noCount % colors.length];
+            if(noClicks >= 2) document.querySelector('#page10 .emoji-large').innerText = '🥺';
         }
 
         function handleYes() {
-            document.getElementById('agreement').style.display = 'block';
-            document.querySelector('#step-3 h1').innerText = "Best Decision Ever!";
-            document.querySelector('.ring-anim').innerText = '💖';
-            
-            setTimeout(() => {
-                document.getElementById('btn-container').style.opacity = '0';
-                setTimeout(() => document.getElementById('btn-container').style.display = 'none', 500);
-            }, 1000);
-
-            const end = Date.now() + 5000;
+            goTo(11);
+            const duration = 5 * 1000;
+            const end = Date.now() + duration;
             (function frame() {
-                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff4d6d', '#ffffff'] });
-                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff4d6d', '#ffffff'] });
+                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff4d6d'] });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff4d6d'] });
                 if (Date.now() < end) requestAnimationFrame(frame);
             }());
         }
