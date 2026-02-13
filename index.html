@@ -8,16 +8,20 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --royal-red: #800020;
+            --royal-red: #72001a;
             --gold-leaf: #d4af37;
             --silk-white: #fffcf9;
-            --shadow-gold: rgba(212, 175, 55, 0.3);
+            --luxury-bg: #1a0105; /* Deep luxury dark maroon */
         }
 
         body, html {
             margin: 0; padding: 0; height: 100%;
             font-family: 'Montserrat', sans-serif;
-            background: radial-gradient(circle, #2b0000 0%, #1a0000 100%);
+            /* LUXURY UPDATED BACKGROUND: Deep velvet with a gold shimmer glow */
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.1) 0%, transparent 40%),
+                linear-gradient(135deg, #2b0008 0%, #1a0105 100%);
             display: flex; justify-content: center; align-items: center;
             overflow: hidden;
         }
@@ -27,7 +31,8 @@
             width: 380px;
             height: 620px;
             border-radius: 30px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 20px var(--shadow-gold);
+            /* Extra deep shadow for that "floating" luxury look */
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8), 0 0 40px rgba(212, 175, 55, 0.2);
             padding: 40px;
             display: flex;
             flex-direction: column;
@@ -35,10 +40,11 @@
             align-items: center;
             text-align: center;
             position: relative;
-            border: 3px solid var(--gold-leaf);
+            border: 2px solid var(--gold-leaf);
             transition: all 0.5s ease;
         }
 
+        /* The rest of the styles remain exactly as you liked them */
         .screen { display: none; width: 100%; height: 100%; flex-direction: column; justify-content: center; align-items: center; animation: fadeIn 0.8s ease; }
         .active { display: flex; }
 
@@ -82,7 +88,6 @@
     </div>
 
 <script>
-    // Visual Assets (SVGs)
     const icons = {
         error: `<svg class="small-pic" viewBox="0 0 24 24" fill="none" stroke="#800020" stroke-width="1.5"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`,
         heart: `<svg class="small-pic" viewBox="0 0 24 24" fill="#800020"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
@@ -128,7 +133,6 @@
     const displayArea = document.getElementById('display-area');
     const dotsContainer = document.getElementById('progress-dots');
 
-    // Create dots
     pages.forEach((_, i) => {
         const d = document.createElement('div');
         d.className = 'dot';
