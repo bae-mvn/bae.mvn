@@ -5,135 +5,123 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A Special Moment</title>
 
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
 <style>
 body{
 margin:0;
+overflow:hidden;
 font-family:Georgia,serif;
 background:black;
-overflow:hidden;
-color:white;
+color:gold;
 text-align:center;
 }
 
-/* ===== LOADER ===== */
-#loader{
+/* ===== PASSWORD LOCK ===== */
+#lockScreen{
 position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
 background:black;
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:30px;
-letter-spacing:3px;
-z-index:9999;
-animation:pulse 1.5s infinite;
-}
-@keyframes pulse{
-0%{opacity:0.4}
-50%{opacity:1}
-100%{opacity:0.4}
+z-index:999;
 }
 
-/* ===== PASSWORD ===== */
-#lock{
-display:none;
-height:100vh;
-justify-content:center;
-align-items:center;
-background:linear-gradient(135deg,#ff9ecb,#ff4da6);
-}
-.box{
-background:white;
-color:black;
-padding:40px;
-border-radius:20px;
-box-shadow:0 0 40px rgba(255,105,180,0.6);
-}
-input{
-padding:12px;
-border-radius:10px;
-border:none;
-margin-top:10px;
-text-align:center;
-}
-button{
-padding:12px 25px;
-border:none;
-border-radius:25px;
-background:#ff4da6;
-color:white;
-cursor:pointer;
-margin-top:15px;
-}
-
-/* ===== PARTICLES ===== */
-.spark{
-position:absolute;
-width:3px;
-height:3px;
-background:pink;
-animation:rise 6s linear infinite;
-}
-@keyframes rise{
-0%{transform:translateY(100vh);opacity:0}
-30%{opacity:1}
-100%{transform:translateY(-10vh);opacity:0}
-}
-
-/* ===== BOOK ===== */
-#book{
-display:none;
-height:100vh;
-perspective:2000px;
-}
-
-.page{
-position:absolute;
-width:100%;
-height:100%;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-font-size:28px;
-padding:40px;
-background:radial-gradient(circle,#1a001a,#000);
-backface-visibility:hidden;
-transform-origin:left;
-transition:1s;
-}
-
-.page.turn{
-transform:rotateY(-180deg);
-}
-
-.nextBtn{
-margin-top:30px;
-}
-
-/* ===== RING ===== */
-#ringBox{
-position:fixed;
-bottom:-400px;
-left:50%;
-transform:translateX(-50%);
+.lockBox{
 background:#111;
 padding:40px;
 border-radius:20px;
-box-shadow:0 0 40px pink;
-transition:1.2s;
+box-shadow:0 0 30px gold;
+border:1px solid gold;
 }
-#ringBox.show{
+
+.lockBox input{
+padding:12px;
+margin-top:15px;
+border-radius:10px;
+border:none;
+width:200px;
+text-align:center;
+}
+
+#error{
+color:red;
+margin-top:10px;
+}
+
+/* ===== GOLD PARTICLES ===== */
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* ===== PAGES ===== */
+.page{
+display:none;
+padding:60px 20px;
+animation:fade 1.2s ease;
+}
+
+.page.active{
+display:block;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(50px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+button{
+padding:14px 32px;
+border:none;
+border-radius:40px;
+background:gold;
+color:black;
+font-size:16px;
+cursor:pointer;
+margin-top:25px;
+font-weight:bold;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.1);
+box-shadow:0 0 20px gold;
+}
+
+/* ===== RING POPUP ===== */
+.ringBox{
+position:fixed;
+bottom:-500px;
+left:50%;
+transform:translateX(-50%);
+background:#111;
+padding:45px;
+border-radius:25px;
+box-shadow:0 0 60px gold;
+transition:1.2s;
+border:1px solid gold;
+}
+
+.ringBox.show{
 bottom:120px;
 }
+
 .ring{
-font-size:70px;
-animation:spin 4s linear infinite;
+font-size:85px;
+animation:pulse 1.3s infinite;
 }
-@keyframes spin{
-from{transform:rotateY(0)}
-to{transform:rotateY(360deg)}
+
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.2)}
+100%{transform:scale(1)}
 }
 
 /* ===== FIREWORK ===== */
@@ -142,181 +130,195 @@ position:absolute;
 width:6px;
 height:6px;
 border-radius:50%;
-animation:explode 1s forwards;
-}
-@keyframes explode{
-to{transform:translate(var(--x),var(--y));opacity:0}
+animation:explode 1.2s linear forwards;
 }
 
-/* ===== CONFETTI ===== */
-.confetti{
-position:absolute;
-width:8px;
-height:8px;
-background:hsl(var(--h),100%,60%);
-top:-10px;
-animation:fall 4s linear forwards;
+@keyframes explode{
+from{transform:translate(0,0);}
+to{transform:translate(var(--x),var(--y));opacity:0;}
 }
-@keyframes fall{
-to{transform:translateY(100vh) rotate(720deg)}
+
+/* ===== COUNTDOWN ===== */
+#countdown{
+font-size:90px;
+animation:beat 1s infinite;
+}
+
+@keyframes beat{
+0%{transform:scale(1)}
+50%{transform:scale(1.3)}
+100%{transform:scale(1)}
 }
 </style>
 </head>
 
 <body>
 
-<div id="loader">Loading...</div>
+<!-- PASSWORD SCREEN -->
+<div id="lockScreen">
+  <div class="lockBox">
+    <h2>Enter Password</h2>
+    <input type="password" id="passInput">
+    <br>
+    <button onclick="checkPassword()">Unlock</button>
+    <p id="error"></p>
+  </div>
+</div>
 
-<!-- PASSWORD -->
-<div id="lock">
-<div class="box">
-<h2>Enter Password 💗</h2>
-<input type="password" id="pass">
+<canvas id="bg"></canvas>
+
+<div class="page active">
+<h1 id="intro"></h1>
+<button onclick="nextPage()">Start</button>
+</div>
+
+<div class="page">
+<h1>You came into my life quietly…</h1>
+<button onclick="nextPage()">Next</button>
+</div>
+
+<div class="page">
+<h1>And everything slowly felt different.</h1>
+<button onclick="nextPage()">Next</button>
+</div>
+
+<div class="page">
+<h1>You changed something in me I never knew existed...</h1>
+<button onclick="nextPage()">Next</button>
+</div>
+
+<div class="page">
+<h1>Before I ask something important…</h1>
+<textarea id="herMessage" placeholder="Write something..." style="width:80%;padding:12px;border-radius:10px;border:none;"></textarea>
 <br>
-<button onclick="unlock()">Enter</button>
-</div>
-</div>
-
-<!-- BOOK -->
-<div id="book">
-
-<div class="page" id="p1">
-<h1 id="type"></h1>
-<button class="nextBtn" onclick="flip()">Next</button>
+<button onclick="startCountdown()">Continue</button>
 </div>
 
-<div class="page" id="p2">
-You came into my life quietly 🌸
-<button class="nextBtn" onclick="flip()">Next</button>
+<div class="page" id="countPage">
+<h1>Get Ready...</h1>
+<h1 id="countdown">3</h1>
 </div>
 
-<div class="page" id="p3">
-And everything started to feel different…
-<button class="nextBtn" onclick="flip()">Next</button>
-</div>
-
-<div class="page" id="p4">
-I tried to ignore this feeling...
-<button class="nextBtn" onclick="flip()">Next</button>
-</div>
-
-<div class="page" id="p5">
-But my heart refused ❤️
-<button class="nextBtn" onclick="flip()">Next</button>
-</div>
-
-<div class="page" id="p6">
-Before I ask…
-<textarea id="msg" placeholder="Write something..."
-style="padding:10px;border-radius:10px;margin-top:20px"></textarea>
-<button class="nextBtn" onclick="count()">Continue</button>
-</div>
-
-<div class="page" id="p7">
-<h1 id="count">3</h1>
-</div>
-
-</div>
-
-<!-- RING -->
-<div id="ringBox">
+<div class="ringBox" id="ringBox">
 <div class="ring">💍</div>
 <h1>Will You Be Mine?</h1>
-<button onclick="answer(true)">YES</button>
-<button onclick="answer(false)">NO</button>
+<button onclick="choose('YES ❤️')">Yes</button>
+<button onclick="choose('NO 💔')">No</button>
 </div>
 
 <script>
 
-/* loader */
-setTimeout(()=>{
-loader.style.display="none";
-lock.style.display="flex";
-},2000);
+/* PASSWORD CHECK */
+function checkPassword(){
+let correct="1234";   // CHANGE PASSWORD HERE
+let entered=document.getElementById("passInput").value;
 
-/* particles */
-setInterval(()=>{
-let s=document.createElement("div");
-s.className="spark";
-s.style.left=Math.random()*100+"%";
-document.body.appendChild(s);
-setTimeout(()=>s.remove(),6000);
-},200);
-
-/* password */
-function unlock(){
-if(pass.value==="1234"){
-lock.style.display="none";
-book.style.display="block";
-}else alert("Wrong password");
+if(entered===correct){
+document.getElementById("lockScreen").style.display="none";
+}else{
+document.getElementById("error").innerText="Wrong password";
+}
 }
 
-/* type text */
-let txt="There are moments that change everything…";
+/* EMAILJS */
+emailjs.init("ZBpSMBnfdEQE_bwCn");
+
+/* PAGE CONTROL */
+let current=0;
+function nextPage(){
+let pages=document.querySelectorAll(".page");
+pages[current].classList.remove("active");
+current++;
+pages[current].classList.add("active");
+}
+
+/* INTRO TYPE */
+let text="Some moments change life forever...";
 let i=0;
 function type(){
-if(i<txt.length){
-type.innerHTML+=txt[i++];
+if(i<text.length){
+document.getElementById("intro").innerHTML+=text.charAt(i);
+i++;
 setTimeout(type,40);
 }
 }
 type();
 
-/* page flip */
-let page=1;
-function flip(){
-document.getElementById("p"+page).classList.add("turn");
-page++;
-}
-
-/* countdown */
-function count(){
-flip();
-let c=3;
-let el=document.getElementById("count");
-let int=setInterval(()=>{
-c--;
-el.innerHTML=c;
-if(c==0){
-clearInterval(int);
-ringBox.classList.add("show");
+/* COUNTDOWN */
+function startCountdown(){
+nextPage();
+let count=3;
+let cd=document.getElementById("countdown");
+let interval=setInterval(()=>{
+count--;
+cd.innerHTML=count;
+if(count==0){
+clearInterval(interval);
+document.getElementById("ringBox").classList.add("show");
 }
 },1000);
 }
 
-/* answer */
-function answer(yes){
+/* CHOOSE */
+function choose(answer){
 
-if(yes){
+let msg=document.getElementById("herMessage").value;
 
+emailjs.send("service_vi8o9j4","template_1uului7",{
+message:"Answer: "+answer+" | Message: "+msg
+});
+
+if(answer.includes("YES")){
 for(let i=0;i<200;i++){
 let f=document.createElement("div");
 f.className="fire";
 f.style.left="50%";
 f.style.top="50%";
-f.style.background="hsl("+Math.random()*360+",100%,60%)";
-f.style.setProperty("--x",(Math.random()*800-400)+"px");
-f.style.setProperty("--y",(Math.random()*800-400)+"px");
+f.style.background="gold";
+f.style.setProperty('--x',(Math.random()*900-450)+"px");
+f.style.setProperty('--y',(Math.random()*900-450)+"px");
 document.body.appendChild(f);
 }
-
-for(let i=0;i<150;i++){
-let c=document.createElement("div");
-c.className="confetti";
-c.style.left=Math.random()*100+"%";
-c.style.setProperty("--h",Math.random()*360);
-document.body.appendChild(c);
-}
-
 setTimeout(()=>{
-document.body.innerHTML="<h1 style='margin-top:40vh'>A Beautiful Beginning ❤️</h1>";
-},2000);
-
+document.body.innerHTML="<h1 style='margin-top:40vh;font-size:40px;color:gold;'>A Beautiful Beginning ✨</h1>";
+},1700);
 }else{
-document.body.innerHTML="<h1 style='margin-top:40vh'>No matter what… you are respected 🌙</h1>";
+setTimeout(()=>{
+document.body.innerHTML="<h1 style='margin-top:40vh;'>No matter what, you are special 💛</h1>";
+},1200);
 }
 }
-</script>
 
+/* GOLD PARTICLES */
+let canvas=document.getElementById("bg");
+let ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let p=[];
+for(let i=0;i<120;i++){
+p.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2,
+s:Math.random()*1
+});
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="gold";
+p.forEach(a=>{
+ctx.beginPath();
+ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+ctx.fill();
+a.y+=a.s;
+if(a.y>canvas.height)a.y=0;
+});
+requestAnimationFrame(animate);
+}
+animate();
+
+</script>
 </body>
-  </html>
+</html>
