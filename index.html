@@ -2,19 +2,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cinematic Proposal Experience</title><!-- Fonts --><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet"><!-- GSAP --><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script><!-- EmailJS --><script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script><style>
+<title>Cinematic Proposal Experience</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script><script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script><style>
 *{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
 font-family:'Poppins',sans-serif;
 background:linear-gradient(135deg,#12001f,#2a003f,#000);
 color:white;
 overflow-x:hidden;
 }
-
 section{min-height:100vh;padding:80px 20px;position:relative}
 h1,h2,h3{font-family:'Playfair Display',serif}
 
-/* Glass */
 .glass{
 background:rgba(255,255,255,0.08);
 backdrop-filter:blur(15px);
@@ -23,7 +22,6 @@ border-radius:20px;
 padding:30px;
 }
 
-/* Buttons */
 .btn{
 padding:14px 30px;
 border:none;
@@ -37,10 +35,8 @@ transition:.3s;
 }
 .btn:hover{transform:scale(1.1);box-shadow:0 0 40px rgba(255,100,200,1)}
 
-/* Floating particles */
 canvas{position:fixed;top:0;left:0;z-index:-1}
 
-/* Animated cursor */
 .cursor{
 width:20px;height:20px;border-radius:50%;
 position:fixed;pointer-events:none;
@@ -49,52 +45,42 @@ mix-blend-mode:screen;
 z-index:9999;
 }
 
-/* Hero */
 .hero{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .typing{font-size:2rem;margin-bottom:30px}
 
-/* Timeline */
-.timeline{display:flex;flex-direction:column;gap:30px;max-width:700px;margin:auto}
-.timeline-card{opacity:0;transform:translateY(80px)}
-
-/* Gallery */
-.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
-.gallery img{width:100%;border-radius:15px;cursor:pointer;transition:.4s}
-.gallery img:hover{transform:scale(1.1)}
-.lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center}
-.lightbox img{max-width:80%}
-
-/* Love letter */
 .letter{transform:rotateX(90deg);transform-origin:top}
 
-/* Gift */
 .gift{font-size:80px;cursor:pointer;text-align:center}
 
-/* Proposal */
 .proposal{text-align:center}
-.ring{font-size:70px;animation:float 3s infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
 
-/* Popup */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center}
+/* 3D glowing ring */
+.ring-wrapper{width:140px;height:140px;margin:auto;position:relative}
+.ring{
+width:100%;height:100%;border-radius:50%;
+border:6px solid gold;
+box-shadow:0 0 15px gold,0 0 40px rgba(255,215,0,0.6),inset 0 0 20px rgba(255,255,255,0.5);
+animation:spin 6s linear infinite, float 3s ease-in-out infinite;
+}
+.ring::after{
+content:'';position:absolute;top:-18px;left:50%;transform:translateX(-50%);
+width:24px;height:24px;border-radius:50%;
+background:radial-gradient(circle,#fff,#ffd700);
+box-shadow:0 0 25px white,0 0 60px gold;
+}
+@keyframes spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:2000}
 .modal-content{max-width:400px;text-align:center}
 
-/* Hearts animation */
-.heart{
-position:absolute;
-color:#ff7bd5;
-animation:fall linear infinite;
-}
+.heart{position:absolute;color:#ff7bd5;animation:fall linear forwards}
 @keyframes fall{from{transform:translateY(-10vh)}to{transform:translateY(110vh)}}
 
-/* Love meter */
-.meter{height:10px;background:#222;border-radius:20px;margin:20px 0}
-.meter-fill{height:100%;width:0%;background:linear-gradient(90deg,#ff4ecb,#fff);border-radius:20px}
+.meter{position:fixed;bottom:0;left:0;width:100%;height:8px;background:#222;z-index:999}
+.meter-fill{height:100%;width:0%;background:linear-gradient(90deg,#ff4ecb,#fff)}
 
-/* Ending */
 .ending{text-align:center;font-size:2rem}
-
-/* NO button escape */
 #noBtn{position:relative}
 
 </style></head>
@@ -106,22 +92,7 @@ animation:fall linear infinite;
 <button class="btn" onclick="startExperience()">Enter My Heart</button>
 <br><br>
 <button class="btn" onclick="toggleMusic()">Music Toggle</button>
-</section><!-- TIMELINE --><section>
-<h2 style="text-align:center">Our Love Story</h2>
-<div class="timeline">
-<div class="glass timeline-card">Memory moment one...</div>
-<div class="glass timeline-card">Memory moment two...</div>
-<div class="glass timeline-card">Memory moment three...</div>
-</div>
-</section><!-- GALLERY --><section>
-<h2 style="text-align:center">Memories</h2>
-<div class="gallery">
-<img src="https://picsum.photos/400?1">
-<img src="https://picsum.photos/400?2">
-<img src="https://picsum.photos/400?3">
-<img src="https://picsum.photos/400?4">
-</div>
-</section><div class="lightbox" id="lightbox"><img></div><!-- LETTER --><section style="display:flex;align-items:center;justify-content:center">
+</section><!-- LOVE LETTER --><section style="display:flex;align-items:center;justify-content:center">
 <div class="glass letter" id="letter">
 <h2>Message From My Heart</h2>
 <p>This is where your emotional message appears...</p>
@@ -132,7 +103,7 @@ animation:fall linear infinite;
 <div class="gift" onclick="openGift()">🎁</div>
 <div id="quote"></div>
 </section><!-- PROPOSAL --><section class="proposal">
-<div class="ring">💍</div>
+<div class="ring-wrapper"><div class="ring"></div></div>
 <h2>Will you be mine forever?</h2>
 <button class="btn" onclick="openProposal()">Open Proposal</button>
 </section><div class="modal" id="proposalModal">
@@ -146,134 +117,56 @@ animation:fall linear infinite;
 </div>
 </div><!-- END --><section class="ending">
 Thank you for being my forever ❤️
-</section><script>
-/* EMAILJS INIT */
-emailjs.init("YOUR_PUBLIC_KEY");
+</section><div class="meter"><div class="meter-fill" id="loveFill"></div></div><script>
+try{ emailjs.init("YOUR_PUBLIC_KEY"); }catch(e){}
 
-/* typing */
 const text="I have something special for you…";
-let i=0;
-function type(){
-if(i<text.length){
-document.getElementById("typing").innerHTML+=text[i];
-i++;setTimeout(type,60);
-}}
-type();
+let i=0;(function type(){ if(i<text.length){typing.textContent+=text[i++];setTimeout(type,50);} })();
 
-/* music */
-function toggleMusic(){
-const m=document.getElementById("bgMusic");
-m.paused?m.play():m.pause();
-}
+function toggleMusic(){const m=bgMusic;m.paused?m.play():m.pause();}
+function startExperience(){window.scrollTo({top:window.innerHeight});}
 
-/* start scroll */
-function startExperience(){
-window.scrollTo({top:window.innerHeight,behavior:'smooth'})
-}
-
-/* timeline animation */
-gsap.utils.toArray(".timeline-card").forEach(el=>{
-gsap.to(el,{opacity:1,y:0,duration:1,scrollTrigger:{trigger:el,start:"top 80%"}})
-})
-
-/* gallery */
-document.querySelectorAll(".gallery img").forEach(img=>{
-img.onclick=()=>{
-const lb=document.getElementById("lightbox");
-lb.style.display="flex";
-lb.querySelector("img").src=img.src;
-}
-})
-document.getElementById("lightbox").onclick=()=>lightbox.style.display="none";
-
-/* letter reveal */
 gsap.to("#letter",{rotateX:0,duration:1.5,scrollTrigger:{trigger:"#letter",start:"top 80%"}})
 
-/* countdown */
 let time=5;
-setInterval(()=>{
-if(time>=0)document.getElementById("countdown").innerText="Opening in "+time--;
-},1000)
+const timer=setInterval(()=>{if(time>=0){countdown.textContent="Opening in "+time;time--}else clearInterval(timer)},1000)
 
-function openGift(){
-document.getElementById("quote").innerText="You are my greatest gift ❤️";
-confetti();
-}
+function openGift(){quote.textContent="You are my greatest gift ❤️";confettiBurst(40)}
+function openProposal(){proposalModal.style.display="flex"}
+function acceptLove(){confettiBurst(120);alert("Forever begins now ❤️")}
 
-/* proposal */
-function openProposal(){
-document.getElementById("proposalModal").style.display="flex";
-}
-
-function acceptLove(){
-alert("Forever begins now ❤️");
-fireworks();
-}
-
-/* no escape */
 const noBtn=document.getElementById("noBtn");
-noBtn.onmouseover=()=>{
-noBtn.style.left=Math.random()*200-100+"px";
-noBtn.style.top=Math.random()*200-100+"px";
-}
+noBtn.addEventListener('mouseenter',()=>{
+const x=Math.random()*200-100;const y=Math.random()*120-60;
+noBtn.style.transform=`translate(${x}px,${y}px)`;
+});
 
-/* send email */
 function sendMessage(){
-const msg=document.getElementById("msgInput").value;
+const msg=msgInput.value.trim();
+if(!msg)return alert("Write a message ❤️");
 emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{message:msg})
 .then(()=>alert("Message sent ❤️"))
+.catch(()=>alert("Email setup needed"));
 }
 
-/* particles */
 const canvas=document.getElementById('particles');
 const ctx=canvas.getContext('2d');
-canvas.width=innerWidth;canvas.height=innerHeight;
-let particles=[];
-for(let i=0;i<100;i++)particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2});
-function draw(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="#ff66cc";
-particles.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.y+=0.3;if(p.y>canvas.height)p.y=0})
-requestAnimationFrame(draw)
-}
-draw();
+let w,h,particles=[];
+function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight}
+resize();addEventListener('resize',resize);
+const particleCount=window.innerWidth<600?40:80;
+for(let i=0;i<particleCount;i++)particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+0.5,s:Math.random()*0.4+0.1});
+function animateParticles(){ctx.clearRect(0,0,w,h);ctx.fillStyle="#ff66cc";for(const p of particles){ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.y+=p.s;if(p.y>h)p.y=0;}requestAnimationFrame(animateParticles);}animateParticles();
 
-/* cursor */
-document.addEventListener('mousemove',e=>{
-document.querySelector('.cursor').style.transform=`translate(${e.clientX}px,${e.clientY}px)`
-})
+let cx=0,cy=0,tx=0,ty=0;
+document.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});
+function cursorLoop(){cx+=(tx-cx)*0.15;cy+=(ty-cy)*0.15;document.querySelector('.cursor').style.transform=`translate(${cx}px,${cy}px)`;requestAnimationFrame(cursorLoop)}cursorLoop();
 
-/* confetti */
-function confetti(){
-for(let i=0;i<80;i++){
-const div=document.createElement('div');
-div.className='heart';
-div.innerHTML='❤';
-div.style.left=Math.random()*100+'vw';
-div.style.animationDuration=Math.random()*3+2+'s';
-document.body.appendChild(div);
-setTimeout(()=>div.remove(),5000);
-}
-}
+function confettiBurst(count){for(let i=0;i<count;i++){const el=document.createElement('div');el.className='heart';el.textContent='❤';el.style.left=Math.random()*100+'vw';el.style.animationDuration=Math.random()*2+2+'s';document.body.appendChild(el);setTimeout(()=>el.remove(),4000);}}
 
-/* fireworks */
-function fireworks(){confetti();setTimeout(confetti,400);setTimeout(confetti,800)}
-
-/* love meter */
-const meter=document.createElement('div');
-meter.className='meter';
-meter.innerHTML='<div class="meter-fill" id="loveFill"></div>';
-document.body.appendChild(meter);
-let love=0;
-setInterval(()=>{love=Math.min(100,love+1);document.getElementById('loveFill').style.width=love+'%';},100)
-
-/* secret easter egg */
-document.addEventListener('keydown',e=>{
-if(e.key==='L')alert('Secret message: You are my destiny ❤️');
-})
-
-/* mobile gesture */
-document.addEventListener('touchstart',()=>confetti());
+let love=0;setInterval(()=>{if(love<100){love+=0.2;loveFill.style.width=love+'%'}},40);
+document.addEventListener('keydown',e=>{if(e.key==='L')alert('Secret message: You are my destiny ❤️')});
+document.addEventListener('touchstart',()=>confettiBurst(15),{passive:true});
 
 </script></body>
 </html>
