@@ -3,135 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Queen, Jebiksha</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <title>For My Queen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Montserrat:wght@300;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --bg-light-pink: #fff0f6;    /* Baby Pink */
-            --soft-petal: #ffdeeb;       /* Light Petal */
-            --accent-pink: #ff85a1;      /* Bright Pink */
-            --thick-pink: #c9184a;       /* Thick/Dark Pink */
+            --baby-pink: #fff0f6;
+            --light-pink: #ffdae9;
+            --candy-pink: #ff85a1;
+            --thick-pink: #c9184a;
+            --deep-rose: #5a3d45;
         }
 
         body, html {
             margin: 0; padding: 0; height: 100%;
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-light-pink);
-            /* Creating a "glowing center" effect without a box */
-            background: radial-gradient(circle at center, #ffffff 0%, var(--soft-petal) 50%, var(--bg-light-pink) 100%);
+            background: radial-gradient(circle at center, #ffffff 0%, var(--light-pink) 70%, var(--baby-pink) 100%);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             overflow: hidden;
         }
 
         #content-wrapper {
-            width: 90%;
-            max-width: 500px;
+            width: 85%;
+            max-width: 600px;
             text-align: center;
             z-index: 2;
         }
 
-        .screen { display: none; flex-direction: column; align-items: center; animation: floatingFade 1s ease-out; }
+        .screen { display: none; flex-direction: column; align-items: center; animation: smoothFloat 0.8s ease-out; }
         .active { display: flex; }
 
-        @keyframes floatingFade {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        .name-tag { 
-            font-family: 'Great Vibes', cursive; 
-            color: var(--thick-pink); 
-            font-size: 4rem; 
-            margin: 5px 0;
-            filter: drop-shadow(2px 4px 6px rgba(201, 24, 74, 0.1));
+        @keyframes smoothFloat {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .gold-title { 
             font-family: 'Cinzel', serif; 
-            color: var(--accent-pink); 
-            letter-spacing: 5px; 
-            font-size: 0.9rem; 
+            color: var(--candy-pink); 
+            letter-spacing: 4px; 
+            font-size: 0.8rem; 
             font-weight: 700;
-            text-transform: uppercase;
+            margin-bottom: 20px;
         }
         
         h2 { 
             font-weight: 600; 
-            color: #5a3d45; 
+            color: var(--deep-rose); 
             font-size: 1.6rem; 
-            margin: 20px 0;
-            line-height: 1.2;
+            margin: 15px 0;
+            line-height: 1.3;
         }
 
         p { 
             color: #8a5e6a; 
-            font-size: 1.1rem; 
-            max-width: 300px; 
-            margin: 0 auto 30px auto;
+            font-size: 1.05rem; 
+            margin-bottom: 30px;
+            line-height: 1.6;
         }
 
         .small-pic { 
-            width: 120px; 
-            height: 120px; 
+            width: 110px; height: 110px; 
             margin-bottom: 10px; 
-            filter: drop-shadow(0 10px 15px rgba(201, 24, 74, 0.2));
+            filter: drop-shadow(0 8px 10px rgba(201, 24, 74, 0.15));
         }
 
         .btn-container {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 20px;
+            display: flex; gap: 15px; justify-content: center;
         }
 
         .btn {
-            padding: 16px 40px;
+            padding: 15px 35px;
             border: none;
             background: var(--thick-pink);
             color: white;
             font-family: 'Cinzel', serif;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.3s;
             border-radius: 50px;
-            letter-spacing: 2px;
-            font-size: 0.85rem;
-            box-shadow: 0 8px 20px rgba(201, 24, 74, 0.25);
+            letter-spacing: 1.5px;
+            font-size: 0.8rem;
+            box-shadow: 0 5px 15px rgba(201, 24, 74, 0.2);
         }
 
-        .btn:hover { 
-            transform: scale(1.1); 
-            background: #ff4d6d;
-            box-shadow: 0 12px 25px rgba(201, 24, 74, 0.4);
-        }
+        .btn:hover { transform: translateY(-3px); background: #ff4d6d; }
 
-        #no-btn { 
-            background: white; 
-            color: var(--thick-pink); 
-            border: 2px solid var(--soft-petal);
-        }
+        #no-btn { background: white; color: var(--thick-pink); border: 2px solid var(--light-pink); }
 
         .progress-bar {
-            position: fixed;
-            bottom: 40px;
-            display: flex;
-            gap: 8px;
+            position: fixed; bottom: 30px;
+            display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; width: 80%;
         }
 
         .dot { 
-            width: 10px; height: 10px; 
-            border-radius: 50%; 
-            background: var(--soft-petal); 
-            transition: 0.3s;
-            border: 1px solid rgba(201, 24, 74, 0.1);
+            width: 6px; height: 6px; border-radius: 50%; 
+            background: var(--light-pink); transition: 0.3s; 
         }
 
-        .active-dot { 
-            background: var(--thick-pink); 
-            transform: scale(1.5);
-            box-shadow: 0 0 10px rgba(201, 24, 74, 0.3);
-        }
+        .active-dot { background: var(--thick-pink); transform: scale(1.4); }
     </style>
 </head>
 <body>
@@ -152,11 +122,36 @@
     };
 
     const pages = [
-        { icon: icons.error, title: "Initializing", head: "Finding Perfection", sub: "Scanning the universe for the most beautiful girl...", btn: "Searching..." },
-        { icon: icons.heart, title: "Identity Confirmed", head: "It's Jebiksha!", sub: "No one else even comes close to your grace.", btn: "That's Me" },
-        { icon: icons.crown, title: "Royal Decree", head: "To My Queen", sub: "Jebiksha, you deserve the world and more.", btn: "Continue" },
-        { icon: icons.heart, title: "Chapter 1", head: "The Magic", sub: "Your smile is the only light I'll ever need.", btn: "Sweet" },
-        { icon: icons.heart, title: "Final Chapter", head: "One Question", sub: "Jebiksha, will you make my dreams come true?", btn: "YES", btnNo: "NO" }
+        { icon: icons.error, title: "Registry Error", head: "404 Page Not Found", sub: "The system cannot locate the most precious user.", btn: "Refresh System" },
+        { icon: icons.heart, title: "System Scan", head: "Jebiksha Detected", sub: "Elegance levels are off the charts today.", btn: "Continue" },
+        { icon: icons.crown, title: "Royal Note", head: "To My Queen", sub: "Jebiksha, your presence is requested.", btn: "I'm here" },
+        { icon: icons.heart, title: "Chapter 1", head: "A Rare Sight", sub: "In a world full of trends, you are a classic.", btn: "Tell me more" },
+        { icon: icons.heart, title: "Chapter 2", head: "The Magic", sub: "Did you know your smile is my favorite luxury?", btn: "Really?" },
+        { icon: icons.heart, title: "Chapter 3", head: "Scientific Fact", sub: "Thinking of you increases my happiness by 1000%.", btn: "That's sweet" },
+        { icon: icons.heart, title: "Chapter 4", head: "Your Grace", sub: "You carry yourself with such effortless beauty.", btn: "Go on..." },
+        { icon: icons.heart, title: "Chapter 5", head: "The Voice", sub: "Even a single 'Hello' from you makes my day.", btn: "Next page" },
+        { icon: icons.heart, title: "Chapter 6", head: "Unique", sub: "There isn't a single person like you, Jebiksha.", btn: "I know" },
+        { icon: icons.heart, title: "Chapter 7", head: "The Stars", sub: "They look at you to learn how to shine.", btn: "So poetic" },
+        { icon: icons.heart, title: "Chapter 8", head: "The Dream", sub: "Every time I dream of peace, I see you.", btn: "Is that so?" },
+        { icon: icons.heart, title: "Chapter 9", head: "The Spark", sub: "You have a light that never fades.", btn: "Keep talking" },
+        { icon: icons.heart, title: "Chapter 10", head: "Halfway Point", sub: "Are you enjoying this journey, my Queen?", btn: "Yes, I am" },
+        { icon: icons.heart, title: "Chapter 11", head: "The Calm", sub: "You are the quiet in the middle of a storm.", btn: "That's lovely" },
+        { icon: icons.heart, title: "Chapter 12", head: "The Strength", sub: "Your kindness is your greatest power.", btn: "Thank you" },
+        { icon: icons.heart, title: "Chapter 13", head: "The Style", sub: "Fashion changes, but your class is eternal.", btn: "Always" },
+        { icon: icons.heart, title: "Chapter 14", head: "My World", sub: "You've become the best part of my every day.", btn: "And you mine?" },
+        { icon: icons.heart, title: "Chapter 15", head: "The Laugh", sub: "It's the only melody I need on repeat.", btn: "Hehe, next" },
+        { icon: icons.heart, title: "Chapter 16", head: "The Look", sub: "One glance from you and I forget what to say.", btn: "Speechless?" },
+        { icon: icons.heart, title: "Chapter 17", head: "The Time", sub: "Time stops whenever I'm with you.", btn: "Tick Tock" },
+        { icon: icons.heart, title: "Chapter 18", head: "The Choice", sub: "If I had a billion choices, I'd pick you.", btn: "Every time?" },
+        { icon: icons.heart, title: "Chapter 19", head: "The Secret", sub: "I have a big question coming up soon.", btn: "I'm ready" },
+        { icon: icons.heart, title: "Chapter 20", head: "Almost There", sub: "Jebiksha, take a deep breath...", btn: "Okay..." },
+        { icon: icons.heart, title: "Chapter 21", head: "The Heart", sub: "It beats for no one but you.", btn: "Prove it" },
+        { icon: icons.heart, title: "Chapter 22", head: "The Poetry", sub: "You are the most beautiful poem ever written.", btn: "Read me" },
+        { icon: icons.heart, title: "Chapter 23", head: "The Diamond", sub: "Shining bright even in the dark.", btn: "Sparkle" },
+        { icon: icons.heart, title: "Chapter 24", head: "The Moon", sub: "Is jealous of how much I talk about you.", btn: "Poor Moon" },
+        { icon: icons.heart, title: "Chapter 25", head: "The Name", sub: "Jebiksha. It's the most beautiful sound.", btn: "Next" },
+        { icon: icons.gift, title: "The Moment", head: "Are You Ready?", sub: "The final page is waiting for your answer.", btn: "Let's do this" },
+        { icon: icons.ring, title: "The Question", head: "Will you be my Valentine?", sub: "Jebiksha, will you make me the luckiest?", btn: "YES", btnNo: "NO" }
     ];
 
     let current = 0;
@@ -177,7 +172,6 @@
         displayArea.innerHTML = `
             <div class="screen active">
                 <div class="gold-title">${p.title}</div>
-                <div class="name-tag">Jebiksha</div>
                 ${p.icon}
                 <h2>${p.head}</h2>
                 <p>${p.sub}</p>
@@ -209,19 +203,18 @@
     function handleYes() {
         displayArea.innerHTML = `
             <div class="screen active">
-                <div class="gold-title">Forever Starts Now</div>
-                <div class="name-tag">Jebiksha</div>
-                <div style="font-size:5rem; margin-bottom:20px;">🌹</div>
-                <h2>Thank You, My Queen!</h2>
-                <p>You've made me the happiest person in the world.</p>
-                <div style="font-size:2rem;">💖✨🎀</div>
+                <div class="gold-title">Official Decision</div>
+                <div style="font-size:4rem; margin: 20px 0;">💖</div>
+                <h2>Thank You, Jebiksha!</h2>
+                <p>You've made this Valentine's Day legendary.</p>
+                <div style="font-size:1.5rem;">✨🌸🎀🌸✨</div>
             </div>
         `;
         confetti({
             particleCount: 200,
-            spread: 90,
-            origin: { y: 0.7 },
-            colors: ['#c9184a', '#ff85a1', '#ffffff']
+            spread: 100,
+            origin: { y: 0.6 },
+            colors: ['#ff85a1', '#c9184a', '#ffffff']
         });
     }
 
