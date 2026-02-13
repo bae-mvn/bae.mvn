@@ -34,8 +34,8 @@
         .active { display: flex; }
 
         @keyframes smoothFloat {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .gold-title { 
@@ -66,6 +66,16 @@
             width: 110px; height: 110px; 
             margin-bottom: 10px; 
             filter: drop-shadow(0 8px 10px rgba(201, 24, 74, 0.15));
+        }
+
+        /* Styling for the new cartoon illustration */
+        .cartoon-img {
+            width: 220px;
+            height: auto;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            border: 4px solid white;
+            box-shadow: 0 10px 20px rgba(201, 24, 74, 0.2);
         }
 
         .btn-container {
@@ -123,35 +133,42 @@
 
     const pages = [
         { icon: icons.error, title: "Registry Error", head: "404 Page Not Found", sub: "The system cannot locate the most precious user.", btn: "Refresh System" },
-        { icon: icons.heart, title: "System Scan", head: "Jebiksha Detected", sub: "Elegance levels are off the charts today.", btn: "Continue" },
-        { icon: icons.crown, title: "Royal Note", head: "To My Queen", sub: "Jebiksha, your presence is requested.", btn: "I'm here" },
-        { icon: icons.heart, title: "Chapter 1", head: "A Rare Sight", sub: "In a world full of trends, you are a classic.", btn: "Tell me more" },
-        { icon: icons.heart, title: "Chapter 2", head: "The Magic", sub: "Did you know your smile is my favorite luxury?", btn: "Really?" },
-        { icon: icons.heart, title: "Chapter 3", head: "Scientific Fact", sub: "Thinking of you increases my happiness by 1000%.", btn: "That's sweet" },
-        { icon: icons.heart, title: "Chapter 4", head: "Your Grace", sub: "You carry yourself with such effortless beauty.", btn: "Go on..." },
-        { icon: icons.heart, title: "Chapter 5", head: "The Voice", sub: "Even a single 'Hello' from you makes my day.", btn: "Next page" },
-        { icon: icons.heart, title: "Chapter 6", head: "Unique", sub: "There isn't a single person like you, Jebiksha.", btn: "I know" },
-        { icon: icons.heart, title: "Chapter 7", head: "The Stars", sub: "They look at you to learn how to shine.", btn: "So poetic" },
-        { icon: icons.heart, title: "Chapter 8", head: "The Dream", sub: "Every time I dream of peace, I see you.", btn: "Is that so?" },
-        { icon: icons.heart, title: "Chapter 9", head: "The Spark", sub: "You have a light that never fades.", btn: "Keep talking" },
-        { icon: icons.heart, title: "Chapter 10", head: "Halfway Point", sub: "Are you enjoying this journey, my Queen?", btn: "Yes, I am" },
-        { icon: icons.heart, title: "Chapter 11", head: "The Calm", sub: "You are the quiet in the middle of a storm.", btn: "That's lovely" },
-        { icon: icons.heart, title: "Chapter 12", head: "The Strength", sub: "Your kindness is your greatest power.", btn: "Thank you" },
-        { icon: icons.heart, title: "Chapter 13", head: "The Style", sub: "Fashion changes, but your class is eternal.", btn: "Always" },
-        { icon: icons.heart, title: "Chapter 14", head: "My World", sub: "You've become the best part of my every day.", btn: "And you mine?" },
-        { icon: icons.heart, title: "Chapter 15", head: "The Laugh", sub: "It's the only melody I need on repeat.", btn: "Hehe, next" },
-        { icon: icons.heart, title: "Chapter 16", head: "The Look", sub: "One glance from you and I forget what to say.", btn: "Speechless?" },
-        { icon: icons.heart, title: "Chapter 17", head: "The Time", sub: "Time stops whenever I'm with you.", btn: "Tick Tock" },
-        { icon: icons.heart, title: "Chapter 18", head: "The Choice", sub: "If I had a billion choices, I'd pick you.", btn: "Every time?" },
-        { icon: icons.heart, title: "Chapter 19", head: "The Secret", sub: "I have a big question coming up soon.", btn: "I'm ready" },
-        { icon: icons.heart, title: "Chapter 20", head: "Almost There", sub: "Jebiksha, take a deep breath...", btn: "Okay..." },
-        { icon: icons.heart, title: "Chapter 21", head: "The Heart", sub: "It beats for no one but you.", btn: "Prove it" },
-        { icon: icons.heart, title: "Chapter 22", head: "The Poetry", sub: "You are the most beautiful poem ever written.", btn: "Read me" },
-        { icon: icons.heart, title: "Chapter 23", head: "The Diamond", sub: "Shining bright even in the dark.", btn: "Sparkle" },
-        { icon: icons.heart, title: "Chapter 24", head: "The Moon", sub: "Is jealous of how much I talk about you.", btn: "Poor Moon" },
-        { icon: icons.heart, title: "Chapter 25", head: "The Name", sub: "Jebiksha. It's the most beautiful sound.", btn: "Next" },
-        { icon: icons.gift, title: "The Moment", head: "Are You Ready?", sub: "The final page is waiting for your answer.", btn: "Let's do this" },
-        { icon: icons.ring, title: "The Question", head: "Will you be my Valentine?", sub: "Jebiksha, will you make me the luckiest?", btn: "YES", btnNo: "NO" }
+        { icon: icons.heart, title: "System Scan", head: "Jebiksha Detected", sub: "Elegance levels are off the charts today. ✨", btn: "Continue" },
+        { icon: icons.crown, title: "Royal Note", head: "To My Queen", sub: "Jebiksha, your presence is requested. 👑", btn: "I'm here" },
+        { icon: icons.heart, title: "Chapter 1", head: "A Rare Sight", sub: "In a world full of trends, you are a classic. 👗", btn: "Tell me more" },
+        { icon: icons.heart, title: "Chapter 2", head: "The Magic", sub: "Did you know your smile is my favorite luxury? 😊", btn: "Really?" },
+        { icon: icons.heart, title: "Chapter 3", head: "Scientific Fact", sub: "Thinking of you increases my happiness by 1000%. 📊", btn: "That's sweet" },
+        { icon: icons.heart, title: "Chapter 4", head: "Your Grace", sub: "You carry yourself with such effortless beauty. 🌸", btn: "Go on..." },
+        { icon: icons.heart, title: "Chapter 5", head: "The Voice", sub: "Even a single 'Hello' from you makes my day. 📞", btn: "Next page" },
+        { icon: icons.heart, title: "Chapter 6", head: "Unique", sub: "There isn't a single person like you, Jebiksha. 💎", btn: "I know" },
+        { icon: icons.heart, title: "Chapter 7", head: "The Stars", sub: "They look at you to learn how to shine. ⭐", btn: "So poetic" },
+        { icon: icons.heart, title: "Chapter 8", head: "The Dream", sub: "Every time I dream of peace, I see you. ☁️", btn: "Is that so?" },
+        { icon: icons.heart, title: "Chapter 9", head: "The Spark", sub: "You have a light that never fades. 🕯️", btn: "Keep talking" },
+        { icon: icons.heart, title: "Chapter 10", head: "Halfway Point", sub: "Are you enjoying this journey, my Queen? 💖", btn: "Yes, I am" },
+        { icon: icons.heart, title: "Chapter 11", head: "The Calm", sub: "You are the quiet in the middle of a storm. 🌊", btn: "That's lovely" },
+        { icon: icons.heart, title: "Chapter 12", head: "The Strength", sub: "Your kindness is your greatest power. 💪", btn: "Thank you" },
+        { icon: icons.heart, title: "Chapter 13", head: "The Style", sub: "Fashion changes, but your class is eternal. 👠", btn: "Always" },
+        { icon: icons.heart, title: "Chapter 14", head: "My World", sub: "You've become the best part of my every day. 🌍", btn: "And you mine?" },
+        { icon: icons.heart, title: "Chapter 15", head: "The Laugh", sub: "It's the only melody I need on repeat. 🎶", btn: "Hehe, next" },
+        { icon: icons.heart, title: "Chapter 16", head: "The Look", sub: "One glance from you and I forget what to say. 👁️", btn: "Speechless?" },
+        { icon: icons.heart, title: "Chapter 17", head: "The Time", sub: "Time stops whenever I'm with you. ⏳", btn: "Tick Tock" },
+        { icon: icons.heart, title: "Chapter 18", head: "The Choice", sub: "If I had a billion choices, I'd pick you. ✅", btn: "Every time?" },
+        { icon: icons.heart, title: "Chapter 19", head: "The Secret", sub: "I have a big question coming up soon. 🤫", btn: "I'm ready" },
+        { icon: icons.heart, title: "Chapter 20", head: "Almost There", sub: "Jebiksha, take a deep breath... 🌬️", btn: "Okay..." },
+        { icon: icons.heart, title: "Chapter 21", head: "The Heart", sub: "It beats for no one but you. 💓", btn: "Prove it" },
+        { icon: icons.heart, title: "Chapter 22", head: "The Poetry", sub: "You are the most beautiful poem ever written. 📖", btn: "Read me" },
+        { icon: icons.heart, title: "Chapter 23", head: "The Diamond", sub: "Shining bright even in the dark. 🎇", btn: "Sparkle" },
+        { icon: icons.heart, title: "Chapter 24", head: "The Moon", sub: "Is jealous of how much I talk about you. 🌙", btn: "Poor Moon" },
+        { icon: icons.heart, title: "Chapter 25", head: "The Name", sub: "Jebiksha. It's the most beautiful sound. 🔔", btn: "Next" },
+        { icon: icons.gift, title: "The Moment", head: "Are You Ready?", sub: "The final page is waiting for your answer. 🎁", btn: "Let's do this" },
+        { 
+            icon: `<img src="[attachment_0](attachment)" class="cartoon-img">`, 
+            title: "The Question", 
+            head: "Will you be my Valentine?", 
+            sub: "Jebiksha, will you make me the luckiest? 💍", 
+            btn: "YES", 
+            btnNo: "NO" 
+        }
     ];
 
     let current = 0;
@@ -204,9 +221,9 @@
         displayArea.innerHTML = `
             <div class="screen active">
                 <div class="gold-title">Official Decision</div>
-                <div style="font-size:4rem; margin: 20px 0;">💖</div>
+                <div style="font-size:4rem; margin: 20px 0;">💒</div>
                 <h2>Thank You, Jebiksha!</h2>
-                <p>You've made this Valentine's Day legendary.</p>
+                <p>You've made this Valentine's Day legendary. 💖</p>
                 <div style="font-size:1.5rem;">✨🌸🎀🌸✨</div>
             </div>
         `;
