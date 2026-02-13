@@ -1,172 +1,218 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cinematic Proposal Experience</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script><script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script><style>
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+<title>A Special Moment</title>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<style>
 body{
-font-family:'Poppins',sans-serif;
-background:linear-gradient(135deg,#12001f,#2a003f,#000);
-color:white;
-overflow-x:hidden;
-}
-section{min-height:100vh;padding:80px 20px;position:relative}
-h1,h2,h3{font-family:'Playfair Display',serif}
-
-.glass{
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(15px);
-border:1px solid rgba(255,255,255,0.15);
-border-radius:20px;
-padding:30px;
+margin:0;
+overflow:hidden;
+font-family:Georgia,serif;
+background:radial-gradient(circle,#ffe6f0,#ffc0cb);
+color:#6b2c4a;
+text-align:center;
 }
 
-.btn{
-padding:14px 30px;
+/* Pages */
+.page{
+display:none;
+padding:60px 20px;
+animation:fade 1.2s ease;
+}
+
+.page.active{
+display:block;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+button{
+padding:12px 30px;
 border:none;
-border-radius:40px;
-background:linear-gradient(45deg,#ff4ecb,#ffd6f7);
+border-radius:30px;
+background:#ff69b4;
 color:white;
-font-size:18px;
+font-size:16px;
 cursor:pointer;
-box-shadow:0 0 20px rgba(255,100,200,0.5);
-transition:.3s;
-}
-.btn:hover{transform:scale(1.1);box-shadow:0 0 40px rgba(255,100,200,1)}
-
-canvas{position:fixed;top:0;left:0;z-index:-1}
-
-.cursor{
-width:20px;height:20px;border-radius:50%;
-position:fixed;pointer-events:none;
-background:radial-gradient(circle,#ff66cc,transparent);
-mix-blend-mode:screen;
-z-index:9999;
+margin-top:25px;
+transition:0.3s;
 }
 
-.hero{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.typing{font-size:2rem;margin-bottom:30px}
+button:hover{
+transform:scale(1.08);
+}
 
-.letter{transform:rotateX(90deg);transform-origin:top}
+/* Ring */
+.ringBox{
+position:fixed;
+bottom:-400px;
+left:50%;
+transform:translateX(-50%);
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 0 40px #ff69b4;
+transition:1.2s;
+}
 
-.gift{font-size:80px;cursor:pointer;text-align:center}
+.ringBox.show{
+bottom:120px;
+}
 
-.proposal{text-align:center}
-
-/* 3D glowing ring */
-.ring-wrapper{width:140px;height:140px;margin:auto;position:relative}
 .ring{
-width:100%;height:100%;border-radius:50%;
-border:6px solid gold;
-box-shadow:0 0 15px gold,0 0 40px rgba(255,215,0,0.6),inset 0 0 20px rgba(255,255,255,0.5);
-animation:spin 6s linear infinite, float 3s ease-in-out infinite;
+font-size:70px;
+animation:spin 4s linear infinite;
 }
-.ring::after{
-content:'';position:absolute;top:-18px;left:50%;transform:translateX(-50%);
-width:24px;height:24px;border-radius:50%;
-background:radial-gradient(circle,#fff,#ffd700);
-box-shadow:0 0 25px white,0 0 60px gold;
+
+@keyframes spin{
+from{transform:rotateY(0);}
+to{transform:rotateY(360deg);}
 }
-@keyframes spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
 
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:2000}
-.modal-content{max-width:400px;text-align:center}
+/* Firework */
+.fire{
+position:absolute;
+width:6px;
+height:6px;
+border-radius:50%;
+animation:explode 1s linear forwards;
+}
 
-.heart{position:absolute;color:#ff7bd5;animation:fall linear forwards}
-@keyframes fall{from{transform:translateY(-10vh)}to{transform:translateY(110vh)}}
+@keyframes explode{
+from{transform:translate(0,0);}
+to{transform:translate(var(--x),var(--y));opacity:0;}
+}
+</style>
+</head>
 
-.meter{position:fixed;bottom:0;left:0;width:100%;height:8px;background:#222;z-index:999}
-.meter-fill{height:100%;width:0%;background:linear-gradient(90deg,#ff4ecb,#fff)}
+<body>
 
-.ending{text-align:center;font-size:2rem}
-#noBtn{position:relative}
-
-</style></head>
-<body><div class="cursor"></div>
-<canvas id="particles"></canvas><audio id="bgMusic" loop>
-<source src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9c9d5b.mp3">
-</audio><!-- HERO --><section class="hero">
-<div class="typing" id="typing"></div>
-<button class="btn" onclick="startExperience()">Enter My Heart</button>
-<br><br>
-<button class="btn" onclick="toggleMusic()">Music Toggle</button>
-</section><!-- LOVE LETTER --><section style="display:flex;align-items:center;justify-content:center">
-<div class="glass letter" id="letter">
-<h2>Message From My Heart</h2>
-<p>This is where your emotional message appears...</p>
+<div class="page active">
+<h1 id="intro"></h1>
+<button onclick="nextPage()">Start</button>
 </div>
-</section><!-- SURPRISE --><section style="text-align:center">
-<h2>Special Surprise</h2>
-<div id="countdown"></div>
-<div class="gift" onclick="openGift()">🎁</div>
-<div id="quote"></div>
-</section><!-- PROPOSAL --><section class="proposal">
-<div class="ring-wrapper"><div class="ring"></div></div>
-<h2>Will you be mine forever?</h2>
-<button class="btn" onclick="openProposal()">Open Proposal</button>
-</section><div class="modal" id="proposalModal">
-<div class="glass modal-content">
-<h2>Will you marry me?</h2>
-<button class="btn" onclick="acceptLove()">YES</button>
-<button class="btn" id="noBtn">NO</button>
-<br><br>
-<input placeholder="Send a message" id="msgInput">
-<button class="btn" onclick="sendMessage()">Send Message</button>
+
+<div class="page">
+<h1>You came into my life quietly 🌸</h1>
+<button onclick="nextPage()">Next</button>
 </div>
-</div><!-- END --><section class="ending">
-Thank you for being my forever ❤️
-</section><div class="meter"><div class="meter-fill" id="loveFill"></div></div><script>
-try{ emailjs.init("YOUR_PUBLIC_KEY"); }catch(e){}
 
-const text="I have something special for you…";
-let i=0;(function type(){ if(i<text.length){typing.textContent+=text[i++];setTimeout(type,50);} })();
+<div class="page">
+<h1>And somehow… everything felt softer.</h1>
+<button onclick="nextPage()">Next</button>
+</div>
 
-function toggleMusic(){const m=bgMusic;m.paused?m.play():m.pause();}
-function startExperience(){window.scrollTo({top:window.innerHeight});}
+<div class="page">
+<h1>I didn’t expect this feeling.</h1>
+<button onclick="nextPage()">Next</button>
+</div>
 
-gsap.to("#letter",{rotateX:0,duration:1.5,scrollTrigger:{trigger:"#letter",start:"top 80%"}})
+<div class="page">
+<h1>But I don’t want to ignore it anymore.</h1>
+<button onclick="nextPage()">Next</button>
+</div>
 
-let time=5;
-const timer=setInterval(()=>{if(time>=0){countdown.textContent="Opening in "+time;time--}else clearInterval(timer)},1000)
+<div class="page">
+<h1>Before I ask…</h1>
+<textarea id="herMessage" placeholder="Write something..." style="width:80%;padding:12px;border-radius:10px;border:none;"></textarea>
+<br>
+<button onclick="startCountdown()">Continue</button>
+</div>
 
-function openGift(){quote.textContent="You are my greatest gift ❤️";confettiBurst(40)}
-function openProposal(){proposalModal.style.display="flex"}
-function acceptLove(){confettiBurst(120);alert("Forever begins now ❤️")}
+<div class="page" id="countPage">
+<h1>Get Ready...</h1>
+<h1 id="countdown">3</h1>
+</div>
 
-const noBtn=document.getElementById("noBtn");
-noBtn.addEventListener('mouseenter',()=>{
-const x=Math.random()*200-100;const y=Math.random()*120-60;
-noBtn.style.transform=`translate(${x}px,${y}px)`;
+<div class="ringBox" id="ringBox">
+<div class="ring">💍</div>
+<h1>Will You Be Mine?</h1>
+<button onclick="choose('YES ❤️')">Yes</button>
+<button onclick="choose('NO 💔')">No</button>
+</div>
+
+<script>
+
+/* Safe EmailJS init */
+try{
+emailjs.init("ZBpSMBnfdEQE_bwCn");
+}catch(e){}
+
+/* Page control */
+let current=0;
+function nextPage(){
+let pages=document.querySelectorAll(".page");
+pages[current].classList.remove("active");
+current++;
+pages[current].classList.add("active");
+}
+
+/* Intro typing */
+let text="There are moments that quietly change everything.";
+let i=0;
+function type(){
+if(i<text.length){
+document.getElementById("intro").innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,40);
+}
+}
+type();
+
+/* Countdown */
+function startCountdown(){
+nextPage();
+let count=3;
+let cd=document.getElementById("countdown");
+let interval=setInterval(()=>{
+count--;
+cd.innerHTML=count;
+if(count==0){
+clearInterval(interval);
+document.getElementById("ringBox").classList.add("show");
+}
+},1000);
+}
+
+/* Choose */
+function choose(answer){
+
+let msg=document.getElementById("herMessage").value;
+
+try{
+emailjs.send("service_vi8o9j4","template_1uului7",{
+message:"Answer: "+answer+" | Message: "+msg
 });
+}catch(e){}
 
-function sendMessage(){
-const msg=msgInput.value.trim();
-if(!msg)return alert("Write a message ❤️");
-emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{message:msg})
-.then(()=>alert("Message sent ❤️"))
-.catch(()=>alert("Email setup needed"));
+if(answer.includes("YES")){
+for(let i=0;i<150;i++){
+let f=document.createElement("div");
+f.className="fire";
+f.style.left="50%";
+f.style.top="50%";
+f.style.background="hsl("+Math.random()*360+",100%,70%)";
+f.style.setProperty('--x',(Math.random()*800-400)+"px");
+f.style.setProperty('--y',(Math.random()*800-400)+"px");
+document.body.appendChild(f);
 }
+setTimeout(()=>{
+document.body.innerHTML="<h1 style='margin-top:40vh;'>A Beautiful Beginning 🌸</h1>";
+},1500);
+}else{
+setTimeout(()=>{
+document.body.innerHTML="<h1 style='margin-top:40vh;'>No matter what, you are respected 🌙</h1>";
+},1000);
+}
+}
+</script>
 
-const canvas=document.getElementById('particles');
-const ctx=canvas.getContext('2d');
-let w,h,particles=[];
-function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight}
-resize();addEventListener('resize',resize);
-const particleCount=window.innerWidth<600?40:80;
-for(let i=0;i<particleCount;i++)particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+0.5,s:Math.random()*0.4+0.1});
-function animateParticles(){ctx.clearRect(0,0,w,h);ctx.fillStyle="#ff66cc";for(const p of particles){ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.y+=p.s;if(p.y>h)p.y=0;}requestAnimationFrame(animateParticles);}animateParticles();
-
-let cx=0,cy=0,tx=0,ty=0;
-document.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});
-function cursorLoop(){cx+=(tx-cx)*0.15;cy+=(ty-cy)*0.15;document.querySelector('.cursor').style.transform=`translate(${cx}px,${cy}px)`;requestAnimationFrame(cursorLoop)}cursorLoop();
-
-function confettiBurst(count){for(let i=0;i<count;i++){const el=document.createElement('div');el.className='heart';el.textContent='❤';el.style.left=Math.random()*100+'vw';el.style.animationDuration=Math.random()*2+2+'s';document.body.appendChild(el);setTimeout(()=>el.remove(),4000);}}
-
-let love=0;setInterval(()=>{if(love<100){love+=0.2;loveFill.style.width=love+'%'}},40);
-document.addEventListener('keydown',e=>{if(e.key==='L')alert('Secret message: You are my destiny ❤️')});
-document.addEventListener('touchstart',()=>confettiBurst(15),{passive:true});
-
-</script></body>
+</body>
 </html>
