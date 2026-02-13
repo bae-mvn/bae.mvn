@@ -8,16 +8,16 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --royal-red: #72001a;
+            --royal-red: #800020;
             --gold-leaf: #d4af37;
             --silk-white: #fffcf9;
-            --single-bg: #1a0105; /* Single, solid luxury deep maroon */
+            --valentine-pink: #ffe5ec; /* Elegant, light Valentine background */
         }
 
         body, html {
             margin: 0; padding: 0; height: 100%;
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--single-bg); /* Clean single background */
+            background-color: var(--valentine-pink); /* Single light pink background */
             display: flex; justify-content: center; align-items: center;
             overflow: hidden;
         }
@@ -27,7 +27,7 @@
             width: 380px;
             height: 620px;
             border-radius: 30px;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+            box-shadow: 0 25px 50px rgba(128, 0, 32, 0.1); /* Soft shadow to match theme */
             padding: 40px;
             display: flex;
             flex-direction: column;
@@ -41,13 +41,13 @@
         .screen { display: none; width: 100%; height: 100%; flex-direction: column; justify-content: center; align-items: center; animation: fadeIn 0.8s ease; }
         .active { display: flex; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
 
         .name-tag { font-family: 'Great Vibes', cursive; color: var(--royal-red); font-size: 3.2rem; margin: 10px 0; }
         .gold-title { font-family: 'Cinzel', serif; color: var(--gold-leaf); letter-spacing: 3px; font-size: 0.8rem; margin-bottom: 10px; }
         
         h2 { font-weight: 500; color: #333; font-size: 1.3rem; margin: 15px 0; line-height: 1.4; }
-        .small-pic { width: 80px; height: 80px; margin-bottom: 20px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
+        .small-pic { width: 80px; height: 80px; margin-bottom: 20px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.05)); }
 
         .btn {
             padding: 12px 30px;
@@ -65,10 +65,10 @@
         }
         .btn:hover { background: var(--gold-leaf); color: white; transform: translateY(-3px); }
 
-        #no-btn { background: #f9f9f9; border-color: #ddd; color: #999; }
+        #no-btn { background: #fdfdfd; border-color: #ddd; color: #999; }
 
         .progress { width: 100%; display: flex; justify-content: center; gap: 4px; margin-top: 20px; }
-        .dot { width: 5px; height: 5px; border-radius: 50%; background: #ddd; transition: 0.3s; }
+        .dot { width: 5px; height: 5px; border-radius: 50%; background: #eec1cc; transition: 0.3s; }
         .active-dot { background: var(--gold-leaf); transform: scale(1.5); }
     </style>
 </head>
