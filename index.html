@@ -2,217 +2,286 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Special Moment</title>
+<title>For You ❤️</title>
 
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box}
+
 body{
-margin:0;
+height:100vh;
 overflow:hidden;
+background:black;
 font-family:Georgia,serif;
-background:radial-gradient(circle,#ffe6f0,#ffc0cb);
-color:#6b2c4a;
-text-align:center;
+color:gold;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
-/* Pages */
+/* ===== GOLD PARTICLES ===== */
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:0;
+}
+
+/* ===== BOOK ===== */
+.book{
+width:320px;
+height:500px;
+position:relative;
+perspective:2000px;
+z-index:2;
+}
+
 .page{
-display:none;
-padding:60px 20px;
-animation:fade 1.2s ease;
+position:absolute;
+width:100%;
+height:100%;
+background:#111;
+border:1px solid gold;
+padding:30px;
+transform-origin:left;
+transition:1s;
+backface-visibility:hidden;
+box-shadow:0 0 25px gold;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+font-size:20px;
 }
 
-.page.active{
-display:block;
-}
-
-@keyframes fade{
-from{opacity:0;transform:translateY(40px);}
-to{opacity:1;transform:translateY(0);}
+.page.flipped{
+transform:rotateY(-180deg);
 }
 
 button{
-padding:12px 30px;
+background:gold;
 border:none;
-border-radius:30px;
-background:#ff69b4;
-color:white;
-font-size:16px;
+padding:12px 25px;
+margin-top:20px;
 cursor:pointer;
-margin-top:25px;
-transition:0.3s;
+font-weight:bold;
 }
 
-button:hover{
-transform:scale(1.08);
-}
-
-/* Ring */
+/* ===== RING MODAL ===== */
 .ringBox{
 position:fixed;
-bottom:-400px;
-left:50%;
-transform:translateX(-50%);
-background:white;
-padding:40px;
-border-radius:20px;
-box-shadow:0 0 40px #ff69b4;
-transition:1.2s;
-}
-
-.ringBox.show{
-bottom:120px;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:5;
 }
 
 .ring{
-font-size:70px;
-animation:spin 4s linear infinite;
+font-size:90px;
+animation:pulse 1.2s infinite;
 }
 
-@keyframes spin{
-from{transform:rotateY(0);}
-to{transform:rotateY(360deg);}
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.2)}
+100%{transform:scale(1)}
 }
 
-/* Firework */
-.fire{
-position:absolute;
-width:6px;
-height:6px;
-border-radius:50%;
-animation:explode 1s linear forwards;
+/* ===== FIREWORKS ===== */
+.fireworks{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+z-index:6;
 }
 
-@keyframes explode{
-from{transform:translate(0,0);}
-to{transform:translate(var(--x),var(--y));opacity:0;}
+/* ===== MESSAGE BOX ===== */
+textarea{
+width:250px;
+height:100px;
+margin-top:10px;
+}
+
+/* ===== LOADER ===== */
+.loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:28px;
+z-index:10;
+animation:fadeOut 3s forwards;
+animation-delay:2s;
+}
+
+@keyframes fadeOut{
+to{opacity:0;visibility:hidden}
 }
 </style>
 </head>
 
 <body>
 
-<div class="page active">
-<h1 id="intro"></h1>
-<button onclick="nextPage()">Start</button>
+<div class="loader">Opening your story...</div>
+
+<canvas id="particles"></canvas>
+
+<div class="book" id="book">
+
+<div class="page" onclick="next()">Every story has a beginning...</div>
+
+<div class="page" onclick="next()">Some moments change everything...</div>
+
+<div class="page" onclick="next()">Some people feel like destiny...</div>
+
+<div class="page" onclick="next()">And some smiles stay forever...</div>
+
+<div class="page" onclick="next()">
+Your message here... ❤️
 </div>
 
-<div class="page">
-<h1>You came into my life quietly 🌸</h1>
-<button onclick="nextPage()">Next</button>
+<div class="page" onclick="showRing()">
+I have one question for you...
 </div>
 
-<div class="page">
-<h1>And somehow… everything felt softer.</h1>
-<button onclick="nextPage()">Next</button>
 </div>
 
-<div class="page">
-<h1>I didn’t expect this feeling.</h1>
-<button onclick="nextPage()">Next</button>
-</div>
-
-<div class="page">
-<h1>But I don’t want to ignore it anymore.</h1>
-<button onclick="nextPage()">Next</button>
-</div>
-
-<div class="page">
-<h1>Before I ask…</h1>
-<textarea id="herMessage" placeholder="Write something..." style="width:80%;padding:12px;border-radius:10px;border:none;"></textarea>
-<br>
-<button onclick="startCountdown()">Continue</button>
-</div>
-
-<div class="page" id="countPage">
-<h1>Get Ready...</h1>
-<h1 id="countdown">3</h1>
-</div>
-
+<!-- RING PROPOSAL -->
 <div class="ringBox" id="ringBox">
 <div class="ring">💍</div>
-<h1>Will You Be Mine?</h1>
-<button onclick="choose('YES ❤️')">Yes</button>
-<button onclick="choose('NO 💔')">No</button>
+<h2>Will you be mine?</h2>
+
+<button onclick="yes()">YES ❤️</button>
+<button onclick="no()">NO</button>
+
+<br>
+<textarea id="msg" placeholder="Write your message..."></textarea>
 </div>
+
+<canvas class="fireworks" id="fireworks"></canvas>
 
 <script>
 
-/* Safe EmailJS init */
-try{
-emailjs.init("ZBpSMBnfdEQE_bwCn");
-}catch(e){}
+/* ===== EMAILJS ===== */
+(function(){
+emailjs.init("YOUR_PUBLIC_KEY");
+})();
 
-/* Page control */
-let current=0;
-function nextPage(){
+/* ===== PAGE FLIP ===== */
 let pages=document.querySelectorAll(".page");
-pages[current].classList.remove("active");
-current++;
-pages[current].classList.add("active");
-}
+let index=0;
 
-/* Intro typing */
-let text="There are moments that quietly change everything.";
-let i=0;
-function type(){
-if(i<text.length){
-document.getElementById("intro").innerHTML+=text.charAt(i);
-i++;
-setTimeout(type,40);
+function next(){
+if(index<pages.length){
+pages[index].classList.add("flipped");
+index++;
 }
 }
-type();
 
-/* Countdown */
-function startCountdown(){
-nextPage();
-let count=3;
-let cd=document.getElementById("countdown");
-let interval=setInterval(()=>{
-count--;
-cd.innerHTML=count;
-if(count==0){
-clearInterval(interval);
-document.getElementById("ringBox").classList.add("show");
-}
-},1000);
+/* ===== RING ===== */
+function showRing(){
+document.getElementById("ringBox").style.display="flex";
 }
 
-/* Choose */
-function choose(answer){
+/* ===== YES ===== */
+function yes(){
+sendMail("YES");
+startFireworks();
+}
 
-let msg=document.getElementById("herMessage").value;
+/* ===== NO ===== */
+function no(){
+sendMail("NO");
+alert("Thank you for your honesty 💛");
+}
 
-try{
-emailjs.send("service_vi8o9j4","template_1uului7",{
-message:"Answer: "+answer+" | Message: "+msg
+/* ===== SEND EMAIL ===== */
+function sendMail(answer){
+let message=document.getElementById("msg").value;
+
+emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{
+answer:answer,
+message:message
 });
-}catch(e){}
+}
 
-if(answer.includes("YES")){
-for(let i=0;i<150;i++){
-let f=document.createElement("div");
-f.className="fire";
-f.style.left="50%";
-f.style.top="50%";
-f.style.background="hsl("+Math.random()*360+",100%,70%)";
-f.style.setProperty('--x',(Math.random()*800-400)+"px");
-f.style.setProperty('--y',(Math.random()*800-400)+"px");
-document.body.appendChild(f);
+/* ===== GOLD PARTICLES BACKGROUND ===== */
+let canvas=document.getElementById("particles");
+let ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let p=[];
+for(let i=0;i<120;i++){
+p.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2,
+s:Math.random()*1
+});
 }
-setTimeout(()=>{
-document.body.innerHTML="<h1 style='margin-top:40vh;'>A Beautiful Beginning 🌸</h1>";
-},1500);
-}else{
-setTimeout(()=>{
-document.body.innerHTML="<h1 style='margin-top:40vh;'>No matter what, you are respected 🌙</h1>";
-},1000);
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="gold";
+p.forEach(a=>{
+ctx.beginPath();
+ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+ctx.fill();
+a.y+=a.s;
+if(a.y>canvas.height)a.y=0;
+});
+requestAnimationFrame(animate);
 }
+animate();
+
+/* ===== FIREWORKS ===== */
+let fcanvas=document.getElementById("fireworks");
+let fctx=fcanvas.getContext("2d");
+fcanvas.width=window.innerWidth;
+fcanvas.height=window.innerHeight;
+
+let sparks=[];
+
+function startFireworks(){
+for(let i=0;i<200;i++){
+sparks.push({
+x:window.innerWidth/2,
+y:window.innerHeight/2,
+vx:(Math.random()-0.5)*8,
+vy:(Math.random()-0.5)*8,
+life:100
+});
 }
+drawFireworks();
+}
+
+function drawFireworks(){
+fctx.clearRect(0,0,fcanvas.width,fcanvas.height);
+sparks.forEach(s=>{
+fctx.fillStyle="gold";
+fctx.fillRect(s.x,s.y,3,3);
+s.x+=s.vx;
+s.y+=s.vy;
+s.life--;
+});
+sparks=sparks.filter(s=>s.life>0);
+if(sparks.length>0)requestAnimationFrame(drawFireworks);
+}
+
 </script>
-
 </body>
 </html>
