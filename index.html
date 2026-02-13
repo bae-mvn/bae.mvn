@@ -34,17 +34,30 @@
         .active { display: flex; }
 
         @keyframes smoothFloat {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .gold-title { 
+        .emoji-display {
+            font-size: 5rem;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 5px 10px rgba(201, 24, 74, 0.2));
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .chapter-label { 
             font-family: 'Cinzel', serif; 
             color: var(--candy-pink); 
             letter-spacing: 4px; 
             font-size: 0.8rem; 
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         
         h2 { 
@@ -60,22 +73,7 @@
             font-size: 1.05rem; 
             margin-bottom: 30px;
             line-height: 1.6;
-        }
-
-        .small-pic { 
-            width: 110px; height: 110px; 
-            margin-bottom: 10px; 
-            filter: drop-shadow(0 8px 10px rgba(201, 24, 74, 0.15));
-        }
-
-        /* Styling for the new cartoon illustration */
-        .cartoon-img {
-            width: 220px;
-            height: auto;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            border: 4px solid white;
-            box-shadow: 0 10px 20px rgba(201, 24, 74, 0.2);
+            font-weight: 500;
         }
 
         .btn-container {
@@ -93,17 +91,22 @@
             transition: 0.3s;
             border-radius: 50px;
             letter-spacing: 1.5px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             box-shadow: 0 5px 15px rgba(201, 24, 74, 0.2);
         }
 
         .btn:hover { transform: translateY(-3px); background: #ff4d6d; }
 
-        #no-btn { background: white; color: var(--thick-pink); border: 2px solid var(--light-pink); }
+        #no-btn { 
+            background: white; 
+            color: var(--thick-pink); 
+            border: 2px solid var(--light-pink); 
+            transition: 0.1s;
+        }
 
         .progress-bar {
             position: fixed; bottom: 30px;
-            display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; width: 80%;
+            display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; width: 85%;
         }
 
         .dot { 
@@ -111,7 +114,7 @@
             background: var(--light-pink); transition: 0.3s; 
         }
 
-        .active-dot { background: var(--thick-pink); transform: scale(1.4); }
+        .active-dot { background: var(--thick-pink); transform: scale(1.5); }
     </style>
 </head>
 <body>
@@ -123,52 +126,37 @@
     <div class="progress-bar" id="progress-dots"></div>
 
 <script>
-    const icons = {
-        error: `<svg class="small-pic" viewBox="0 0 24 24" fill="none" stroke="#c9184a" stroke-width="1.5"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`,
-        heart: `<svg class="small-pic" viewBox="0 0 24 24" fill="#c9184a"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
-        crown: `<svg class="small-pic" viewBox="0 0 24 24" fill="#ff85a1"><path d="M5 16L3 5L8.5 10L12 4L15.5 10L21 5L19 16H5M19 19C19 19.6 18.6 20 18 20H6C5.4 20 5 19.6 5 19V18H19V19Z"/></svg>`,
-        ring: `<svg class="small-pic" viewBox="0 0 24 24" fill="none" stroke="#c9184a" stroke-width="2"><circle cx="12" cy="14" r="6"/><path d="M12 8V4m-2 0h4"/></svg>`,
-        gift: `<svg class="small-pic" viewBox="0 0 24 24" fill="#c9184a"><path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.65-.5-.65C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.1 0-2 .9-2 2v2c0 .55.45 1 1 1h1v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V11h1c.55 0 1-.45 1-1V8c0-1.1-.9-2-2-2z"/></svg>`
-    };
-
     const pages = [
-        { icon: icons.error, title: "Registry Error", head: "404 Page Not Found", sub: "The system cannot locate the most precious user.", btn: "Refresh System" },
-        { icon: icons.heart, title: "System Scan", head: "Jebiksha Detected", sub: "Elegance levels are off the charts today. ✨", btn: "Continue" },
-        { icon: icons.crown, title: "Royal Note", head: "To My Queen", sub: "Jebiksha, your presence is requested. 👑", btn: "I'm here" },
-        { icon: icons.heart, title: "Chapter 1", head: "A Rare Sight", sub: "In a world full of trends, you are a classic. 👗", btn: "Tell me more" },
-        { icon: icons.heart, title: "Chapter 2", head: "The Magic", sub: "Did you know your smile is my favorite luxury? 😊", btn: "Really?" },
-        { icon: icons.heart, title: "Chapter 3", head: "Scientific Fact", sub: "Thinking of you increases my happiness by 1000%. 📊", btn: "That's sweet" },
-        { icon: icons.heart, title: "Chapter 4", head: "Your Grace", sub: "You carry yourself with such effortless beauty. 🌸", btn: "Go on..." },
-        { icon: icons.heart, title: "Chapter 5", head: "The Voice", sub: "Even a single 'Hello' from you makes my day. 📞", btn: "Next page" },
-        { icon: icons.heart, title: "Chapter 6", head: "Unique", sub: "There isn't a single person like you, Jebiksha. 💎", btn: "I know" },
-        { icon: icons.heart, title: "Chapter 7", head: "The Stars", sub: "They look at you to learn how to shine. ⭐", btn: "So poetic" },
-        { icon: icons.heart, title: "Chapter 8", head: "The Dream", sub: "Every time I dream of peace, I see you. ☁️", btn: "Is that so?" },
-        { icon: icons.heart, title: "Chapter 9", head: "The Spark", sub: "You have a light that never fades. 🕯️", btn: "Keep talking" },
-        { icon: icons.heart, title: "Chapter 10", head: "Halfway Point", sub: "Are you enjoying this journey, my Queen? 💖", btn: "Yes, I am" },
-        { icon: icons.heart, title: "Chapter 11", head: "The Calm", sub: "You are the quiet in the middle of a storm. 🌊", btn: "That's lovely" },
-        { icon: icons.heart, title: "Chapter 12", head: "The Strength", sub: "Your kindness is your greatest power. 💪", btn: "Thank you" },
-        { icon: icons.heart, title: "Chapter 13", head: "The Style", sub: "Fashion changes, but your class is eternal. 👠", btn: "Always" },
-        { icon: icons.heart, title: "Chapter 14", head: "My World", sub: "You've become the best part of my every day. 🌍", btn: "And you mine?" },
-        { icon: icons.heart, title: "Chapter 15", head: "The Laugh", sub: "It's the only melody I need on repeat. 🎶", btn: "Hehe, next" },
-        { icon: icons.heart, title: "Chapter 16", head: "The Look", sub: "One glance from you and I forget what to say. 👁️", btn: "Speechless?" },
-        { icon: icons.heart, title: "Chapter 17", head: "The Time", sub: "Time stops whenever I'm with you. ⏳", btn: "Tick Tock" },
-        { icon: icons.heart, title: "Chapter 18", head: "The Choice", sub: "If I had a billion choices, I'd pick you. ✅", btn: "Every time?" },
-        { icon: icons.heart, title: "Chapter 19", head: "The Secret", sub: "I have a big question coming up soon. 🤫", btn: "I'm ready" },
-        { icon: icons.heart, title: "Chapter 20", head: "Almost There", sub: "Jebiksha, take a deep breath... 🌬️", btn: "Okay..." },
-        { icon: icons.heart, title: "Chapter 21", head: "The Heart", sub: "It beats for no one but you. 💓", btn: "Prove it" },
-        { icon: icons.heart, title: "Chapter 22", head: "The Poetry", sub: "You are the most beautiful poem ever written. 📖", btn: "Read me" },
-        { icon: icons.heart, title: "Chapter 23", head: "The Diamond", sub: "Shining bright even in the dark. 🎇", btn: "Sparkle" },
-        { icon: icons.heart, title: "Chapter 24", head: "The Moon", sub: "Is jealous of how much I talk about you. 🌙", btn: "Poor Moon" },
-        { icon: icons.heart, title: "Chapter 25", head: "The Name", sub: "Jebiksha. It's the most beautiful sound. 🔔", btn: "Next" },
-        { icon: icons.gift, title: "The Moment", head: "Are You Ready?", sub: "The final page is waiting for your answer. 🎁", btn: "Let's do this" },
-        { 
-            icon: `<img src="[attachment_0](attachment)" class="cartoon-img">`, 
-            title: "The Question", 
-            head: "Will you be my Valentine?", 
-            sub: "Jebiksha, will you make me the luckiest? 💍", 
-            btn: "YES", 
-            btnNo: "NO" 
-        }
+        { emoji: "🔍", title: "Registry Error", head: "Analysis Started", sub: "The system is searching for the most precious person...", btn: "Scan System" },
+        { emoji: "✨", title: "System Scan", head: "Jebiksha Detected", sub: "Elegance levels are off the charts today.", btn: "Continue" },
+        { emoji: "👑", title: "Royal Note", head: "To My Queen", sub: "Jebiksha, your presence is requested.", btn: "I'm here" },
+        { emoji: "🌹", title: "Chapter 1", head: "A Rare Sight", sub: "In a world full of trends, you are a classic.", btn: "Tell me more" },
+        { emoji: "😊", title: "Chapter 2", head: "The Magic", sub: "Did you know your smile is my favorite luxury?", btn: "Really?" },
+        { emoji: "📈", title: "Chapter 3", head: "Scientific Fact", sub: "Thinking of you increases my happiness by 1000%.", btn: "That's sweet" },
+        { emoji: "🌸", title: "Chapter 4", head: "Your Grace", sub: "You carry yourself with such effortless beauty.", btn: "Go on..." },
+        { emoji: "📞", title: "Chapter 5", head: "The Voice", sub: "Even a single 'Hello' from you makes my day.", btn: "Next page" },
+        { emoji: "💎", title: "Chapter 6", head: "Unique", sub: "There isn't a single person like you, Jebiksha.", btn: "I know" },
+        { emoji: "⭐", title: "Chapter 7", head: "The Stars", sub: "They look at you to learn how to shine.", btn: "So poetic" },
+        { emoji: "☁️", title: "Chapter 8", head: "The Dream", sub: "Every time I dream of peace, I see you.", btn: "Is that so?" },
+        { emoji: "🕯️", title: "Chapter 9", head: "The Spark", sub: "You have a light that never fades.", btn: "Keep talking" },
+        { emoji: "💖", title: "Chapter 10", head: "Halfway Point", sub: "Are you enjoying this journey, my Queen?", btn: "Yes, I am" },
+        { emoji: "🌊", title: "Chapter 11", head: "The Calm", sub: "You are the quiet in the middle of a storm.", btn: "That's lovely" },
+        { emoji: "💪", title: "Chapter 12", head: "The Strength", sub: "Your kindness is your greatest power.", btn: "Thank you" },
+        { emoji: "👠", title: "Chapter 13", head: "The Style", sub: "Fashion changes, but your class is eternal.", btn: "Always" },
+        { emoji: "🌍", title: "Chapter 14", head: "My World", sub: "You've become the best part of my every day.", btn: "And you mine?" },
+        { emoji: "🎶", title: "Chapter 15", head: "The Laugh", sub: "It's the only melody I need on repeat.", btn: "Hehe, next" },
+        { emoji: "👁️", title: "Chapter 16", head: "The Look", sub: "One glance from you and I forget what to say.", btn: "Speechless?" },
+        { emoji: "⏳", title: "Chapter 17", head: "The Time", sub: "Time stops whenever I'm with you.", btn: "Tick Tock" },
+        { emoji: "✅", title: "Chapter 18", head: "The Choice", sub: "If I had a billion choices, I'd pick you.", btn: "Every time?" },
+        { emoji: "🤫", title: "Chapter 19", head: "The Secret", sub: "I have a big question coming up soon.", btn: "I'm ready" },
+        { emoji: "🌬️", title: "Chapter 20", head: "Almost There", sub: "Jebiksha, take a deep breath...", btn: "Okay..." },
+        { emoji: "💓", title: "Chapter 21", head: "The Heart", sub: "It beats for no one but you.", btn: "Prove it" },
+        { emoji: "📖", title: "Chapter 22", head: "The Poetry", sub: "You are the most beautiful poem ever written.", btn: "Read me" },
+        { emoji: "🎇", title: "Chapter 23", head: "The Diamond", sub: "Shining bright even in the dark.", btn: "Sparkle" },
+        { emoji: "🌙", title: "Chapter 24", head: "The Moon", sub: "Is jealous of how much I talk about you.", btn: "Poor Moon" },
+        { emoji: "🔔", title: "Chapter 25", head: "The Name", sub: "Jebiksha. It's the most beautiful sound.", btn: "Next" },
+        { emoji: "🎁", title: "The Moment", head: "Are You Ready?", sub: "The final page is waiting for your answer.", btn: "Let's do this" },
+        { emoji: "💍", title: "The Question", head: "Will you be my Valentine?", sub: "Jebiksha, will you make me the luckiest?", btn: "YES", btnNo: "NO" }
     ];
 
     let current = 0;
@@ -188,13 +176,13 @@
         
         displayArea.innerHTML = `
             <div class="screen active">
-                <div class="gold-title">${p.title}</div>
-                ${p.icon}
+                <div class="chapter-label">${p.title}</div>
+                <div class="emoji-display">${p.emoji}</div>
                 <h2>${p.head}</h2>
                 <p>${p.sub}</p>
                 <div class="btn-container">
                     <button class="btn" id="yes-btn" onclick="${isFinal ? 'handleYes()' : 'next()'}">${p.btn}</button>
-                    ${isFinal ? '<button class="btn" id="no-btn" onmouseover="handleNo()">NO</button>' : ''}
+                    ${isFinal ? '<button class="btn" id="no-btn" onmouseover="handleNo()" onclick="handleNo()">NO</button>' : ''}
                 </div>
             </div>
         `;
@@ -220,10 +208,10 @@
     function handleYes() {
         displayArea.innerHTML = `
             <div class="screen active">
-                <div class="gold-title">Official Decision</div>
-                <div style="font-size:4rem; margin: 20px 0;">💒</div>
+                <div class="chapter-label">Official Decision</div>
+                <div class="emoji-display">👩‍❤️‍👨</div>
                 <h2>Thank You, Jebiksha!</h2>
-                <p>You've made this Valentine's Day legendary. 💖</p>
+                <p>You've made this Valentine's Day the best one ever!</p>
                 <div style="font-size:1.5rem;">✨🌸🎀🌸✨</div>
             </div>
         `;
