@@ -2,212 +2,278 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mevin ❤️ Jebiksha</title><style>
+<title>Cinematic Proposal Experience</title><!-- Fonts --><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet"><!-- GSAP --><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script><!-- EmailJS --><script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script><style>
+*{margin:0;padding:0;box-sizing:border-box}
 body{
-  margin:0;
-  font-family: 'Segoe UI', sans-serif;
-  background:black;
-  color:white;
-  overflow:hidden;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#12001f,#2a003f,#000);
+color:white;
+overflow-x:hidden;
 }
 
-.scene{
-  position:absolute;
-  width:100%;
-  height:100vh;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  text-align:center;
-  animation:fadeIn 1.5s ease;
+section{min-height:100vh;padding:80px 20px;position:relative}
+h1,h2,h3{font-family:'Playfair Display',serif}
+
+/* Glass */
+.glass{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.15);
+border-radius:20px;
+padding:30px;
 }
 
-.active{ display:flex; }
+/* Buttons */
+.btn{
+padding:14px 30px;
+border:none;
+border-radius:40px;
+background:linear-gradient(45deg,#ff4ecb,#ffd6f7);
+color:white;
+font-size:18px;
+cursor:pointer;
+box-shadow:0 0 20px rgba(255,100,200,0.5);
+transition:.3s;
+}
+.btn:hover{transform:scale(1.1);box-shadow:0 0 40px rgba(255,100,200,1)}
 
-@keyframes fadeIn{
-  from{opacity:0; transform:scale(1.05)}
-  to{opacity:1; transform:scale(1)}
+/* Floating particles */
+canvas{position:fixed;top:0;left:0;z-index:-1}
+
+/* Animated cursor */
+.cursor{
+width:20px;height:20px;border-radius:50%;
+position:fixed;pointer-events:none;
+background:radial-gradient(circle,#ff66cc,transparent);
+mix-blend-mode:screen;
+z-index:9999;
 }
 
-h1{
-  font-size:3rem;
-  margin:20px;
-}
+/* Hero */
+.hero{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.typing{font-size:2rem;margin-bottom:30px}
 
-p{
-  font-size:1.4rem;
-  max-width:700px;
-  line-height:1.6;
-}
+/* Timeline */
+.timeline{display:flex;flex-direction:column;gap:30px;max-width:700px;margin:auto}
+.timeline-card{opacity:0;transform:translateY(80px)}
 
-button{
-  padding:14px 30px;
-  border:none;
-  border-radius:40px;
-  background:#ff4da6;
-  color:white;
-  font-size:18px;
-  cursor:pointer;
-  margin-top:30px;
-  transition:.3s;
-}
-button:hover{ transform:scale(1.1); }
+/* Gallery */
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.gallery img{width:100%;border-radius:15px;cursor:pointer;transition:.4s}
+.gallery img:hover{transform:scale(1.1)}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center}
+.lightbox img{max-width:80%}
 
-/* falling hearts */
+/* Love letter */
+.letter{transform:rotateX(90deg);transform-origin:top}
+
+/* Gift */
+.gift{font-size:80px;cursor:pointer;text-align:center}
+
+/* Proposal */
+.proposal{text-align:center}
+.ring{font-size:70px;animation:float 3s infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+
+/* Popup */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center}
+.modal-content{max-width:400px;text-align:center}
+
+/* Hearts animation */
 .heart{
-  position:fixed;
-  top:-10px;
-  color:#ff4da6;
-  font-size:20px;
-  animation:fall linear infinite;
+position:absolute;
+color:#ff7bd5;
+animation:fall linear infinite;
 }
+@keyframes fall{from{transform:translateY(-10vh)}to{transform:translateY(110vh)}}
 
-@keyframes fall{
-  to{
-    transform:translateY(110vh);
-    opacity:0;
-  }
-}
+/* Love meter */
+.meter{height:10px;background:#222;border-radius:20px;margin:20px 0}
+.meter-fill{height:100%;width:0%;background:linear-gradient(90deg,#ff4ecb,#fff);border-radius:20px}
 
-/* gallery */
-.gallery{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-.gallery img{
-  width:200px;
-  height:250px;
-  object-fit:cover;
-  border-radius:20px;
-  box-shadow:0 0 20px rgba(255,255,255,0.3);
-}
+/* Ending */
+.ending{text-align:center;font-size:2rem}
 
-/* ring box */
-.ring-box{
-  width:180px;
-  height:120px;
-  background:#111;
-  border-radius:20px;
-  position:relative;
-  cursor:pointer;
-  box-shadow:0 0 30px rgba(255,255,255,0.3);
-}
-.ring{
-  position:absolute;
-  top:20px;
-  left:50%;
-  transform:translateX(-50%) scale(0);
-  font-size:50px;
-  transition:1s;
-}
-.open .ring{ transform:translateX(-50%) scale(1.5); }
-
-/* fireworks */
-.firework{
-  position:fixed;
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  animation:explode 1s ease-out forwards;
-}
-@keyframes explode{
-  to{
-    transform:translate(var(--x), var(--y));
-    opacity:0;
-  }
-}
+/* NO button escape */
+#noBtn{position:relative}
 
 </style></head>
-<body><audio id="music" loop>
-  <source src="enna-oru.mp3" type="audio/mpeg">
-</audio><!-- SCENE 1 INTRO --><div class="scene active">
-  <h1>✨ A Special Journey ✨</h1>
-  <p>This is not just a website... this is my heart.</p>
-  <button onclick="nextScene()">Start</button>
-</div><!-- SCENE 2 NAME --><div class="scene">
-  <h1>Mevin ❤️ Jebiksha</h1>
-  <p>Some love stories are written by fate...</p>
-  <button onclick="nextScene()">Next</button>
-</div><!-- SCENE 3 MEMORIES --><div class="scene">
-  <h1>Our Memories</h1>
-  <p>Every moment with you is my favorite memory.</p>
-  <button onclick="nextScene()">See More</button>
-</div><!-- SCENE 4 GALLERY --><div class="scene">
-  <h1>Beautiful Moments</h1>
-  <div class="gallery">
-    <img src="photo1.jpg">
-    <img src="photo2.jpg">
-    <img src="photo3.jpg">
-  </div>
-  <button onclick="nextScene()">Continue</button>
-</div><!-- SCENE 5 LOVE LETTER --><div class="scene">
-  <h1>My Heart Says...</h1>
-  <p>
-    From the moment you came into my life,
-    everything became more beautiful.Your smile is my happiness.
-Your voice is my peace.
-Your love is my world.
+<body><div class="cursor"></div>
+<canvas id="particles"></canvas><audio id="bgMusic" loop>
+<source src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9c9d5b.mp3">
+</audio><!-- HERO --><section class="hero">
+<div class="typing" id="typing"></div>
+<button class="btn" onclick="startExperience()">Enter My Heart</button>
+<br><br>
+<button class="btn" onclick="toggleMusic()">Music Toggle</button>
+</section><!-- TIMELINE --><section>
+<h2 style="text-align:center">Our Love Story</h2>
+<div class="timeline">
+<div class="glass timeline-card">Memory moment one...</div>
+<div class="glass timeline-card">Memory moment two...</div>
+<div class="glass timeline-card">Memory moment three...</div>
+</div>
+</section><!-- GALLERY --><section>
+<h2 style="text-align:center">Memories</h2>
+<div class="gallery">
+<img src="https://picsum.photos/400?1">
+<img src="https://picsum.photos/400?2">
+<img src="https://picsum.photos/400?3">
+<img src="https://picsum.photos/400?4">
+</div>
+</section><div class="lightbox" id="lightbox"><img></div><!-- LETTER --><section style="display:flex;align-items:center;justify-content:center">
+<div class="glass letter" id="letter">
+<h2>Message From My Heart</h2>
+<p>This is where your emotional message appears...</p>
+</div>
+</section><!-- SURPRISE --><section style="text-align:center">
+<h2>Special Surprise</h2>
+<div id="countdown"></div>
+<div class="gift" onclick="openGift()">🎁</div>
+<div id="quote"></div>
+</section><!-- PROPOSAL --><section class="proposal">
+<div class="ring">💍</div>
+<h2>Will you be mine forever?</h2>
+<button class="btn" onclick="openProposal()">Open Proposal</button>
+</section><div class="modal" id="proposalModal">
+<div class="glass modal-content">
+<h2>Will you marry me?</h2>
+<button class="btn" onclick="acceptLove()">YES</button>
+<button class="btn" id="noBtn">NO</button>
+<br><br>
+<input placeholder="Send a message" id="msgInput">
+<button class="btn" onclick="sendMessage()">Send Message</button>
+</div>
+</div><!-- END --><section class="ending">
+Thank you for being my forever ❤️
+</section><script>
+/* EMAILJS INIT */
+emailjs.init("YOUR_PUBLIC_KEY");
 
-  </p>
-  <button onclick="nextScene()">One More Thing</button>
-</div><!-- SCENE 6 RING --><div class="scene">
-  <h1>Open This...</h1>
-  <div class="ring-box" onclick="openRing(this)">
-    <div class="ring">💍</div>
-  </div>
-</div><!-- SCENE 7 PROPOSAL --><div class="scene">
-  <h1>Jebiksha...</h1>
-  <h1>Will You Marry Me?</h1>
-  <button onclick="yesLove()">YES ❤️</button>
-  <button onclick="alert('Think again 😜')">NO</button>
-</div><script>
-const scenes = document.querySelectorAll('.scene');
-let current = 0;
+/* typing */
+const text="I have something special for you…";
+let i=0;
+function type(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text[i];
+i++;setTimeout(type,60);
+}}
+type();
 
-function nextScene(){
-  scenes[current].classList.remove('active');
-  current++;
-  scenes[current].classList.add('active');
-  document.getElementById('music').play();
+/* music */
+function toggleMusic(){
+const m=document.getElementById("bgMusic");
+m.paused?m.play():m.pause();
 }
 
-function openRing(box){
-  box.classList.add('open');
-  setTimeout(nextScene,1500);
+/* start scroll */
+function startExperience(){
+window.scrollTo({top:window.innerHeight,behavior:'smooth'})
 }
 
-function yesLove(){
-  launchFireworks();
-  alert('She said YES ❤️❤️❤️');
-}
+/* timeline animation */
+gsap.utils.toArray(".timeline-card").forEach(el=>{
+gsap.to(el,{opacity:1,y:0,duration:1,scrollTrigger:{trigger:el,start:"top 80%"}})
+})
 
-/* falling hearts */
+/* gallery */
+document.querySelectorAll(".gallery img").forEach(img=>{
+img.onclick=()=>{
+const lb=document.getElementById("lightbox");
+lb.style.display="flex";
+lb.querySelector("img").src=img.src;
+}
+})
+document.getElementById("lightbox").onclick=()=>lightbox.style.display="none";
+
+/* letter reveal */
+gsap.to("#letter",{rotateX:0,duration:1.5,scrollTrigger:{trigger:"#letter",start:"top 80%"}})
+
+/* countdown */
+let time=5;
 setInterval(()=>{
-  const heart=document.createElement('div');
-  heart.className='heart';
-  heart.innerHTML='❤';
-  heart.style.left=Math.random()*100+'vw';
-  heart.style.animationDuration=3+Math.random()*4+'s';
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),7000);
-},300);
+if(time>=0)document.getElementById("countdown").innerText="Opening in "+time--;
+},1000)
+
+function openGift(){
+document.getElementById("quote").innerText="You are my greatest gift ❤️";
+confetti();
+}
+
+/* proposal */
+function openProposal(){
+document.getElementById("proposalModal").style.display="flex";
+}
+
+function acceptLove(){
+alert("Forever begins now ❤️");
+fireworks();
+}
+
+/* no escape */
+const noBtn=document.getElementById("noBtn");
+noBtn.onmouseover=()=>{
+noBtn.style.left=Math.random()*200-100+"px";
+noBtn.style.top=Math.random()*200-100+"px";
+}
+
+/* send email */
+function sendMessage(){
+const msg=document.getElementById("msgInput").value;
+emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{message:msg})
+.then(()=>alert("Message sent ❤️"))
+}
+
+/* particles */
+const canvas=document.getElementById('particles');
+const ctx=canvas.getContext('2d');
+canvas.width=innerWidth;canvas.height=innerHeight;
+let particles=[];
+for(let i=0;i<100;i++)particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2});
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#ff66cc";
+particles.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.y+=0.3;if(p.y>canvas.height)p.y=0})
+requestAnimationFrame(draw)
+}
+draw();
+
+/* cursor */
+document.addEventListener('mousemove',e=>{
+document.querySelector('.cursor').style.transform=`translate(${e.clientX}px,${e.clientY}px)`
+})
+
+/* confetti */
+function confetti(){
+for(let i=0;i<80;i++){
+const div=document.createElement('div');
+div.className='heart';
+div.innerHTML='❤';
+div.style.left=Math.random()*100+'vw';
+div.style.animationDuration=Math.random()*3+2+'s';
+document.body.appendChild(div);
+setTimeout(()=>div.remove(),5000);
+}
+}
 
 /* fireworks */
-function launchFireworks(){
-  for(let i=0;i<80;i++){
-    const f=document.createElement('div');
-    f.className='firework';
-    f.style.background=`hsl(${Math.random()*360},100%,60%)`;
-    f.style.left='50%';
-    f.style.top='50%';
-    f.style.setProperty('--x',(Math.random()-0.5)*600+'px');
-    f.style.setProperty('--y',(Math.random()-0.5)*600+'px');
-    document.body.appendChild(f);
-    setTimeout(()=>f.remove(),1000);
-  }
-}
+function fireworks(){confetti();setTimeout(confetti,400);setTimeout(confetti,800)}
+
+/* love meter */
+const meter=document.createElement('div');
+meter.className='meter';
+meter.innerHTML='<div class="meter-fill" id="loveFill"></div>';
+document.body.appendChild(meter);
+let love=0;
+setInterval(()=>{love=Math.min(100,love+1);document.getElementById('loveFill').style.width=love+'%';},100)
+
+/* secret easter egg */
+document.addEventListener('keydown',e=>{
+if(e.key==='L')alert('Secret message: You are my destiny ❤️');
+})
+
+/* mobile gesture */
+document.addEventListener('touchstart',()=>confetti());
+
 </script></body>
 </html>
