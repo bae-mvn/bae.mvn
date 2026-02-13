@@ -17,7 +17,43 @@ color:gold;
 text-align:center;
 }
 
-/* GOLD PARTICLES */
+/* ===== PASSWORD LOCK ===== */
+#lockScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.lockBox{
+background:#111;
+padding:40px;
+border-radius:20px;
+box-shadow:0 0 30px gold;
+border:1px solid gold;
+}
+
+.lockBox input{
+padding:12px;
+margin-top:15px;
+border-radius:10px;
+border:none;
+width:200px;
+text-align:center;
+}
+
+#error{
+color:red;
+margin-top:10px;
+}
+
+/* ===== GOLD PARTICLES ===== */
 canvas{
 position:fixed;
 top:0;
@@ -25,7 +61,7 @@ left:0;
 z-index:-1;
 }
 
-/* Pages */
+/* ===== PAGES ===== */
 .page{
 display:none;
 padding:60px 20px;
@@ -59,7 +95,7 @@ transform:scale(1.1);
 box-shadow:0 0 20px gold;
 }
 
-/* Ring popup */
+/* ===== RING POPUP ===== */
 .ringBox{
 position:fixed;
 bottom:-500px;
@@ -88,7 +124,7 @@ animation:pulse 1.3s infinite;
 100%{transform:scale(1)}
 }
 
-/* Firework */
+/* ===== FIREWORK ===== */
 .fire{
 position:absolute;
 width:6px;
@@ -102,7 +138,7 @@ from{transform:translate(0,0);}
 to{transform:translate(var(--x),var(--y));opacity:0;}
 }
 
-/* Countdown style */
+/* ===== COUNTDOWN ===== */
 #countdown{
 font-size:90px;
 animation:beat 1s infinite;
@@ -117,6 +153,17 @@ animation:beat 1s infinite;
 </head>
 
 <body>
+
+<!-- PASSWORD SCREEN -->
+<div id="lockScreen">
+  <div class="lockBox">
+    <h2>Enter Password</h2>
+    <input type="password" id="passInput">
+    <br>
+    <button onclick="checkPassword()">Unlock</button>
+    <p id="error"></p>
+  </div>
+</div>
 
 <canvas id="bg"></canvas>
 
@@ -160,6 +207,18 @@ animation:beat 1s infinite;
 </div>
 
 <script>
+
+/* PASSWORD CHECK */
+function checkPassword(){
+let correct="1234";   // CHANGE PASSWORD HERE
+let entered=document.getElementById("passInput").value;
+
+if(entered===correct){
+document.getElementById("lockScreen").style.display="none";
+}else{
+document.getElementById("error").innerText="Wrong password";
+}
+}
 
 /* EMAILJS */
 emailjs.init("ZBpSMBnfdEQE_bwCn");
@@ -261,6 +320,5 @@ requestAnimationFrame(animate);
 animate();
 
 </script>
-
 </body>
-  </html>
+</html>
