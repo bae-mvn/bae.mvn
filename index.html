@@ -12,39 +12,32 @@ body{
 margin:0;
 overflow:hidden;
 font-family:Georgia,serif;
-background:black;
-color:gold;
+background:radial-gradient(circle,#ffe6f0,#ffc0cb);
+color:#6b2c4a;
 text-align:center;
 }
 
-/* ===== MUSIC ===== */
-audio{
-display:none;
-}
-
-/* ===== PASSWORD ===== */
-#lockScreen{
+/* ===== GALAXY BACKGROUND ===== */
+.galaxy{
 position:fixed;
 top:0;
 left:0;
-width:100%;
-height:100%;
-background:black;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:999;
+width:200%;
+height:200%;
+background:
+radial-gradient(white 1px, transparent 1px),
+radial-gradient(gold 1px, transparent 1px);
+background-size:3px 3px, 6px 6px;
+animation:galaxyMove 120s linear infinite;
+z-index:-2;
 }
 
-.lockBox{
-background:#111;
-padding:40px;
-border-radius:20px;
-box-shadow:0 0 30px gold;
-border:1px solid gold;
+@keyframes galaxyMove{
+from{transform:translate(0,0)}
+to{transform:translate(-50%, -50%)}
 }
 
-/* ===== PAGES ===== */
+/* Pages */
 .page{
 display:none;
 padding:60px 20px;
@@ -56,150 +49,133 @@ display:block;
 }
 
 @keyframes fade{
-from{opacity:0;transform:scale(0.9)}
-to{opacity:1;transform:scale(1)}
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:translateY(0);}
 }
 
-/* ===== BUTTON ===== */
 button{
-padding:14px 32px;
+padding:12px 30px;
 border:none;
-border-radius:40px;
-background:gold;
-color:black;
-font-weight:bold;
+border-radius:30px;
+background:#ff69b4;
+color:white;
+font-size:16px;
 cursor:pointer;
-margin-top:20px;
+margin-top:25px;
+transition:0.3s;
 }
 
-/* ===== HEARTBEAT ===== */
-.heartbeat{
-animation:beat 1s infinite;
+button:hover{
+transform:scale(1.08);
 }
 
-@keyframes beat{
-0%{transform:scale(1)}
-50%{transform:scale(1.2)}
-100%{transform:scale(1)}
-}
-
-/* ===== 3D RING ===== */
+/* Ring */
 .ringBox{
 position:fixed;
-top:50%;
+bottom:-400px;
 left:50%;
-transform:translate(-50%,-50%) scale(0);
-transition:1s;
-background:#111;
-padding:50px;
-border-radius:25px;
-box-shadow:0 0 60px gold;
-border:1px solid gold;
+transform:translateX(-50%);
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 0 40px #ff69b4;
+transition:1.2s;
 }
 
 .ringBox.show{
-transform:translate(-50%,-50%) scale(1);
+bottom:120px;
 }
 
 .ring{
-font-size:90px;
-animation:spin3d 4s linear infinite;
-filter:drop-shadow(0 0 20px gold);
+font-size:70px;
+animation:spin 4s linear infinite;
 }
 
-@keyframes spin3d{
-from{transform:rotateY(0)}
-to{transform:rotateY(360deg)}
+@keyframes spin{
+from{transform:rotateY(0);}
+to{transform:rotateY(360deg);}
 }
 
-/* ===== SPARK TRAIL ===== */
-.spark{
-position:fixed;
-width:6px;
-height:6px;
-background:gold;
-border-radius:50%;
-pointer-events:none;
-animation:sparkFade 1s forwards;
-}
-
-@keyframes sparkFade{
-to{opacity:0;transform:scale(0)}
-}
-
-/* ===== FIREWORK ===== */
+/* Firework */
 .fire{
 position:absolute;
 width:6px;
 height:6px;
 border-radius:50%;
-animation:explode 1.3s linear forwards;
+animation:explode 1s linear forwards;
 }
 
 @keyframes explode{
+from{transform:translate(0,0);}
 to{transform:translate(var(--x),var(--y));opacity:0;}
 }
 
-/* ===== CREDITS ===== */
-.credits{
+/* ===== SHOCKWAVE EFFECT ===== */
+.shock{
 position:fixed;
-bottom:-100%;
-width:100%;
-text-align:center;
-font-size:28px;
-animation:credits 8s linear forwards;
+top:50%;
+left:50%;
+width:50px;
+height:50px;
+border-radius:50%;
+border:3px solid gold;
+transform:translate(-50%,-50%);
+animation:shockExpand 1s forwards;
+pointer-events:none;
 }
 
-@keyframes credits{
-to{bottom:120%}
+@keyframes shockExpand{
+to{
+width:1500px;
+height:1500px;
+opacity:0;
+}
 }
 </style>
 </head>
 
 <body>
 
-<audio id="music" autoplay loop>
-<source src="music.mp3" type="audio/mpeg">
-</audio>
-
-<!-- PASSWORD -->
-<div id="lockScreen">
-<div class="lockBox">
-<h2>Enter Password</h2>
-<input type="password" id="passInput">
-<br>
-<button onclick="unlock()">Unlock</button>
-<p id="error" style="color:red"></p>
-</div>
-</div>
+<!-- GALAXY BACKGROUND -->
+<div class="galaxy"></div>
 
 <div class="page active">
 <h1 id="intro"></h1>
-<button onclick="nextPage()">Begin</button>
+<button onclick="nextPage()">Start</button>
 </div>
 
 <div class="page">
-<h1>You came quietly…</h1>
+<h1>You came into my life quietly 🌸</h1>
 <button onclick="nextPage()">Next</button>
 </div>
 
 <div class="page">
-<h1>But changed everything.</h1>
+<h1>And somehow… everything felt softer.</h1>
 <button onclick="nextPage()">Next</button>
 </div>
 
 <div class="page">
-<h1 class="heartbeat">My heart feels different now…</h1>
+<h1>I didn’t expect this feeling.</h1>
 <button onclick="nextPage()">Next</button>
 </div>
 
 <div class="page">
-<textarea id="msg" placeholder="Write something..." style="padding:12px;border-radius:10px;width:80%"></textarea>
+<h1>But I don’t want to ignore it anymore.</h1>
+<button onclick="nextPage()">Next</button>
+</div>
+
+<div class="page">
+<h1>Before I ask…</h1>
+<textarea id="herMessage" placeholder="Write something..." style="width:80%;padding:12px;border-radius:10px;border:none;"></textarea>
 <br>
-<button onclick="showRing()">Continue</button>
+<button onclick="startCountdown()">Continue</button>
 </div>
 
-<!-- RING -->
+<div class="page" id="countPage">
+<h1>Get Ready...</h1>
+<h1 id="countdown">3</h1>
+</div>
+
 <div class="ringBox" id="ringBox">
 <div class="ring">💍</div>
 <h1>Will You Be Mine?</h1>
@@ -209,82 +185,88 @@ to{bottom:120%}
 
 <script>
 
-/* PASSWORD */
-function unlock(){
-if(passInput.value==="1234"){
-lockScreen.style.display="none";
-}else{
-error.innerText="Wrong password";
-}
-}
-
-/* EMAILJS */
+/* Safe EmailJS init */
+try{
 emailjs.init("ZBpSMBnfdEQE_bwCn");
+}catch(e){}
 
-/* PAGES */
-let pages=document.querySelectorAll(".page");
+/* Page control */
 let current=0;
 function nextPage(){
+let pages=document.querySelectorAll(".page");
 pages[current].classList.remove("active");
 current++;
 pages[current].classList.add("active");
 }
 
-/* INTRO */
-let t="Some moments change life forever...";
+/* Intro typing */
+let text="There are moments that quietly change everything.";
 let i=0;
 function type(){
-if(i<t.length){
-intro.innerHTML+=t[i++];
+if(i<text.length){
+document.getElementById("intro").innerHTML+=text.charAt(i);
+i++;
 setTimeout(type,40);
-}}
+}
+}
 type();
 
-/* SHOW RING */
-function showRing(){
-ringBox.classList.add("show");
+/* Countdown */
+function startCountdown(){
+nextPage();
+let count=3;
+let cd=document.getElementById("countdown");
+let interval=setInterval(()=>{
+count--;
+cd.innerHTML=count;
+if(count==0){
+clearInterval(interval);
+document.getElementById("ringBox").classList.add("show");
+}
+},1000);
 }
 
-/* RESULT */
-function choose(ans){
+/* Choose */
+function choose(answer){
 
+let msg=document.getElementById("herMessage").value;
+
+try{
 emailjs.send("service_vi8o9j4","template_1uului7",{
-message:ans+" | "+msg.value
+message:"Answer: "+answer+" | Message: "+msg
 });
+}catch(e){}
 
-if(ans.includes("YES")){
-fireworks();
-setTimeout(()=>{
-document.body.innerHTML="<div class='credits'>A New Chapter Begins ✨</div>";
-},2000);
-}else{
-document.body.innerHTML="<h1 style='margin-top:40vh'>Always Respect ❤️</h1>";
-}
-}
+/* SHOCKWAVE WHEN YES */
+if(answer.includes("YES")){
 
-/* FIREWORKS */
-function fireworks(){
-for(let i=0;i<250;i++){
+let s=document.createElement("div");
+s.className="shock";
+document.body.appendChild(s);
+
+for(let i=0;i<150;i++){
 let f=document.createElement("div");
 f.className="fire";
 f.style.left="50%";
 f.style.top="50%";
-f.style.background="gold";
-f.style.setProperty('--x',(Math.random()*1000-500)+"px");
-f.style.setProperty('--y',(Math.random()*1000-500)+"px");
+f.style.background="hsl("+Math.random()*360+",100%,70%)";
+f.style.setProperty('--x',(Math.random()*800-400)+"px");
+f.style.setProperty('--y',(Math.random()*800-400)+"px");
 document.body.appendChild(f);
 }
-}
 
-/* SPARK TRAIL */
-document.addEventListener("mousemove",e=>{
-let s=document.createElement("div");
-s.className="spark";
-s.style.left=e.clientX+"px";
-s.style.top=e.clientY+"px";
-document.body.appendChild(s);
-setTimeout(()=>s.remove(),1000);
-});
+setTimeout(()=>{
+document.body.innerHTML="<h1 style='margin-top:40vh;'>A Beautiful Beginning 🌸</h1>";
+},1500);
+
+}else{
+
+setTimeout(()=>{
+document.body.innerHTML="<h1 style='margin-top:40vh;'>No matter what, you are respected 🌙</h1>";
+},1000);
+
+}
+}
 </script>
 
 </body>
