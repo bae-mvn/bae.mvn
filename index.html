@@ -3,104 +3,133 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oops... ❤️</title>
+<title>Oops ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
 *{
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
 body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    transition:background 0.8s ease;
-    background:linear-gradient(135deg,#ffd6ec,#ffe9d6);
+margin:0;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+background:linear-gradient(135deg,#ffd6ec,#ffe9d6);
+animation:bgShift 12s infinite alternate ease-in-out;
 }
 
-/* MAIN CARD */
+/* animated gradient breathing */
+@keyframes bgShift{
+0%{background:linear-gradient(135deg,#ffd6ec,#ffe9d6);}
+50%{background:linear-gradient(135deg,#ffe3f3,#fff1da);}
+100%{background:linear-gradient(135deg,#ffd6ec,#ffe9d6);}
+}
+
+/* floating hearts */
+.heart{
+position:fixed;
+bottom:-50px;
+font-size:20px;
+opacity:.6;
+animation:floatUp linear infinite;
+pointer-events:none;
+}
+
+@keyframes floatUp{
+to{
+transform:translateY(-120vh) rotate(360deg);
+opacity:0;
+}
+}
+
+/* card */
 .container{
-    width:90%;
-    max-width:420px;
-    padding:35px 25px;
-    border-radius:25px;
-    background:rgba(255,255,255,0.75);
-    backdrop-filter:blur(10px);
-    text-align:center;
-    box-shadow:0 20px 40px rgba(0,0,0,0.12);
-    transition:all 0.6s ease;
+width:90%;
+max-width:420px;
+padding:35px 25px;
+border-radius:25px;
+background:rgba(255,255,255,0.75);
+backdrop-filter:blur(12px);
+text-align:center;
+box-shadow:0 20px 40px rgba(0,0,0,0.12);
+transition:all .6s ease;
+animation:cardEnter .8s ease;
 }
 
-/* TEXT */
-h1{
-    margin:0 0 10px;
-    font-weight:700;
-}
-
-p{
-    margin:10px 0 20px;
-    font-weight:300;
-}
-
-/* BUTTONS */
-button{
-    border:none;
-    padding:12px 26px;
-    margin:8px;
-    border-radius:999px;
-    font-size:15px;
-    cursor:pointer;
-    transition:all 0.3s ease;
-    box-shadow:0 6px 15px rgba(0,0,0,0.1);
-}
-
-button:hover{
-    transform:translateY(-2px);
-}
-
-.primary{
-    background:#ff6fa5;
-    color:white;
-}
-
-.secondary{
-    background:white;
+@keyframes cardEnter{
+from{opacity:0; transform:scale(.8) translateY(30px);}
+to{opacity:1; transform:scale(1);}
 }
 
 .hidden{
-    opacity:0;
-    transform:translateY(15px);
-    pointer-events:none;
+opacity:0;
+transform:scale(.9);
+pointer-events:none;
+position:absolute;
 }
 
-/* VALENTINE SECTION */
-#valentine{
-    position:relative;
+/* buttons */
+button{
+border:none;
+padding:12px 26px;
+margin:8px;
+border-radius:999px;
+font-size:15px;
+cursor:pointer;
+transition:.3s;
+box-shadow:0 6px 15px rgba(0,0,0,0.12);
 }
+
+button:hover{transform:translateY(-3px);}
+
+.primary{
+background:#ff6fa5;
+color:white;
+}
+
+/* glowing YES button */
+#yesBtn{
+animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+0%,100%{box-shadow:0 0 0 0 rgba(255,111,165,.6);}
+50%{box-shadow:0 0 20px 8px rgba(255,111,165,.2);}
+}
+
+.secondary{background:white;}
+
+#valentine{position:relative;}
 
 #noBtn{
-    position:absolute;
+position:absolute;
+transition:all .35s cubic-bezier(.2,.8,.2,1);
 }
 
-/* MESSAGE */
+/* message animation */
 #yesMessage{
-    margin-top:15px;
-    white-space:pre-line;
-    font-weight:500;
+margin-top:20px;
+font-weight:500;
+white-space:pre-line;
+animation:fadeRise .8s ease;
 }
 
-/* CONFETTI */
+@keyframes fadeRise{
+from{opacity:0; transform:translateY(15px);}
+to{opacity:1;}
+}
+
 canvas{
-    position:fixed;
-    top:0;
-    left:0;
-    pointer-events:none;
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
 }
 </style>
 </head>
@@ -111,26 +140,35 @@ canvas{
 
 <div class="container">
 
-<!-- 404 SCREEN -->
 <div id="errorScreen">
 <h1>404 😅</h1>
 <p>Page Not Found... but maybe love is?</p>
 <button class="primary" id="refreshBtn">Refresh</button>
 </div>
 
-<!-- VALENTINE SCREEN -->
 <div id="valentine" class="hidden">
 <h1>Will you be my Valentine? 💖</h1>
-
 <button class="primary" id="yesBtn">YES</button>
 <button class="secondary" id="noBtn">NO</button>
-
 <div id="yesMessage" class="hidden"></div>
 </div>
 
 </div>
 
 <script>
+/* floating hearts generator */
+setInterval(()=>{
+const heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="💗";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=5+Math.random()*5+"s";
+heart.style.fontSize=15+Math.random()*25+"px";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),10000);
+},500);
+
+/* elements */
 const errorScreen=document.getElementById("errorScreen");
 const valentine=document.getElementById("valentine");
 const refreshBtn=document.getElementById("refreshBtn");
@@ -139,17 +177,28 @@ const noBtn=document.getElementById("noBtn");
 const message=document.getElementById("yesMessage");
 const body=document.body;
 
-/* ---------- SHOW VALENTINE ---------- */
+/* transition screens */
 refreshBtn.onclick=()=>{
-    errorScreen.classList.add("hidden");
-    setTimeout(()=>valentine.classList.remove("hidden"),400);
+errorScreen.classList.add("hidden");
+setTimeout(()=>valentine.classList.remove("hidden"),500);
 };
 
-/* ---------- YES CLICK ---------- */
+/* typing message */
+function typeText(text){
+message.textContent="";
+let i=0;
+const speed=30;
+const timer=setInterval(()=>{
+message.textContent+=text[i];
+i++;
+if(i>=text.length) clearInterval(timer);
+},speed);
+}
+
+/* YES */
 yesBtn.onclick=()=>{
 
-message.textContent=
-`By clicking YES you agree to:
+const txt=`By clicking YES you agree to:
 
 Unlimited cuddles
 Lifetime supply of bad puns
@@ -158,29 +207,25 @@ Mutual pizza stealing rights
 Effective immediately! 💞`;
 
 message.classList.remove("hidden");
+typeText(txt);
 
-/* hide buttons smoothly */
 setTimeout(()=>{
-    yesBtn.classList.add("hidden");
-    noBtn.classList.add("hidden");
+yesBtn.classList.add("hidden");
+noBtn.classList.add("hidden");
 },1000);
 
 startConfetti();
 setTimeout(stopConfetti,5000);
 };
 
-/* ---------- NO CLICK ---------- */
+/* NO button */
 let noClicks=0;
 
 noBtn.onclick=()=>{
-    noClicks++;
-
+noClicks++;
 moveButton();
-changeBackground();
-
-if(noClicks>=2){
-    noBtn.textContent="🥺";
-}
+changeBg();
+if(noClicks>=2) noBtn.textContent="🥺";
 };
 
 function moveButton(){
@@ -190,64 +235,60 @@ noBtn.style.left=x+"px";
 noBtn.style.top=y+"px";
 }
 
-function changeBackground(){
-const gradients=[
+function changeBg(){
+const g=[
 "linear-gradient(135deg,#ffd6ec,#ffe9d6)",
-"linear-gradient(135deg,#e0c3fc,#f9f586)",
 "linear-gradient(135deg,#ff9a9e,#fad0c4)",
 "linear-gradient(135deg,#a18cd1,#fbc2eb)",
 "linear-gradient(135deg,#ffecd2,#fcb69f)"
 ];
-body.style.background=gradients[Math.floor(Math.random()*gradients.length)];
+body.style.background=g[Math.floor(Math.random()*g.length)];
 }
 
-/* ---------- CONFETTI ---------- */
+/* confetti physics */
 const canvas=document.getElementById("confettiCanvas");
 const ctx=canvas.getContext("2d");
 let confetti=[];
-let confettiRunning=false;
+let running=false;
 
-function resizeCanvas(){
+function resize(){
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 }
-resizeCanvas();
-window.onresize=resizeCanvas;
+resize();
+window.onresize=resize;
 
 function startConfetti(){
-confettiRunning=true;
-for(let i=0;i<150;i++){
+running=true;
+for(let i=0;i<200;i++){
 confetti.push({
 x:Math.random()*canvas.width,
-y:Math.random()*canvas.height- canvas.height,
-size:5+Math.random()*5,
-speed:2+Math.random()*3,
-color:`hsl(${Math.random()*360},100%,60%)`
+y:-20,
+size:6,
+speed:2+Math.random()*4,
+swing:Math.random()*2
 });
 }
-animateConfetti();
+animate();
 }
 
-function animateConfetti(){
-if(!confettiRunning) return;
-
+function animate(){
+if(!running) return;
 ctx.clearRect(0,0,canvas.width,canvas.height);
-
 confetti.forEach(p=>{
 p.y+=p.speed;
-ctx.fillStyle=p.color;
+p.x+=Math.sin(p.y*0.02)*p.swing;
 ctx.fillRect(p.x,p.y,p.size,p.size);
 });
-
-requestAnimationFrame(animateConfetti);
+requestAnimationFrame(animate);
 }
 
 function stopConfetti(){
-confettiRunning=false;
-ctx.clearRect(0,0,canvas.width,canvas.height);
+running=false;
 confetti=[];
+ctx.clearRect(0,0,canvas.width,canvas.height);
 }
 </script>
 
 </body>
-</html>
+    </html>
