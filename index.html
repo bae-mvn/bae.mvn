@@ -1,294 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oops ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --bg-start: #fdfcfb;
+            --bg-end: #e2d1c3;
+            --accent-pink: #ff85a2;
+            --text-color: #4a4a4a;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            transition: background 0.8s ease;
+        }
 
-<style>
-*{
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+        #main-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
 
-body{
-margin:0;
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-overflow:hidden;
-background:linear-gradient(135deg,#ffd6ec,#ffe9d6);
-animation:bgShift 12s infinite alternate ease-in-out;
-}
+        .screen {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
 
-/* animated gradient breathing */
-@keyframes bgShift{
-0%{background:linear-gradient(135deg,#ffd6ec,#ffe9d6);}
-50%{background:linear-gradient(135deg,#ffe3f3,#fff1da);}
-100%{background:linear-gradient(135deg,#ffd6ec,#ffe9d6);}
-}
+        .screen.active {
+            display: block;
+            opacity: 1;
+        }
 
-/* floating hearts */
-.heart{
-position:fixed;
-bottom:-50px;
-font-size:20px;
-opacity:.6;
-animation:floatUp linear infinite;
-pointer-events:none;
-}
+        h1 { color: var(--text-color); margin-bottom: 0.5rem; font-weight: 600; }
+        p { color: #666; font-size: 1.1rem; margin-bottom: 1.5rem; }
 
-@keyframes floatUp{
-to{
-transform:translateY(-120vh) rotate(360deg);
-opacity:0;
-}
-}
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            min-height: 50px;
+        }
 
-/* card */
-.container{
-width:90%;
-max-width:420px;
-padding:35px 25px;
-border-radius:25px;
-background:rgba(255,255,255,0.75);
-backdrop-filter:blur(12px);
-text-align:center;
-box-shadow:0 20px 40px rgba(0,0,0,0.12);
-transition:all .6s ease;
-animation:cardEnter .8s ease;
-}
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+            font-family: 'Quicksand', sans-serif;
+        }
 
-@keyframes cardEnter{
-from{opacity:0; transform:scale(.8) translateY(30px);}
-to{opacity:1; transform:scale(1);}
-}
+        .btn-primary {
+            background-color: var(--accent-pink);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 133, 162, 0.4);
+        }
 
-.hidden{
-opacity:0;
-transform:scale(.9);
-pointer-events:none;
-position:absolute;
-}
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 133, 162, 0.5);
+        }
 
-/* buttons */
-button{
-border:none;
-padding:12px 26px;
-margin:8px;
-border-radius:999px;
-font-size:15px;
-cursor:pointer;
-transition:.3s;
-box-shadow:0 6px 15px rgba(0,0,0,0.12);
-}
+        #no-btn {
+            background-color: #f0f0f0;
+            color: #888;
+            transition: left 0.2s ease, top 0.2s ease, background 0.3s;
+        }
 
-button:hover{transform:translateY(-3px);}
+        ul {
+            text-align: left;
+            padding: 0;
+            list-style: none;
+            margin: 20px auto;
+            display: inline-block;
+        }
 
-.primary{
-background:#ff6fa5;
-color:white;
-}
+        li {
+            margin: 12px 0;
+            font-size: 1rem;
+            color: #555;
+        }
 
-/* glowing YES button */
-#yesBtn{
-animation:pulse 2s infinite;
-}
+        li::before {
+            content: "💖";
+            margin-right: 10px;
+        }
 
-@keyframes pulse{
-0%,100%{box-shadow:0 0 0 0 rgba(255,111,165,.6);}
-50%{box-shadow:0 0 20px 8px rgba(255,111,165,.2);}
-}
+        .emoji {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
 
-.secondary{background:white;}
-
-#valentine{position:relative;}
-
-#noBtn{
-position:absolute;
-transition:all .35s cubic-bezier(.2,.8,.2,1);
-}
-
-/* message animation */
-#yesMessage{
-margin-top:20px;
-font-weight:500;
-white-space:pre-line;
-animation:fadeRise .8s ease;
-}
-
-@keyframes fadeRise{
-from{opacity:0; transform:translateY(15px);}
-to{opacity:1;}
-}
-
-canvas{
-position:fixed;
-top:0;
-left:0;
-pointer-events:none;
-}
-</style>
+        .fade-out {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+    </style>
 </head>
-
 <body>
 
-<canvas id="confettiCanvas"></canvas>
+    <div id="main-card">
+        <div id="screen-404" class="screen active">
+            <span class="emoji">🔍</span>
+            <h1>404</h1>
+            <p>Page Not Found.<br>You seem a little lost...</p>
+            <button class="btn btn-primary" onclick="transitionToValentine()">Refresh</button>
+        </div>
 
-<div class="container">
+        <div id="screen-valentine" class="screen">
+            <span id="val-emoji" class="emoji">💌</span>
+            <h1 id="val-title">Will you be my Valentine?</h1>
+            
+            <div id="agreement-msg" style="display: none;">
+                <p><strong>By clicking YES you agree to:</strong></p>
+                <ul>
+                    <li>Unlimited cuddles</li>
+                    <li>Lifetime supply of bad puns</li>
+                    <li>Mutual pizza stealing rights</li>
+                </ul>
+                <p style="font-style: italic; font-size: 0.9rem;">Effective immediately!</p>
+            </div>
 
-<div id="errorScreen">
-<h1>404 😅</h1>
-<p>Page Not Found... but maybe love is?</p>
-<button class="primary" id="refreshBtn">Refresh</button>
-</div>
+            <div id="btn-container" class="btn-group">
+                <button id="yes-btn" class="btn btn-primary" onclick="handleYes()">YES</button>
+                <button id="no-btn" class="btn" onclick="handleNo()">NO</button>
+            </div>
+        </div>
+    </div>
 
-<div id="valentine" class="hidden">
-<h1>Will you be my Valentine? 💖</h1>
-<button class="primary" id="yesBtn">YES</button>
-<button class="secondary" id="noBtn">NO</button>
-<div id="yesMessage" class="hidden"></div>
-</div>
+    <script>
+        let noClickCount = 0;
+        const gradients = [
+            'linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%)',
+            'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+            'linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%)',
+            'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)'
+        ];
 
-</div>
+        function transitionToValentine() {
+            const s404 = document.getElementById('screen-404');
+            const sVal = document.getElementById('screen-valentine');
+            
+            s404.style.opacity = '0';
+            setTimeout(() => {
+                s404.classList.remove('active');
+                sVal.classList.add('active');
+                setTimeout(() => sVal.style.opacity = '1', 50);
+            }, 500);
+        }
 
-<script>
-/* floating hearts generator */
-setInterval(()=>{
-const heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="💗";
-heart.style.left=Math.random()*100+"vw";
-heart.style.animationDuration=5+Math.random()*5+"s";
-heart.style.fontSize=15+Math.random()*25+"px";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),10000);
-},500);
+        function handleNo() {
+            noClickCount++;
+            const noBtn = document.getElementById('no-btn');
+            
+            // Move to random position
+            const padding = 50;
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+            noBtn.style.zIndex = '1000';
 
-/* elements */
-const errorScreen=document.getElementById("errorScreen");
-const valentine=document.getElementById("valentine");
-const refreshBtn=document.getElementById("refreshBtn");
-const yesBtn=document.getElementById("yesBtn");
-const noBtn=document.getElementById("noBtn");
-const message=document.getElementById("yesMessage");
-const body=document.body;
+            // Change background
+            document.body.style.background = gradients[noClickCount % gradients.length];
 
-/* transition screens */
-refreshBtn.onclick=()=>{
-errorScreen.classList.add("hidden");
-setTimeout(()=>valentine.classList.remove("hidden"),500);
-};
+            // Change emoji after 2 clicks
+            if (noClickCount === 2) {
+                document.getElementById('val-emoji').innerText = '🥺';
+            }
+        }
 
-/* typing message */
-function typeText(text){
-message.textContent="";
-let i=0;
-const speed=30;
-const timer=setInterval(()=>{
-message.textContent+=text[i];
-i++;
-if(i>=text.length) clearInterval(timer);
-},speed);
-}
+        function handleYes() {
+            // Reveal Message
+            document.getElementById('val-title').innerText = "It's a Deal!";
+            document.getElementById('val-emoji').innerText = '💍';
+            document.getElementById('agreement-msg').style.display = 'block';
+            
+            // Hide buttons after 1 second
+            setTimeout(() => {
+                document.getElementById('btn-container').classList.add('fade-out');
+            }, 1000);
 
-/* YES */
-yesBtn.onclick=()=>{
+            // Confetti effect for 5 seconds
+            const end = Date.now() + 5000;
+            (function frame() {
+                confetti({
+                    particleCount: 2,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff85a2', '#ffffff']
+                });
+                confetti({
+                    particleCount: 2,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff85a2', '#ffffff']
+                });
 
-const txt=`By clicking YES you agree to:
-
-Unlimited cuddles
-Lifetime supply of bad puns
-Mutual pizza stealing rights
-
-Effective immediately! 💞`;
-
-message.classList.remove("hidden");
-typeText(txt);
-
-setTimeout(()=>{
-yesBtn.classList.add("hidden");
-noBtn.classList.add("hidden");
-},1000);
-
-startConfetti();
-setTimeout(stopConfetti,5000);
-};
-
-/* NO button */
-let noClicks=0;
-
-noBtn.onclick=()=>{
-noClicks++;
-moveButton();
-changeBg();
-if(noClicks>=2) noBtn.textContent="🥺";
-};
-
-function moveButton(){
-const x=Math.random()*(window.innerWidth-120);
-const y=Math.random()*(window.innerHeight-60);
-noBtn.style.left=x+"px";
-noBtn.style.top=y+"px";
-}
-
-function changeBg(){
-const g=[
-"linear-gradient(135deg,#ffd6ec,#ffe9d6)",
-"linear-gradient(135deg,#ff9a9e,#fad0c4)",
-"linear-gradient(135deg,#a18cd1,#fbc2eb)",
-"linear-gradient(135deg,#ffecd2,#fcb69f)"
-];
-body.style.background=g[Math.floor(Math.random()*g.length)];
-}
-
-/* confetti physics */
-const canvas=document.getElementById("confettiCanvas");
-const ctx=canvas.getContext("2d");
-let confetti=[];
-let running=false;
-
-function resize(){
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-}
-resize();
-window.onresize=resize;
-
-function startConfetti(){
-running=true;
-for(let i=0;i<200;i++){
-confetti.push({
-x:Math.random()*canvas.width,
-y:-20,
-size:6,
-speed:2+Math.random()*4,
-swing:Math.random()*2
-});
-}
-animate();
-}
-
-function animate(){
-if(!running) return;
-ctx.clearRect(0,0,canvas.width,canvas.height);
-confetti.forEach(p=>{
-p.y+=p.speed;
-p.x+=Math.sin(p.y*0.02)*p.swing;
-ctx.fillRect(p.x,p.y,p.size,p.size);
-});
-requestAnimationFrame(animate);
-}
-
-function stopConfetti(){
-running=false;
-confetti=[];
-ctx.clearRect(0,0,canvas.width,canvas.height);
-}
-</script>
-
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+    </script>
 </body>
-    </html>
+</html>
